@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/Iletisim_page.dart';
+import 'package:psikolook_anasayfa/cikisyap_page.dart';
 
 import 'hakkimzda_page.dart';
 import 'home_page.dart';
@@ -58,7 +60,7 @@ class _homePageState extends State<homePage> {
     );
   }
 
-  FloatingActionButton buildPsikolookButton() {
+  /* FloatingActionButton buildPsikolookButton() {
     return FloatingActionButton(
       tooltip: 'Psikolook',
       onPressed: () {
@@ -71,7 +73,7 @@ class _homePageState extends State<homePage> {
       elevation: 0,
       child: Image.asset('assets/images/fb_logo.png'), //gölgeyi kaldırdı
     );
-  }
+  } */
 
   Padding buildBottomNavigationBar() {
     return Padding(
@@ -172,14 +174,34 @@ class _homePageState extends State<homePage> {
                         ));
                   },
                   child: Text(
-                    'KVKK Hakkımızda İletişim',
+                    'KVKK Hakkımızda',
                     style: TextStyle(
                       color: Colors.white,
                     ),
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IletisimPage(),
+                        ));
+                  },
+                  child: Text(
+                    'İletişim',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CikisYapPage()),
+                    );
+                  },
                   child: Text(
                     'Çıkış Yap',
                     style: TextStyle(color: Colors.white),

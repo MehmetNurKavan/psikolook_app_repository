@@ -43,7 +43,8 @@ class _MessagePageState extends State<MessagePage> {
                   height: MediaQuery.of(context).size.height * 0.153,
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/logo.png'),
+                      backgroundImage:
+                          AssetImage('assets/images/woman_picture.png'),
                     ),
                     title: Text('Psikolook'),
                     subtitle: Text(

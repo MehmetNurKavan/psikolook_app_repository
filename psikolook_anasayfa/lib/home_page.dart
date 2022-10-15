@@ -11,60 +11,93 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool deger = true;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: buildCard_oneView(),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              width: 375,
-              alignment: Alignment.topCenter,
-              child: GridView.count(
-                crossAxisCount: 1,
-                scrollDirection: Axis.horizontal,
+    if (deger == true) {
+      return Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: buildCard_oneView(),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                width: 375,
+                alignment: Alignment.topCenter,
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    buildCard_twoView(),
+                    buildCard_twoView(),
+                    buildCard_twoView(),
+                    buildCard_twoView(),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  buildCard_twoView(),
-                  buildCard_twoView(),
-                  buildCard_twoView(),
-                  buildCard_twoView(),
+                  TextButton(
+                    onPressed: () {
+                      deger = false;
+                    },
+                    child: const Text(
+                      'Blog Yazılarınınn Tümünü Görmek İçin Tıklayınız.',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.pink,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Blog Yazılarınınn Tümünü Görmek İçin Tıklayınız.',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.pink,
-                      fontSize: 10,
-                    ),
-                  ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  primary: false,
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    buildCard_threeView(),
+                    buildCard_threeView(),
+                    buildCard_threeView(),
+                    buildCard_threeView(),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
+          ],
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                deger = true;
+              },
+            ),
+            Container(
               alignment: Alignment.topLeft,
               child: GridView.count(
-                crossAxisCount: 1,
+                crossAxisCount: 3,
                 primary: false,
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.all(10),
@@ -76,10 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
   }
 
   Card buildCard_oneView() {

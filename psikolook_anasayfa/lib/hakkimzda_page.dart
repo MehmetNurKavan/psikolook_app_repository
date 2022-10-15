@@ -72,7 +72,7 @@ class HakkimizdaPage extends StatelessWidget {
                       elevation: 0,
                       onPressed: () {},
                       child: Image.asset(
-                        'assets/images/psikolook_logo.png',
+                        'assets/images/starfish.png',
                       ),
                     ),
                   ),

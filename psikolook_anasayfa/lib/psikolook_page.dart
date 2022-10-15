@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:psikolook_anasayfa/buy_sally_page.dart';
 
-class PsikolookPage extends StatelessWidget {
+class PsikolookPage extends StatefulWidget {
   const PsikolookPage({super.key});
 
+  @override
+  State<PsikolookPage> createState() => _PsikolookPageState();
+}
+
+class _PsikolookPageState extends State<PsikolookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +127,7 @@ class PsikolookPage extends StatelessWidget {
                       textStyle: const TextStyle(fontSize: 15),
                     ),
                     child: const Text('Profili İncele'),
-                    onPressed: () {/* ... */},
+                    onPressed: () {},
                   ),
                 ),
                 SizedBox(
@@ -134,7 +140,12 @@ class PsikolookPage extends StatelessWidget {
                       textStyle: const TextStyle(fontSize: 15),
                     ),
                     child: const Text('1 SEANS 200TL'),
-                    onPressed: () {/* ... */},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const buySallyPage()));
+                    },
                   ),
                 ),
               ],
