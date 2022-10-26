@@ -7,13 +7,13 @@ class HakkimizdaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Colors.pink[100],
+        color: Color.fromARGB(255, 253, 215, 226),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 70),
                 Row(
                   children: [
                     const SizedBox(width: 15),
@@ -41,6 +41,7 @@ class HakkimizdaPage extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Card(

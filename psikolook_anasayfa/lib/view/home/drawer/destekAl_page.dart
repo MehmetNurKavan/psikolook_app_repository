@@ -15,7 +15,7 @@ class _DestekAlPage extends State<DestekAlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[100],
+      backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: buildCikisYap(context),
     );
   }

@@ -17,7 +17,7 @@ class _buySallyPageState extends State<buySallyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[100],
+      backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         //mainAxisAlignment: MainAxisAlignment.center,

@@ -14,7 +14,7 @@ class _OdemeSecenekleriPageState extends State<OdemeSecenekleriPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[100],
+      backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

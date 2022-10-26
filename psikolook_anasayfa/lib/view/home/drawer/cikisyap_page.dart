@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/destekAl_page.dart';
+import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
 
 class CikisYapPage extends StatefulWidget {
   const CikisYapPage({super.key});
@@ -14,7 +14,7 @@ class _CikisYapPageState extends State<CikisYapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[100],
+      backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: buildCikisYap(context),
     );
   }

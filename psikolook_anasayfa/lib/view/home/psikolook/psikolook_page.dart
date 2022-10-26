@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:psikolook_anasayfa/buy_sally_page.dart';
+import 'package:psikolook_anasayfa/view/home/psikolook/buy_sally_page.dart';
 
 class PsikolookPage extends StatefulWidget {
   const PsikolookPage({super.key});
@@ -11,10 +9,18 @@ class PsikolookPage extends StatefulWidget {
 }
 
 class _PsikolookPageState extends State<PsikolookPage> {
+  String resim = 'assets/images/woman_picture.png';
+  String ilgiAlani =
+      'Anksiyete bozukluğu, stres yönetimi, okb ve aile içi ilişkiler';
+  String psikologadi = "PSİKOLOG SELİN AYDIN";
+  String psikologadi2 = "PSİKOLOG MELİH TAŞÇIOĞLU";
+  int para1 = 200;
+  int para2 = 300;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[100],
+      backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: Container(
         child: Column(
           children: [
@@ -38,9 +44,15 @@ class _PsikolookPageState extends State<PsikolookPage> {
               ),
             ),
             SizedBox(height: 10),
-            Expanded(flex: 3, child: buildPsikologCard(context)),
+            Expanded(
+                flex: 3,
+                child: buildPsikologCard(
+                    context, resim, ilgiAlani, psikologadi, para1)),
             SizedBox(height: 10),
-            Expanded(flex: 3, child: buildPsikologCard(context)),
+            Expanded(
+                flex: 3,
+                child: buildPsikologCard(
+                    context, resim, ilgiAlani, psikologadi2, para2)),
             SizedBox(height: 30),
           ],
         ),
@@ -48,7 +60,8 @@ class _PsikolookPageState extends State<PsikolookPage> {
     );
   }
 
-  Card buildPsikologCard(BuildContext context) {
+  Card buildPsikologCard(
+      BuildContext context, image, text, psikologname, para) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30.0),
@@ -62,9 +75,13 @@ class _PsikolookPageState extends State<PsikolookPage> {
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
             colors: [
-              Colors.pinkAccent,
-              Colors.pinkAccent,
-              Colors.amberAccent,
+              Color.fromARGB(255, 237, 36, 150),
+              Color.fromARGB(255, 237, 36, 150),
+              Color.fromARGB(255, 237, 36, 150),
+              Color.fromARGB(255, 237, 36, 150),
+              Color.fromARGB(255, 254, 112, 145),
+              Color.fromARGB(255, 248, 170, 158),
+              Color.fromARGB(255, 253, 210, 130),
             ],
           ),
         ),
@@ -82,15 +99,13 @@ class _PsikolookPageState extends State<PsikolookPage> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Colors.pink[300],
+                      color: Color.fromARGB(255, 251, 84, 179),
                     ),
-                    child: const Padding(
+                    child: Padding(
                         padding: EdgeInsets.only(top: 8, left: 20),
                         child: Text(
-                          'PSİKOLOG SELİN AYDIN',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                          psikologname,
+                          style: TextStyle(color: Colors.white),
                         )),
                   ),
                 ),
@@ -100,14 +115,13 @@ class _PsikolookPageState extends State<PsikolookPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/woman_picture.png'),
+                  backgroundImage: AssetImage(image),
                   radius: 50.0,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
-                    'Anksiyete bozukluğu, stres yönetimi, okb ve aile içi ilişkiler',
+                    text,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -139,7 +153,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
                       backgroundColor: Colors.pink[50],
                       textStyle: const TextStyle(fontSize: 15),
                     ),
-                    child: const Text('1 SEANS 200TL'),
+                    child: Text('1 SEANS $para TL'),
                     onPressed: () {
                       Navigator.push(
                           context,
