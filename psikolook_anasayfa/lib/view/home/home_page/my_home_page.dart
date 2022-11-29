@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -34,7 +32,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String history = '8 Nisan';
   String otherPsikologName = 'Psikolook';
   String psikologAvatar = 'assets/images/woman_picture.png';
+  Color color1 = Color.fromARGB(255, 92, 225, 230);
+  Color color2 = Colors.white;
+  Color color3 = Color.fromARGB(255, 255, 3, 144);
 
+  String mavi = 'Color.fromARGB(255, 92, 225, 230),';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,20 +80,20 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Expanded(
               flex: 5,
               child: Container(
-                width: 375,
                 alignment: Alignment.topCenter,
                 child: GridView.count(
                   crossAxisCount: 1,
                   scrollDirection: Axis.horizontal,
+                  childAspectRatio: 0.7,
                   children: [
                     buildMidCardView(
-                        psikologAvatar, history, otherPsikologName),
+                        psikologAvatar, history, otherPsikologName, color1),
                     buildMidCardView(
-                        psikologAvatar, history, otherPsikologName),
+                        psikologAvatar, history, otherPsikologName, color2),
                     buildMidCardView(
-                        psikologAvatar, history, otherPsikologName),
+                        psikologAvatar, history, otherPsikologName, color3),
                     buildMidCardView(
-                        psikologAvatar, history, otherPsikologName),
+                        psikologAvatar, history, otherPsikologName, color1),
                   ],
                 ),
               ),
@@ -326,14 +328,14 @@ Card buildBlogCardView(dkk, baslik, image) {
   );
 }
 
-Container buildMidCardView(psikologAvatar, history, otherPsikologName) {
+Container buildMidCardView(psikologAvatar, history, otherPsikologName, color) {
   return Container(
     width: 22,
     height: 11,
     child: Card(
       /* color: Color((math.Random().nextDouble() * 0xFFFFF).toInt())
           .withOpacity(1.0), */
-      color: generateRandomColor1(),
+      color: color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
@@ -342,8 +344,8 @@ Container buildMidCardView(psikologAvatar, history, otherPsikologName) {
           ListTile(
             //minLeadingWidth: 1,aralarınadki bosluk sanırım
             contentPadding: EdgeInsets.all(1),
-            horizontalTitleGap: 3.0, //başlık ve avatar arasındaki mesafe olamlı
-            minVerticalPadding: 10,
+            //horizontalTitleGap: 3.0, //başlık ve avatar arasındaki mesafe olamlı
+            //minVerticalPadding: 10,
             //minLeadingWidth: 10,
             leading: Padding(
               padding: EdgeInsets.all(8.0),
@@ -367,14 +369,4 @@ Container buildMidCardView(psikologAvatar, history, otherPsikologName) {
       ),
     ),
   );
-}
-
-Color generateRandomColor1() {
-  const predefinedColors = [
-    Color.fromARGB(255, 92, 225, 230),
-    Colors.white,
-    Color.fromARGB(255, 255, 3, 144),
-  ];
-  Random random = Random();
-  return predefinedColors[random.nextInt(predefinedColors.length)];
 }

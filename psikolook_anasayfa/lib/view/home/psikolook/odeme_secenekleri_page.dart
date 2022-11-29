@@ -192,8 +192,10 @@ class _OdemeSecenekleriPageState extends State<OdemeSecenekleriPage> {
                   ),
                   Text('okudum onaylıyorum'),
                   Checkbox(
-                    checkColor: Colors.white,
-                    //fillColor: MaterialStateProperty.resolveWith(getColor),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    checkColor: Colors.pink,
+                    activeColor: Colors.pink,
                     value: isChecked,
                     onChanged: (bool? value) {
                       setState(() {

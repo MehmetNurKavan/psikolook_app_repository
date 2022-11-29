@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/drawer/Iletisim_page.dart';
-import 'package:psikolook_anasayfa/view/home/drawer/cikisyap_page.dart';
-import 'package:psikolook_anasayfa/view/home/drawer/hakkimzda_page.dart';
-import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
-import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
-import '../psikologHome/psikologKısmıIskeleti.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikolog_icon.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
 
-class homePage extends StatefulWidget {
-  const homePage({super.key});
+import '../drawer/Iletisim_page.dart';
+import '../drawer/cikisyap_page.dart';
+import '../drawer/hakkimzda_page.dart';
+import '../message/message_page.dart';
+
+class psikolog_page extends StatefulWidget {
+  const psikolog_page({super.key});
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<psikolog_page> createState() => _psikolog_pageState();
 }
 
-class _homePageState extends State<homePage> {
+class _psikolog_pageState extends State<psikolog_page> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    MyHomePage(),
-    PsikolookPage(),
-    HomePage_Person(),
+    PsikologHome(),
+    PsikolookIcon(),
+    PsikologProfil(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -112,13 +112,6 @@ class _homePageState extends State<homePage> {
       iconTheme: const IconThemeData(color: Color.fromRGBO(204, 11, 106, 100)),
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: IconButton(
-        icon: Icon(Icons.abc),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => psikolog_page()));
-        },
-      ),
       actions: <Widget>[
         FloatingActionButton.small(
           child:

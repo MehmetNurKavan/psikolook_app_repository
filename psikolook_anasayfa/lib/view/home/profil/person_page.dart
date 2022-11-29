@@ -46,66 +46,12 @@ class HomePage_Person extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
+                  child: ListTile(
                     leading: Text('Telefon :'),
                     title: Text(''),
-                    trailing: Icon(Icons.more_horiz),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                    leading: Text('E-posta :'),
-                    title: Text(''),
-                    trailing: Icon(Icons.more_horiz),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                    leading: Text('Yaş :'),
-                    title: Text(''),
-                    trailing: Icon(Icons.more_horiz),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                    leading: Text('Cinsiyet :'),
-                    title: Text(''),
-                    trailing: Icon(Icons.more_horiz),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                    leading: Text('Meslek :'),
-                    title: Text(''),
-                    trailing: Icon(Icons.more_horiz),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                    leading: Text('Okul :'),
-                    title: Text(''),
-                    trailing: Icon(
-                      Icons.more_horiz,
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
                     ),
                   ),
                 ),
@@ -114,10 +60,13 @@ class HomePage_Person extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                    leading: Text('Bölüm :'),
+                  child: ListTile(
+                    leading: Text('E-posta :'),
                     title: Text(''),
-                    trailing: Icon(Icons.more_horiz),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
                   ),
                 ),
                 Card(
@@ -125,10 +74,84 @@ class HomePage_Person extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                  child: const ListTile(
-                      leading: Text('Sınıf :'),
-                      title: Text(''),
-                      trailing: Icon(Icons.more_horiz)),
+                  child: ListTile(
+                    leading: Text('Yaş :'),
+                    title: Text(''),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: ListTile(
+                    leading: Text('Cinsiyet :'),
+                    title: Text(''),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: ListTile(
+                    leading: Text('Meslek :'),
+                    title: Text(''),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: ListTile(
+                    leading: Text('Okul :'),
+                    title: Text(''),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: ListTile(
+                    leading: Text('Bölüm :'),
+                    title: Text(''),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: ListTile(
+                    leading: Text('Sınıf :'),
+                    title: Text(''),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_horiz),
+                    ),
+                  ),
                 ),
               ],
             ),

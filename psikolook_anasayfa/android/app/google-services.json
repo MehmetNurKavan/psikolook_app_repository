@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "632553014957",
+    "project_id": "psikolook-firebase",
+    "storage_bucket": "psikolook-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632553014957:android:de6adda6c4c0785fcde824",
+        "android_client_info": {
+          "package_name": "com.example.psikolook_anasayfa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632553014957-jlprbpmob1k516gcrdi9a8gpgr6g8net.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY08uhKeA5Tgcol4TLc80UCcLa7LXQ9hY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632553014957-jlprbpmob1k516gcrdi9a8gpgr6g8net.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

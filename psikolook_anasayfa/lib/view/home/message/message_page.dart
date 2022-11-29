@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/message/messsage_chat.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
@@ -42,18 +43,18 @@ class _MessagePageState extends State<MessagePage> {
                   color: index.isOdd ? Colors.pink[300] : Colors.pink[100],
                   height: MediaQuery.of(context).size.height * 0.153,
                   child: ListTile(
-                    leading: CircleAvatar(
+                    leading: const CircleAvatar(
                       backgroundImage:
                           AssetImage('assets/images/woman_picture.png'),
                     ),
-                    title: Text('Psikolook'),
-                    subtitle: Text(
+                    title: const Text('Psikolook'),
+                    subtitle: const Text(
                       'Hi!!!!',
                     ),
                     textColor: Colors.white,
                     trailing: Column(
                       children: [
-                        Expanded(child: Text('1 min')),
+                        const Expanded(child: Text('1 min')),
                         Expanded(
                           child: FloatingActionButton.small(
                             backgroundColor: Colors.pink,
@@ -71,10 +72,16 @@ class _MessagePageState extends State<MessagePage> {
                         ),
                       ],
                     ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessageChatPage()));
+                    },
                   ),
                 );
               },
-              childCount: 20,
+              childCount: 4,
             ),
           ),
         ],

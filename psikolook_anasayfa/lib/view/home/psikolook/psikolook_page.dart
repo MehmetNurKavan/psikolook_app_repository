@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/psikolook/buy_sally_page.dart';
+import 'package:psikolook_anasayfa/view/home/psikolook/referansPage.dart';
 
 class PsikolookPage extends StatefulWidget {
   const PsikolookPage({super.key});
@@ -16,44 +19,56 @@ class _PsikolookPageState extends State<PsikolookPage> {
   String psikologadi2 = "PSİKOLOG MELİH TAŞÇIOĞLU";
   int para1 = 200;
   int para2 = 300;
-
+  bool isVisible = true;
+  bool isNotVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color.fromARGB(255, 253, 215, 226),
       body: Container(
-        child: Column(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: ListView(
+          primary: false,
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    foregroundColor: Colors.white,
-                    backgroundColor: Color.fromARGB(255, 90, 216, 216),
-                    textStyle: const TextStyle(fontSize: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: Center(
-                      child:
-                          const Text('REFERANS KODUN VARSA BURADAN DESTEK AL')),
-                  onPressed: () {/* ... */},
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromARGB(255, 90, 216, 216),
+                  textStyle: const TextStyle(fontSize: 20),
                 ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    'REFERANS KODUN VARSA BURADAN DESTEK AL',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const referansPage(),
+                      ));
+                },
               ),
             ),
-            SizedBox(height: 10),
-            Expanded(
-                flex: 3,
-                child: buildPsikologCard(
-                    context, resim, ilgiAlani, psikologadi, para1)),
-            SizedBox(height: 10),
-            Expanded(
-                flex: 3,
-                child: buildPsikologCard(
-                    context, resim, ilgiAlani, psikologadi2, para2)),
-            SizedBox(height: 30),
+            const SizedBox(height: 10),
+            buildPsikologCard(context, resim, ilgiAlani, psikologadi, para1),
+            const SizedBox(height: 10),
+            buildPsikologCard(context, resim, ilgiAlani, psikologadi2, para2),
+            const SizedBox(height: 30),
+            buildPsikologCard(context, resim, ilgiAlani, psikologadi2, para2),
+            const SizedBox(height: 10),
+            buildPsikologCard(context, resim, ilgiAlani, psikologadi2, para2),
+            const SizedBox(height: 10),
           ],
         ),
       ),
@@ -63,6 +78,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
   Card buildPsikologCard(
       BuildContext context, image, text, psikologname, para) {
     return Card(
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30.0),
       ),
@@ -70,7 +86,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
@@ -99,13 +115,13 @@ class _PsikolookPageState extends State<PsikolookPage> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Color.fromARGB(255, 251, 84, 179),
+                      color: const Color.fromARGB(255, 251, 84, 179),
                     ),
                     child: Padding(
-                        padding: EdgeInsets.only(top: 8, left: 20),
+                        padding: const EdgeInsets.only(top: 8, left: 20),
                         child: Text(
                           psikologname,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         )),
                   ),
                 ),
@@ -122,10 +138,10 @@ class _PsikolookPageState extends State<PsikolookPage> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
                     text,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
-                SizedBox(),
+                const SizedBox(),
               ],
             ),
             Row(
@@ -135,9 +151,9 @@ class _PsikolookPageState extends State<PsikolookPage> {
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       foregroundColor: Colors.white,
-                      backgroundColor: Color.fromARGB(255, 90, 216, 216),
+                      backgroundColor: const Color.fromARGB(255, 90, 216, 216),
                       textStyle: const TextStyle(fontSize: 15),
                     ),
                     child: const Text('Profili İncele'),
@@ -148,7 +164,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       foregroundColor: Colors.pink,
                       backgroundColor: Colors.pink[50],
                       textStyle: const TextStyle(fontSize: 15),
