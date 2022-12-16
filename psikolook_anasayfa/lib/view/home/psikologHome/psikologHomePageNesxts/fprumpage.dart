@@ -15,7 +15,7 @@ class _ForumPageState extends State<ForumPage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: SingleChildScrollView(
-        primary: false,
+        primary: false, 
         child: Padding(
           padding: const EdgeInsets.only(left: 10.0, top: 22),
           child: Container(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/blog/Choose_screen_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/blogYazPage.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/fprumpage.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/palnlanPage.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/seansGecmisiPAge.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/ucretPage.dart';
+
+import '../../forum/very_soon1.dart';
 
 class PsikologHome extends StatefulWidget {
   const PsikologHome({super.key});
@@ -52,7 +53,7 @@ class _PsikologHomeState extends State<PsikologHome> {
               buildRow(
                 Icon(Icons.bookmark, color: Color(0xFFEF144E), size: 40),
                 'Blog Yazısi Yaz',
-                BlogYazPage(),
+                ChooseScreen(),
                 Image.asset('assets/images/hand_icon.png'),
                 'Bizden Destek Al',
                 DestekAlPage(),
@@ -60,7 +61,7 @@ class _PsikologHomeState extends State<PsikologHome> {
               buildRow(
                 Image.asset('assets/images/chat_icon.png'),
                 'Psikolog Formu',
-                ForumPage(),
+                very_soon1(),
                 Image.asset('assets/images/hand2_icon.png'),
                 'Seans Geçmişiniz',
                 SeansGecmisiPAge(),

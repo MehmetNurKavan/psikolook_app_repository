@@ -108,7 +108,8 @@ class _PsikologProfilState extends State<PsikologProfil> {
               TextField(
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.none,
-                maxLines: 15,
+                minLines: 15,
+                maxLines: null,
                 onChanged: (String deger) {
                   if (deger.length > 3) {
                     print(deger);
@@ -134,7 +135,8 @@ class _PsikologProfilState extends State<PsikologProfil> {
               TextField(
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.none,
-                maxLines: 7,
+                minLines: 7,
+                maxLines: null,
                 style: TextStyle(color: Colors.white),
                 onChanged: (String deger) {
                   if (deger.length > 3) {

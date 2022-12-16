@@ -112,13 +112,6 @@ class _homePageState extends State<homePage> {
       iconTheme: const IconThemeData(color: Color.fromRGBO(204, 11, 106, 100)),
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: IconButton(
-        icon: Icon(Icons.abc),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => psikolog_page()));
-        },
-      ),
       actions: <Widget>[
         FloatingActionButton.small(
           child:
