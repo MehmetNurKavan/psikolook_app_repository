@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/login/sixthPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/Login_home.dart';
 
 class FifthPage extends StatefulWidget {
   const FifthPage({super.key});
@@ -47,7 +47,8 @@ class _FifthPageState extends State<FifthPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SixthPage()));
+                                    builder: (context) =>
+                                        const LoginHomePage()));
                           },
                           child: Text(
                             "Atla",

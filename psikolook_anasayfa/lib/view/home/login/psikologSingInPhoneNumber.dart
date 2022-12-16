@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/home_page.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologK%C4%B1sm%C4%B1Iskeleti.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
-
+import 'package:psikolook_anasayfa/view/home/login/PsikologsingInPage.dart';
+import '../psikologHome/psikologKısmıIskeleti.dart';
 import 'ForgetPasswordPage.dart';
 
-class SignInWithPhonePage extends StatefulWidget {
-  const SignInWithPhonePage({super.key});
+class PsikologSignInWithPhonePage extends StatefulWidget {
+  const PsikologSignInWithPhonePage({super.key});
 
   @override
-  State<SignInWithPhonePage> createState() => _SignInWithPhonePageState();
+  State<PsikologSignInWithPhonePage> createState() =>
+      _PsikologSignInWithPhonePageState();
 }
 
-class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
+class _PsikologSignInWithPhonePageState
+    extends State<PsikologSignInWithPhonePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +27,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
               children: [
                 FloatingActionButton.small(
                     elevation: 0,
-                    backgroundColor: Color(0xFFFF0390),
+                    backgroundColor: Color(0xFF5CE1E6),
                     child: Icon(
                       Icons.arrow_back_ios_new,
                     ),
@@ -109,12 +108,12 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignInPage()));
+                          builder: (context) => const PsikologSignInPage()));
                 },
                 child: Text(
                   "E-Mail ile Giriş Yap",
                   style: TextStyle(
-                      color: Color(0xFFFF0390),
+                      color: Color(0xFF5CE1E6),
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
                 )),
@@ -125,7 +124,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF5CE1E6),
+                        backgroundColor: Color(0xFFFF0390),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
@@ -135,7 +134,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const homePage()));
+                                builder: (context) => const psikolog_page()));
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(

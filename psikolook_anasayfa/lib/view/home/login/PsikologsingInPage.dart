@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
+import 'package:psikolook_anasayfa/view/home/login/PsikologForgetPassword.dart';
+import 'package:psikolook_anasayfa/view/home/login/psikologSingInPhoneNumber.dart';
 import 'package:psikolook_anasayfa/view/home/login/signUpPage.dart';
+import '../psikologHome/psikologKısmıIskeleti.dart';
 
-import '../home_page/home_page.dart';
-import 'ForgetPasswordPage.dart';
-
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class PsikologSignInPage extends StatefulWidget {
+  const PsikologSignInPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<PsikologSignInPage> createState() => _PsikologSignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _PsikologSignInPageState extends State<PsikologSignInPage> {
   bool _obscureText = true;
 
   @override
@@ -30,7 +29,7 @@ class _SignInPageState extends State<SignInPage> {
                 children: [
                   FloatingActionButton.small(
                       elevation: 0,
-                      backgroundColor: Color(0xFFFF0390),
+                      backgroundColor: Color(0xFF5CE1E6),
                       child: Icon(
                         Icons.arrow_back_ios_new,
                       ),
@@ -101,7 +100,7 @@ class _SignInPageState extends State<SignInPage> {
                                   _obscureText = !_obscureText;
                                 });
                               },
-                              color: Color(0xFFFF0390),
+                              color: Color(0xFF5CE1E6),
                               icon: Icon(_obscureText
                                   ? Icons.visibility
                                   : Icons.visibility_off)),
@@ -126,12 +125,13 @@ class _SignInPageState extends State<SignInPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SignInWithPhonePage()));
+                            builder: (context) =>
+                                const PsikologSignInWithPhonePage()));
                   },
                   child: Text(
                     "Telefon Numarasıyla Giriş Yap",
                     style: TextStyle(
-                        color: Color(0xFFFF0390),
+                        color: Color(0xFF5CE1E6),
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                   )),
@@ -142,7 +142,7 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF5CE1E6),
+                          backgroundColor: Color(0xFFFF0390),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
@@ -152,7 +152,7 @@ class _SignInPageState extends State<SignInPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const homePage()));
+                                  builder: (context) => const psikolog_page()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -166,7 +166,7 @@ class _SignInPageState extends State<SignInPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const ForgetPasswordPage()));
+                                        const PsikologForgetPasswordPage()));
                           },
                           child: Text("Şifremi Unuttum",
                               style: TextStyle(

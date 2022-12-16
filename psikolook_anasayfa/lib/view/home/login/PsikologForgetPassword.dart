@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/home_page.dart';
-import 'package:psikolook_anasayfa/view/home/login/epostaReferansPage.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
-import 'package:psikolook_anasayfa/view/home/login/verificationPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/psikolog_epostaReferance.dart';
+import 'package:psikolook_anasayfa/view/home/login/psikologSingInPhoneNumber.dart';
+import 'epostaReferansPage.dart';
 
-class ForgetPasswordPage extends StatefulWidget {
-  const ForgetPasswordPage({super.key});
+class PsikologForgetPasswordPage extends StatefulWidget {
+  const PsikologForgetPasswordPage({super.key});
 
   @override
-  State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
+  State<PsikologForgetPasswordPage> createState() =>
+      _PsikologForgetPasswordPageState();
 }
 
-class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
+class _PsikologForgetPasswordPageState
+    extends State<PsikologForgetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,11 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                         Icons.arrow_back_ios_new,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PsikologSignInWithPhonePage()));
                       }),
                 ],
               ),
@@ -80,7 +85,8 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const epostaRefreancePage()));
+                          builder: (context) =>
+                              const PsikologEpostaRefreancePage()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(

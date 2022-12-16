@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/home_page.dart';
-import 'package:psikolook_anasayfa/view/home/login/epostaReferansPage.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
-import 'package:psikolook_anasayfa/view/home/login/verificationPage.dart';
+import 'PsikologNewPasswordSuccesful.dart';
 
-class ForgetPasswordPage extends StatefulWidget {
-  const ForgetPasswordPage({super.key});
+class PsikologNewPasswordPage extends StatefulWidget {
+  const PsikologNewPasswordPage({super.key});
 
   @override
-  State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
+  State<PsikologNewPasswordPage> createState() =>
+      _PsikologNewPasswordPageState();
 }
 
-class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
+class _PsikologNewPasswordPageState extends State<PsikologNewPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +48,12 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("E-Postanızı Giriniz:",
+                  Text("Yeni Şifre",
                       style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                 ],
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
@@ -63,7 +62,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       borderSide: BorderSide(width: 0, style: BorderStyle.none),
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
-                    hintText: "E-Postanızı Giriniiz",
+                    hintText: "Yeni Şifrenizi Giriniz",
                     filled: true,
                     fillColor: Color(0xFFFEF2F5)),
               ),
@@ -80,12 +79,13 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const epostaRefreancePage()));
+                          builder: (context) =>
+                              const PsikologNewPasswordSuccesfullPage()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 30, right: 30, top: 13, bottom: 13),
-                  child: Text("Tamam"),
+                      left: 20, right: 20, top: 13, bottom: 13),
+                  child: Text("Parolayı Yenile"),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.2),

@@ -1,16 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/login/PsikologsingInPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/Login_home.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class psikologSignUpPage extends StatefulWidget {
+  const psikologSignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<psikologSignUpPage> createState() => _psikologSignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _psikologSignUpPageState extends State<psikologSignUpPage> {
   int _value = 1;
   bool isChecked = false;
   bool isChecked2 = false;
@@ -35,12 +36,16 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       FloatingActionButton.small(
                           elevation: 0,
-                          backgroundColor: Color(0xFFFF0390),
+                          backgroundColor: Color.fromRGBO(92, 225, 230, 100),
                           child: Icon(
                             Icons.arrow_back_ios_new,
                           ),
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const LoginHomePage()));
                           }),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,27 +89,26 @@ class _SignUpPageState extends State<SignUpPage> {
                       ],
                     ),
                     gender(),
-                    buildSignUpView("Şikayetiniz", TextInputType.name),
-                    buildSignUpView("Mesleğiniz", TextInputType.name),
                     buildSignUpView("Telefon", TextInputType.number),
-                    buildSignUpView("Öğrenciyseniz Okuduğunuz Okulun Adı",
-                        TextInputType.name),
-                    buildSignUpView(
-                        "Öğrenciyseniz Bölümünüz", TextInputType.name),
-                    buildSignUpView(
-                        "Öğrenciyseniz Sınıfınız", TextInputType.name),
                     buildSignUpView("Şifreniz", TextInputType.name),
                     buildSignUpView(
-                        "Şifrenizi Tekrar Giriniz", TextInputType.name),
-                    buildSignUpView("Referans Kodunuz", TextInputType.number),
+                        "Yüksek Lisans veya Doktora Öğrencisiyseniz Okulunuzun Adı",
+                        TextInputType.number),
+                    buildSignUpView(
+                        "Çalışıorsanız Çalıştığınız Kurum", TextInputType.name),
+                    buildSignUpView("Ünvanınız", TextInputType.name),
+                    buildSignUpView(
+                      "Diplomanız ya da Öğrenci Olduğunza Kanıtlar Nitelikte Belge",
+                      TextInputType.none,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                          "Referans kodunuzu girmeden ücretsiz psikolojik destek alamazsınız,referans kodunuzu henüz bilmiyorsanız uygulamaya giriş yaptıktan sonra da girebilirsiniz",
-                          style: TextStyle(
-                            color: Colors.pink,
-                            fontWeight: FontWeight.bold,
-                          )),
+                      child:
+                          Text("belgeniz onaylandığında size mail gelecektir",
+                              style: TextStyle(
+                                color: Colors.pink,
+                                fontWeight: FontWeight.bold,
+                              )),
                     ),
                     SizedBox(
                       height: 15.0,
@@ -198,7 +202,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignInPage()));
+                                    builder: (context) =>
+                                        const PsikologSignInPage()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -225,10 +230,7 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(width: 10.0),
-            Text(value,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                )),
+            Text(value, style: TextStyle(fontSize: 11)),
           ],
         ),
         SizedBox(

@@ -15,29 +15,15 @@ class _sayfaState extends State<sayfa> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 253, 215, 226),
       body: Center(
-        child: Container(
-          child: Image.asset("assets/images/psikolook-.png"),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const secondPage()));
-        },
-        label: Text("Hadi Başlayalım",
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.pink[400],
-            )),
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.black,
-        splashColor: Colors.pink[500],
-        hoverColor: Colors.black,
-        icon: Icon(
-          Icons.all_inclusive_sharp,
-          size: 40.0,
-          color: Colors.pink[400],
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => secondPage()));
+          },
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 1,
+              child: Image.asset("assets/images/psikolook-.png")),
         ),
       ),
     );

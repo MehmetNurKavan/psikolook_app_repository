@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/login/PsikologsingInPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/psikolog_sing_up.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/signUpPage.dart';
 
-import '../psikologHome/psikologKısmıIskeleti.dart';
-
-class SixthPage extends StatefulWidget {
-  const SixthPage({super.key});
+class PsikologLoginHome extends StatefulWidget {
+  const PsikologLoginHome({super.key});
 
   @override
-  State<SixthPage> createState() => _SixthPageState();
+  State<PsikologLoginHome> createState() => _PsikologLoginHomeState();
 }
 
-class _SixthPageState extends State<SixthPage> {
+class _PsikologLoginHomeState extends State<PsikologLoginHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,8 @@ class _SixthPageState extends State<SixthPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignInPage()));
+                                    builder: (context) =>
+                                        PsikologSignInPage()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -65,7 +66,8 @@ class _SixthPageState extends State<SixthPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignUpPage()));
+                                    builder: (context) =>
+                                        const psikologSignUpPage()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -75,44 +77,10 @@ class _SixthPageState extends State<SixthPage> {
                         ),
                       ],
                     ),
-                    Text(
-                      '_______________________________________',
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFFDD282),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          textStyle: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => psikolog_page()));
-                        },
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                "Ruh sağlığı çalışanıysan buraya tıkla",
-                                style: TextStyle(fontSize: 17),
-                              ),
-                              Image.asset(
-                                "assets/images/ruh_sagligi_Icon.png",
-                                width: 25,
-                                height: 25,
-                              )
-                            ],
-                          ),
-                        ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Divider(
+                        color: Colors.black87,
                       ),
                     ),
                   ],

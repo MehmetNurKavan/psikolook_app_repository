@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/login/newpasswordPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/psikolog_new_password_page.dart';
 
-class referansPage extends StatefulWidget {
-  const referansPage({super.key});
+class epostaRefreancePage extends StatefulWidget {
+  const epostaRefreancePage({super.key});
 
   @override
-  State<referansPage> createState() => _referansPageState();
+  State<epostaRefreancePage> createState() => _epostaRefreancePageState();
 }
 
-class _referansPageState extends State<referansPage> {
+class _epostaRefreancePageState extends State<epostaRefreancePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +70,8 @@ class _referansPageState extends State<referansPage> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewPasswordPage()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
