@@ -14,5 +14,10 @@ class CustomColors {
   static const startWriteTextColor = Color(0xfffEE2798);
   static const textFieldColor = Color(0xfff707070);
   static const textFieldHintColor = Color(0xfff817889);
-  
+
+  static const pink1 = Color.fromARGB(255, 255, 204, 204);
+  static const pink2 = Color.fromARGB(255, 250, 234, 240);
+  static const pink3 = Color.fromARGB(255, 247, 230, 243);
+  static const blue1 = Color.fromARGB(255, 219, 233, 234);
+  static const blue2 = Color.fromARGB(255, 192, 222, 228);
 }

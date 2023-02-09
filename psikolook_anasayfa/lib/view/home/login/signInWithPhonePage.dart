@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/home_page.dart';
+import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologK%C4%B1sm%C4%B1Iskeleti.dart';
 import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';

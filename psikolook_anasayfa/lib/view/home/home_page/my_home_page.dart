@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/bilimekatki/bilime_katki_page.dart';
+import 'package:psikolook_anasayfa/view/home/drawer/Iletisim_page.dart';
+import 'package:psikolook_anasayfa/view/home/drawer/cikisyap_page.dart';
+import 'package:psikolook_anasayfa/view/home/drawer/hakkimzda_page.dart';
 import 'dart:math' as math;
 
 import 'package:psikolook_anasayfa/view/home/home_page/meeting_page.dart';
+import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
+import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikolog_icon.dart';
+import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
+import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class homePage extends StatefulWidget {
+  const homePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<homePage> createState() => _homePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _homePageState extends State<homePage> {
   bool isVisible = true;
   bool isNotVisible = false;
   String dkk1 = '8';
@@ -39,130 +48,183 @@ class _MyHomePageState extends State<MyHomePage> {
   String mavi = 'Color.fromARGB(255, 92, 225, 230),';
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Visibility(
-            visible: isVisible,
-            child: Expanded(
-              flex: 5,
-              child: buildMeetingCardView(
-                  context, psikologName, psikologText, psikologImage),
+    return Scaffold(
+      appBar: buildAppBar(context),
+      drawer: buildDrawer(context),
+      bottomNavigationBar: builHomeRow(context),
+      floatingActionButton: buildPsikolookButton(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Visibility(
+              visible: isVisible,
+              child: Expanded(
+                flex: 5,
+                child: buildMeetingCardView(
+                    context, psikologName, psikologText, psikologImage),
+              ),
             ),
-          ),
-          Visibility(
-            visible: isNotVisible,
-            child: Expanded(
-              flex: 5,
-              child: Container(
-                alignment: Alignment.topLeft,
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  primary: false,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(10),
-                  children: [
-                    buildBlogCardView(dkk1, baslik1, image1),
-                    buildBlogCardView(dkk2, baslik2, image2),
-                    buildBlogCardView(dkk3, baslik3, image3),
-                    buildBlogCardView(dkk4, baslik4, image4),
-                  ],
+            Visibility(
+              visible: isNotVisible,
+              child: Expanded(
+                flex: 5,
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: GridView.count(
+                    crossAxisCount: 1,
+                    primary: false,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(10),
+                    children: [
+                      buildBlogCardView(dkk1, baslik1, image1),
+                      buildBlogCardView(dkk2, baslik2, image2),
+                      buildBlogCardView(dkk3, baslik3, image3),
+                      buildBlogCardView(dkk4, baslik4, image4),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          Visibility(
-            visible: isVisible,
-            child: Expanded(
-              flex: 5,
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  scrollDirection: Axis.horizontal,
-                  childAspectRatio: 0.7,
-                  children: [
-                    buildMidCardView(
-                        psikologAvatar, history, otherPsikologName, color1),
-                    buildMidCardView(
-                        psikologAvatar, history, otherPsikologName, color2),
-                    buildMidCardView(
-                        psikologAvatar, history, otherPsikologName, color3),
-                    buildMidCardView(
-                        psikologAvatar, history, otherPsikologName, color1),
-                  ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Visibility(
+              visible: isVisible,
+              child: Expanded(
+                flex: 5,
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child: GridView.count(
+                    crossAxisCount: 1,
+                    scrollDirection: Axis.horizontal,
+                    childAspectRatio: 0.7,
+                    children: [
+                      buildMidCardView(
+                          psikologAvatar, history, otherPsikologName, color1),
+                      buildMidCardView(
+                          psikologAvatar, history, otherPsikologName, color2),
+                      buildMidCardView(
+                          psikologAvatar, history, otherPsikologName, color3),
+                      buildMidCardView(
+                          psikologAvatar, history, otherPsikologName, color1),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Visibility(
-            visible: isNotVisible,
-            child: Expanded(
-              flex: 5,
-              child: Container(
-                alignment: Alignment.topLeft,
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  primary: false,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(10),
-                  children: [
-                    buildBlogCardView(dkk1, baslik1, image1),
-                    buildBlogCardView(dkk2, baslik2, image2),
-                    buildBlogCardView(dkk3, baslik3, image3),
-                    buildBlogCardView(dkk4, baslik4, image4),
-                  ],
+            Visibility(
+              visible: isNotVisible,
+              child: Expanded(
+                flex: 5,
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: GridView.count(
+                    crossAxisCount: 1,
+                    primary: false,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(10),
+                    children: [
+                      buildBlogCardView(dkk1, baslik1, image1),
+                      buildBlogCardView(dkk2, baslik2, image2),
+                      buildBlogCardView(dkk3, baslik3, image3),
+                      buildBlogCardView(dkk4, baslik4, image4),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Visibility(
-            visible: isVisible,
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        isVisible = !isVisible;
-                        isNotVisible = !isNotVisible;
-                      });
-                    },
-                    child: const Text(
-                      'Blog Yazılarınınn Tümünü Görmek İçin Tıklayınız.',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.pink,
-                        fontSize: 10,
+            Visibility(
+              visible: isVisible,
+              child: Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          isVisible = !isVisible;
+                          isNotVisible = !isNotVisible;
+                        });
+                      },
+                      child: const Text(
+                        'Blog Yazılarınınn Tümünü Görmek İçin Tıklayınız.',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.pink,
+                          fontSize: 10,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+            Expanded(
+              flex: 5,
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  primary: false,
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    buildBlogCardView(dkk1, baslik1, image1),
+                    buildBlogCardView(dkk2, baslik2, image2),
+                    buildBlogCardView(dkk3, baslik3, image3),
+                    buildBlogCardView(dkk4, baslik4, image4),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container builHomeRow(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.09,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(35.0),
+          topRight: Radius.circular(35.0),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.home, color: Colors.pink),
           ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              alignment: Alignment.topLeft,
-              child: GridView.count(
-                crossAxisCount: 1,
-                primary: false,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.all(10),
-                children: [
-                  buildBlogCardView(dkk1, baslik1, image1),
-                  buildBlogCardView(dkk2, baslik2, image2),
-                  buildBlogCardView(dkk3, baslik3, image3),
-                  buildBlogCardView(dkk4, baslik4, image4),
-                ],
-              ),
-            ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BilimeKatkiPage()));
+            },
+            icon: Icon(Icons.science_outlined, color: Colors.pink),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.3,
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ToplulukPage()));
+            },
+            icon: Icon(Icons.person_add_outlined, color: Colors.pink),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomePage_Person()));
+            },
+            icon: Icon(Icons.person_outline, color: Colors.pink),
           ),
         ],
       ),
@@ -366,6 +428,156 @@ Container buildMidCardView(psikologAvatar, history, otherPsikologName, color) {
             child: Text('Henüz takip ettiğin bir piskolog yok.'),
           ),
         ],
+      ),
+    ),
+  );
+}
+
+SizedBox buildPsikolookButton(context) {
+  return SizedBox(
+    height: 100,
+    width: 150,
+    child: FloatingActionButton(
+      tooltip: 'Psikolook',
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PsikolookPage(),
+            ));
+      },
+      backgroundColor: Colors.transparent, //arka planrengini kaldırdı
+      elevation: 0,
+      child: Image.asset('assets/images/psikolook_logo.png'), //gölgeyi kaldırdı
+    ),
+  );
+}
+
+AppBar buildAppBar(context) {
+  return AppBar(
+    iconTheme: const IconThemeData(color: Colors.black),
+    backgroundColor: Color.fromARGB(255, 255, 204, 204),
+    elevation: 0,
+    actions: <Widget>[
+      FloatingActionButton.small(
+        child: Image.asset('assets/images/message_icon.png', fit: BoxFit.cover),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        tooltip: 'Mesajlar',
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const MessagePage()));
+        },
+      ),
+    ],
+  );
+}
+
+Container buildDrawer(context) {
+  return Container(
+    margin: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * 0.05,
+        bottom: MediaQuery.of(context).size.height * 0.4),
+    child: ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10),
+        topRight: Radius.circular(10),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10),
+      ),
+      child: Drawer(
+        elevation: 0,
+        width: MediaQuery.of(context).size.width * 0.28,
+        backgroundColor: Colors.black,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.close),
+              color: Colors.white,
+              iconSize: 34,
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HakkimizdaPage(),
+                    ));
+              },
+              child: Text(
+                'HAKKIMIZDA',
+                style: TextStyle(
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IletisimPage(),
+                    ));
+              },
+              child: Text(
+                'DESTEK',
+                style: TextStyle(
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IletisimPage(),
+                    ));
+              },
+              child: Text(
+                'İLETİŞİM',
+                style: TextStyle(
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                /* Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => kvkk(),
+                          )); */
+              },
+              child: Text(
+                'KVKK',
+                style: TextStyle(
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CikisYapPage()),
+                );
+              },
+              child: Text(
+                'Çıkış Yap',
+                style: TextStyle(
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
