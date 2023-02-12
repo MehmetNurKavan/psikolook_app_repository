@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/login/PsikologForgetPassword.dart';
 import 'package:psikolook_anasayfa/view/home/login/psikologSingInPhoneNumber.dart';
 import 'package:psikolook_anasayfa/view/home/login/signUpPage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import '../psikologHome/psikologKısmıIskeleti.dart';
 
 class PsikologSignInPage extends StatefulWidget {

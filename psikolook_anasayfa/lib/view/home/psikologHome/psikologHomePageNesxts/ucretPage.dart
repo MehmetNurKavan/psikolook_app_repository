@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class ucretpage extends StatefulWidget {
   const ucretpage({super.key});
@@ -16,92 +14,107 @@ class _ucretpageState extends State<ucretpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
-      body: SingleChildScrollView(
-        primary: false,
-        child: Padding(
-          padding: const EdgeInsets.all(22.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    FloatingActionButton.small(
-                      onPressed: () => Navigator.of(context).pop(),
-                      tooltip: 'geri',
-                      child: Icon(Icons.arrow_back_ios_new, size: 30),
-                      elevation: 0,
-                      backgroundColor: Color(0xFF5CE1E6),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(
-                    'BURAYI SADECE ÜCRETLİ OLARAK ÇALIŞANLAR KULLANACAKTIR, ÖĞRENCİLERE HERHANGİ BİR ÜCRET ÖDEMESİ YAPILMAYACAKTIR',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'PSİKOLOOK HESABI',
-                      style: TextStyle(color: Color(0xFFFF0390), fontSize: 14),
-                    ),
-                    SizedBox(height: 10),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: buildParayiAktarinCard(context),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(width: 30, height: 30),
-                        Text(
-                          'SEANS ÜCRETİNİZ',
-                          style:
-                              TextStyle(color: Color(0xFFFF0390), fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    buildSeansUcretiCard(1),
-                    Text(
-                      'Psikolook Psikolog tanıtım bedeli olarak aldığınız ücretten %20 komisyon keser.',
-                      style: TextStyle(
-                        fontSize: 10,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.decal,
+            colors: [
+              Color.fromARGB(255, 255, 236, 241),
+              Color.fromARGB(255, 254, 243, 244),
+              Color.fromARGB(255, 255, 248, 245),
+              Color.fromARGB(255, 255, 252, 247),
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          primary: false,
+          child: Padding(
+            padding: const EdgeInsets.all(22.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      FloatingActionButton.small(
+                        onPressed: () => Navigator.of(context).pop(),
+                        tooltip: 'geri',
+                        child: const Icon(Icons.arrow_back_ios_new, size: 30),
+                        elevation: 0,
+                        backgroundColor: Colors.black,
                       ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: const Text(
+                      'BURAYI SADECE ÜCRETLİ OLARAK ÇALIŞANLAR KULLANACAKTIR, ÖĞRENCİLERE HERHANGİ BİR ÜCRET ÖDEMESİ YAPILMAYACAKTIR',
+                      textAlign: TextAlign.center,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              Color(0xFF5CE1E6),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(22.0),
+                  ),
+                  Column(
+                    children: [
+                      const Text(
+                        'PSİKOLOOK HESABI',
+                        style:
+                            TextStyle(color: Color(0xFFFF0390), fontSize: 14),
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: buildParayiAktarinCard(context),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 30, height: 30),
+                          const Text(
+                            'SEANS ÜCRETİNİZ',
+                            style: TextStyle(
+                                color: Color(0xFFFF0390), fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      buildSeansUcretiCard(1),
+                      const Text(
+                        'Psikolook Psikolog tanıtım bedeli olarak aldığınız ücretten %20 komisyon keser.',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.black,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(22.0),
+                                ),
                               ),
                             ),
+                            onPressed: () {},
+                            child: const Text('TAMAM'),
                           ),
-                          onPressed: () {},
-                          child: Text('TAMAM'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -116,7 +129,7 @@ class _ucretpageState extends State<ucretpage> {
         children: [
           TextButton(
             onPressed: () {},
-            child: Text(
+            child: const Text(
               'Banka Hesap Bilgilerini Gir',
               style: TextStyle(
                   color: Colors.black,
@@ -127,24 +140,41 @@ class _ucretpageState extends State<ucretpage> {
           SizedBox(
             height: 50,
             width: MediaQuery.of(context).size.width * 0.55,
-            child: TextField(
-              keyboardType: TextInputType.name,
-              style: TextStyle(color: Colors.white),
-              cursorColor: Colors.white,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                hintText: "Buraya iban'ininzi giriniz",
-                filled: true,
-                fillColor: Color(0xFFFF0390),
-                suffixStyle: TextStyle(color: Colors.white),
-                hintStyle: TextStyle(color: Colors.white70),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
-                  ),
-                  borderSide: BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  tileMode: TileMode.decal,
+                  colors: [
+                    Color.fromARGB(255, 248, 229, 228),
+                    Color.fromARGB(255, 252, 246, 238),
+                    Color.fromARGB(255, 252, 246, 238),
+                    Color.fromARGB(255, 252, 246, 238),
+                    Color.fromARGB(255, 248, 229, 228),
+                  ],
+                ),
+              ),
+              child: const TextField(
+                keyboardType: TextInputType.name,
+                style: TextStyle(color: Colors.black),
+                cursorColor: Colors.black,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: "Buraya iban'ininzi giriniz",
+/*                 filled: true,
+                  fillColor: Color(0xFFFF0390), */
+                  suffixStyle: TextStyle(color: Colors.black),
+                  hintStyle: TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
                   ),
                 ),
               ),
@@ -153,7 +183,7 @@ class _ucretpageState extends State<ucretpage> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                Color(0xFF5CE1E6),
+                Colors.black,
               ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
@@ -162,7 +192,7 @@ class _ucretpageState extends State<ucretpage> {
               ),
             ),
             onPressed: () {},
-            child: Text('PARAYI AKTARIN'),
+            child: const Text('PARAYI AKTARIN'),
           ),
         ],
       ),
@@ -180,31 +210,47 @@ class _ucretpageState extends State<ucretpage> {
         children: [
           Text(
             '$seansAdedi SEANS',
-            style: TextStyle(color: Color(0xFF5CE1E6), fontSize: 25),
+            style: const TextStyle(color: Colors.black, fontSize: 25),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.065,
               width: MediaQuery.of(context).size.width * 0.5,
-              child: TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.white),
-                cursorColor: Colors.white,
-                decoration: InputDecoration(
-                  suffixText: 'TL',
-                  filled: true,
-                  fillColor: Color(0xFFFF0390),
-                  hintText: 'Buraya değer giriniz',
-                  hintStyle: TextStyle(color: Colors.white70),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
-                    ),
-                    borderSide: BorderSide(
-                      width: 0,
-                      style: BorderStyle.none,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    tileMode: TileMode.decal,
+                    colors: [
+                      Color.fromARGB(255, 248, 229, 228),
+                      Color.fromARGB(255, 252, 246, 238),
+                      Color.fromARGB(255, 252, 246, 238),
+                      Color.fromARGB(255, 252, 246, 238),
+                      Color.fromARGB(255, 248, 229, 228),
+                    ],
+                  ),
+                ),
+                child: const TextField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.black),
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    suffixText: 'TL',
+                    suffixIconColor: Colors.black,
+                    hintText: 'Buraya değer giriniz',
+                    hintStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
                     ),
                   ),
                 ),

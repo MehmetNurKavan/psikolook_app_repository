@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/utils/customColors.dart';
 import 'package:psikolook_anasayfa/utils/customTextStyle.dart';
+import 'package:psikolook_anasayfa/view/home/blog/do_share.dart';
 
 class SnapPage extends StatefulWidget {
   const SnapPage({super.key});
@@ -13,22 +14,36 @@ class _SnapPageState extends State<SnapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 81.7,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.decal,
+            colors: [
+              Color.fromARGB(255, 255, 236, 241),
+              Color.fromARGB(255, 254, 243, 244),
+              Color.fromARGB(255, 255, 248, 245),
+              Color.fromARGB(255, 255, 252, 247),
+            ],
           ),
-          barField(),
-          SizedBox(
-            height: 81.7,
-          ),
-          snapCardField(),
-          SizedBox(
-            height: 24,
-          ),
-          hearthIcon(),
-        ],
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 81.7,
+            ),
+            barField(),
+            const SizedBox(
+              height: 81.7,
+            ),
+            snapCardField(),
+            const SizedBox(
+              height: 24,
+            ),
+            hearthIcon(),
+          ],
+        ),
       ),
     );
   }
@@ -43,11 +58,11 @@ class _SnapPageState extends State<SnapPage> {
             scrollDirection: Axis.horizontal,
             children: [
               shareCard(),
-              SizedBox(
+              const SizedBox(
                 width: 18,
               ),
               shareCard(),
-              SizedBox(
+              const SizedBox(
                 width: 18,
               ),
               shareCard(),
@@ -59,6 +74,7 @@ class _SnapPageState extends State<SnapPage> {
 //close icon içeriyor
   Row barField() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         closeIconButton(),
       ],
@@ -76,30 +92,31 @@ class _SnapPageState extends State<SnapPage> {
             padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
-                Icon(Icons.person, color: CustomColors.hearthColor, size: 34),
-                SizedBox(
+                const Icon(Icons.person,
+                    color: CustomColors.hearthColor, size: 34),
+                const SizedBox(
                   width: 10,
                 ),
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       "Psikolook",
                       style: textStyle.userNameTextStyle,
                     ),
-                    Text(
+                    const Text(
                       "1 hours ago",
                       style: textStyle.onlineTextStyle,
                     )
                   ],
                 ),
-                SizedBox(width: 120),
+                const SizedBox(width: 120),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.keyboard_arrow_down_sharp))
+                    icon: const Icon(Icons.keyboard_arrow_down_sharp))
               ],
             ),
           ),
-          Text(
+          const Text(
             textAlign: TextAlign.center,
             "Henüz hiç paylaşımın yok,\nhadi paylaşım yaparak kalplere dokun",
             style: textStyle.cardTextStyle,
@@ -116,7 +133,10 @@ class _SnapPageState extends State<SnapPage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(35.5), color: Colors.white),
       child: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DoShare()));
+        },
         icon: Image.asset('assets/images/heart.png'),
       ),
     );
@@ -125,20 +145,14 @@ class _SnapPageState extends State<SnapPage> {
   Padding closeIconButton() {
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 45),
-      child: Container(
-          height: 45,
-          width: 45,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: CustomColors.closeIconButtonColor),
-          child: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.close),
-            color: Colors.white,
-            iconSize: 22,
-          )),
+      child: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.close),
+        color: Colors.black,
+        iconSize: 35,
+      ),
     );
   }
 }

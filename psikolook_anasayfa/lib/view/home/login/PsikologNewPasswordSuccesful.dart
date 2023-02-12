@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import '../psikologHome/psikologKısmıIskeleti.dart';
 
 class PsikologNewPasswordSuccesfullPage extends StatefulWidget {
