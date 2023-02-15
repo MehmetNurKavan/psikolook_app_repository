@@ -77,7 +77,7 @@ class _MeetingPageState extends State<MeetingPage> {
                           const SizedBox(height: 100),
                           TextField(
                             keyboardType: TextInputType.none,
-                            textInputAction: TextInputAction.none,
+                            textInputAction: TextInputAction.done,
                             onChanged: (String deger) {
                               if (deger.length > 3) {
                                 print(deger);

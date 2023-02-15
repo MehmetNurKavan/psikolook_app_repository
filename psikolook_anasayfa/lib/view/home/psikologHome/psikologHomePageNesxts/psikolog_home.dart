@@ -5,10 +5,11 @@ import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/palnlanPage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_psikolook_page.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/seansGecmisiPAge.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/ucretPage.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
-import '../../forum/very_soon1.dart';
+import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
 class psikolog_page extends StatefulWidget {
   const psikolog_page({super.key});
@@ -83,7 +84,7 @@ class _psikolog_pageState extends State<psikolog_page> {
               buildRow(
                 Image.asset('assets/images/forum_icon.png'),
                 'Psikolog Formu',
-                const very_soon1(),
+                const CokYakindaPage(),
                 Image.asset('assets/images/hand2_icon.png'),
                 'Seans Geçmişiniz',
                 const SeansGecmisiPAge(),
@@ -174,11 +175,11 @@ class _psikolog_pageState extends State<psikolog_page> {
       child: FloatingActionButton(
         tooltip: 'Psikolook',
         onPressed: () {
-          /* Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ,
-            )); */
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PsikologPsikolookIcon(),
+              ));
         },
         backgroundColor: Colors.transparent, //arka planrengini kaldırdı
         elevation: 0,
@@ -253,7 +254,7 @@ class _psikolog_pageState extends State<psikolog_page> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CokYakindaPage()));
+                        builder: (context) => const ToplulukPage()));
               },
               icon: Image.asset('assets/images/perosn_two_icon.png'),
               iconSize: 40,

@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_meeting_page.dart';
 
 class PlanPage extends StatefulWidget {
   const PlanPage({super.key});
@@ -11,6 +10,8 @@ class PlanPage extends StatefulWidget {
 }
 
 class _PlanPageState extends State<PlanPage> {
+  bool isNotVisibleButton = false;
+  bool isVisibleButton = true;
   String tarih = 'Tarih:';
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,26 +139,28 @@ class _PlanPageState extends State<PlanPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.06,
                   width: MediaQuery.of(context).size.width * 0.5,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Colors.white,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 217, 167,
-                          179), //eklenen linkin rengi mavi olarak değişip link eklenildi olucak
-                      hintText: 'Zoom Linki Ekle',
-                      hintStyle: TextStyle(color: Colors.white),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
+                  //border: OutlineInputBorder(
+                  //borderRadius: BorderRadius.all(
+                  //  Radius.circular(30),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 217, 167, 179),
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(22.0))),
+                      elevation: 0,
                     ),
+                    child: Text(
+                      'Zoom Linki Ekle',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const PsikologMeetingPage()));
+                    },
                   ),
                 ),
               ],

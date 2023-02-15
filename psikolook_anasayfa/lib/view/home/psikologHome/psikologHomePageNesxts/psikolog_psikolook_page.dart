@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/meeting_page.dart';
 import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
-import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/palnlanPage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
 import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
+import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
-class homePage extends StatefulWidget {
-  const homePage({super.key});
+class PsikologPsikolookIcon extends StatefulWidget {
+  const PsikologPsikolookIcon({super.key});
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<PsikologPsikolookIcon> createState() => _PsikologPsikolookIconState();
 }
 
-class _homePageState extends State<homePage> {
+class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
   bool isVisible = true;
   bool isNotVisible = false;
   String dkk1 = '8';
@@ -29,15 +31,14 @@ class _homePageState extends State<homePage> {
   String baslik2 = 'HAYVAN BESLEMENİN ÖNEMİ';
   String baslik3 = 'DOĞA';
   String baslik4 = 'ÇOCUK GELİŞİMİNDE OYUNUN ÖNEMİ';
-  String psikologName = 'Henüz Psikologun Yok';
-  String psikologText =
-      'Sana uygun psikologu bulman için aşağıdaki Psikolook logosuna bas';
+  String psikologName = 'Uzman Klinik Psikolog Aslı Kaya';
+  String enyakinSeansTarih = '04.03.2023';
+  String enyakinSeansSaat = '11.00';
   String psikologImage = 'assets/images/woman_picture.png';
   String history = '8 Nisan';
   String otherPsikologName = 'Psikolook';
   String psikologAvatar = 'assets/images/woman_picture.png';
 
-  String mavi = 'Color.fromARGB(255, 92, 225, 230),';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +72,8 @@ class _homePageState extends State<homePage> {
               visible: isVisible,
               child: Expanded(
                 flex: 5,
-                child: buildMeetingCardView(
-                    context, psikologName, psikologText, psikologImage),
+                child: buildTopCardView(context, psikologName,
+                    enyakinSeansTarih, enyakinSeansSaat, psikologImage),
               ),
             ),
             Visibility(
@@ -196,7 +197,8 @@ class _homePageState extends State<homePage> {
   }
 }
 
-Card buildMeetingCardView(context, psikologName, psikologText, psikologImage) {
+Card buildTopCardView(
+    context, psikologName, enYakinSeansTarih, enYakinSeansSaat, psikologImage) {
   return Card(
     elevation: 0,
     color: const Color.fromARGB(255, 251, 249, 249),
@@ -274,43 +276,41 @@ Card buildMeetingCardView(context, psikologName, psikologText, psikologImage) {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
-                    child: Text(
-                      psikologText,
-                      style: const TextStyle(
-                          color: Colors.black45, fontWeight: FontWeight.w400),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlanPage()));
+                            },
+                            child: Text(
+                              'En Yakın Seans Tarihiniz:',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
+                              ),
+                            )),
+                        Text(
+                          'Tarih: $enYakinSeansTarih',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black45,
+                          ),
+                        ),
+                        Text(
+                          'Saat: $enYakinSeansSaat',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black45,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      gradient: const LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.bottomRight,
-                        //tileMode: TileMode.decal,
-                        colors: [
-                          Color.fromARGB(255, 221, 240, 242),
-                          Color.fromARGB(255, 191, 222, 228),
-                          Color.fromARGB(255, 164, 206, 215),
-                        ],
-                      ),
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: TextButton(
-                      child: const Text('Görüşme Linki',
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400)),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MeetingPage()));
-                      },
-                    ),
-                  )
                 ],
               ),
             ],
@@ -511,8 +511,10 @@ Container buildButtonNavigatorBar(BuildContext context) {
         children: [
           IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const homePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const psikolog_page()));
             },
             icon: Image.asset('assets/images/home_icon.png'),
             iconSize: 40,
@@ -538,7 +540,7 @@ Container buildButtonNavigatorBar(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const CokYakindaPage()));
+                      builder: (context) => const ToplulukPage()));
             },
             icon: Image.asset('assets/images/perosn_two_icon.png'),
             iconSize: 40,
@@ -548,7 +550,7 @@ Container buildButtonNavigatorBar(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HomePage_Person()));
+                      builder: (context) => const PsikologProfil()));
             },
             icon: Image.asset('assets/images/person_icon.png'),
             iconSize: 40,

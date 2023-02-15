@@ -130,7 +130,7 @@ class _ucretpageState extends State<ucretpage> {
           TextButton(
             onPressed: () {},
             child: const Text(
-              'Banka Hesap Bilgilerini Gir',
+              'Banka Hesap Bilgilerini Gör',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
@@ -162,9 +162,11 @@ class _ucretpageState extends State<ucretpage> {
                 cursorColor: Colors.black,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  hintText: "Buraya iban'ininzi giriniz",
+                  //hintText: "Buraya iban'ininzi giriniz",
 /*                 filled: true,
                   fillColor: Color(0xFFFF0390), */
+                  suffixText: 'TL',
+                  suffixIconColor: Colors.black,
                   suffixStyle: TextStyle(color: Colors.black),
                   hintStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(

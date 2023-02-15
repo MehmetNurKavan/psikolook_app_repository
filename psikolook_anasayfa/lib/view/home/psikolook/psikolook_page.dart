@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/bilimekatki/bilime_katki_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/buy_sally_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/referansPage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/profil_read.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
 class PsikolookPage extends StatefulWidget {
@@ -199,7 +197,12 @@ class _PsikolookPageState extends State<PsikolookPage> {
                       textStyle: const TextStyle(fontSize: 15),
                     ),
                     child: const Text('Profili İncele'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProfilRead()));
+                    },
                   ),
                 ),
                 /* TextButton(
@@ -268,7 +271,7 @@ Container builHomeRow(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const CokYakindaPage()));
+                      builder: (context) => const ToplulukPage()));
             },
             icon: Image.asset('assets/images/perosn_two_icon.png'),
             iconSize: 40,
