@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
+import 'package:psikolook_anasayfa/view/home/home_page/blog_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/meeting_page.dart';
 import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
 import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
 import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
+import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -87,10 +89,10 @@ class _homePageState extends State<homePage> {
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.all(10),
                     children: [
-                      buildBlogCardView(dkk1, baslik1, image1),
-                      buildBlogCardView(dkk2, baslik2, image2),
-                      buildBlogCardView(dkk3, baslik3, image3),
-                      buildBlogCardView(dkk4, baslik4, image4),
+                      buildBlogCardView(context, dkk1, baslik1, image1),
+                      buildBlogCardView(context, dkk2, baslik2, image2),
+                      buildBlogCardView(context, dkk3, baslik3, image3),
+                      buildBlogCardView(context, dkk4, baslik4, image4),
                     ],
                   ),
                 ),
@@ -135,10 +137,10 @@ class _homePageState extends State<homePage> {
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.all(10),
                     children: [
-                      buildBlogCardView(dkk1, baslik1, image1),
-                      buildBlogCardView(dkk2, baslik2, image2),
-                      buildBlogCardView(dkk3, baslik3, image3),
-                      buildBlogCardView(dkk4, baslik4, image4),
+                      buildBlogCardView(context, dkk1, baslik1, image1),
+                      buildBlogCardView(context, dkk2, baslik2, image2),
+                      buildBlogCardView(context, dkk3, baslik3, image3),
+                      buildBlogCardView(context, dkk4, baslik4, image4),
                     ],
                   ),
                 ),
@@ -180,10 +182,10 @@ class _homePageState extends State<homePage> {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.all(10),
                   children: [
-                    buildBlogCardView(dkk1, baslik1, image1),
-                    buildBlogCardView(dkk2, baslik2, image2),
-                    buildBlogCardView(dkk3, baslik3, image3),
-                    buildBlogCardView(dkk4, baslik4, image4),
+                    buildBlogCardView(context, dkk1, baslik1, image1),
+                    buildBlogCardView(context, dkk2, baslik2, image2),
+                    buildBlogCardView(context, dkk3, baslik3, image3),
+                    buildBlogCardView(context, dkk4, baslik4, image4),
                   ],
                 ),
               ),
@@ -201,6 +203,7 @@ Card buildMeetingCardView(context, psikologName, psikologText, psikologImage) {
     elevation: 0,
     color: const Color.fromARGB(255, 251, 249, 249),
     shape: RoundedRectangleBorder(
+      
       borderRadius: BorderRadius.circular(20.0),
       side: const BorderSide(
           width: 1.5, color: Color.fromARGB(255, 201, 201, 201)),
@@ -321,56 +324,66 @@ Card buildMeetingCardView(context, psikologName, psikologText, psikologImage) {
   );
 }
 
-Card buildBlogCardView(dkk, baslik, image) {
-  return Card(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Container(
-      //width: 165, //bunun sayesinde sabitledik mükk oldu
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
-        image: DecorationImage(
-          image: AssetImage(image),
-          fit: BoxFit.cover,
+InkWell buildBlogCardView(context, dkk, baslik, image) {
+  return InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BlogPage(),
         ),
+      );
+    },
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SizedBox(
-              height: 50,
-              child: SingleChildScrollView(
-                child: Text(
-                  baslik,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.0,
+      child: Container(
+        //width: 165, //bunun sayesinde sabitledik mükk oldu
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.0),
+          image: DecorationImage(
+            image: AssetImage(image),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: 50,
+                child: SingleChildScrollView(
+                  child: Text(
+                    baslik,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
+                    ),
+                    //maxLines: 3,
                   ),
-                  //maxLines: 3,
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  '$dkk dkk',
-                  style: const TextStyle(
-                    color: Colors.white70,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    '$dkk dkk',
+                    style: const TextStyle(
+                      color: Colors.white70,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
         ),
       ),
     ),
@@ -538,7 +551,7 @@ Container buildButtonNavigatorBar(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const CokYakindaPage()));
+                      builder: (context) => const ToplulukPage()));
             },
             icon: Image.asset('assets/images/perosn_two_icon.png'),
             iconSize: 40,

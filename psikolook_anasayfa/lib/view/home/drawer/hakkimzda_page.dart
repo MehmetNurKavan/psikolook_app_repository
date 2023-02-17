@@ -5,6 +5,8 @@ class HakkimizdaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String hakkimizdaText =
+        'Bizler,  psikolojik desteğe ulaşmanın önündeki engelleri kaldırmak ve insanlarda  kendilik farkındalığı oluşturmak amacıyla çalışmalar yapan bir grup üniversite öğrencisiyiz. Bu platformu kurmaktaki en büyük motivasyonumuz toplumsal fayda sağlamak ve kalplere dokunabilmektir. Çabamızı deniz yıldızı hikayesine benzetiyoruz. Bu hikayede sahilde yürüyen bir adam bir çocuğun kıyı boyunca uzanmış denizyıldızlarını tek tek denize fırlatmaya çalıştığını görür. Fakat adam çocuğa kıyıda  binlerce deniz yıldızı olduğunu, suya birkaç deniz yıldızı fırlatmanın bir şey değiştirmeyeceğini söylediğinde çocuk son attığı deniz yıldızını göstererek "Ama onun için çok şey değişti," der.  Bizler de psikolojik destek almakta zorluk yaşayan bir kişiye bile yardımcı olmanın, o kişinin hayatında çok şey değiştirebileceğine inanıyoruz. Tüm denizyıldızlarına yardım edebilmek ümidiyle...';
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
@@ -31,11 +33,11 @@ class HakkimizdaPage extends StatelessWidget {
                     FloatingActionButton.small(
                       onPressed: () => Navigator.pop(context),
                       tooltip: 'Geri',
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.transparent,
                       elevation: 0,
                       child: const Icon(
                         Icons.arrow_back_ios_new,
-                        color: Colors.pink,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 100),
@@ -43,7 +45,7 @@ class HakkimizdaPage extends StatelessWidget {
                       child: Text(
                         'HAKKIMIZDA',
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.black87,
                           fontSize: 20,
                           decoration: TextDecoration.none,
                           //altındaki çizgiyi kaldırdı
@@ -59,13 +61,11 @@ class HakkimizdaPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: const Padding(
+                    child: Padding(
                       padding: EdgeInsets.all(30.0),
                       child: Text(
-                        'Bizler,  psikolojik desteğe ulaşmanın önündeki engelleri kaldırmak ve insanlarda  kendilik farkındalığı oluşturmak amacıyla çalışmalar yapan bir grup üniversite öğrencisiyiz. Bu platformu kurmaktaki en büyük motivasyonumuz toplumsal fayda sağlamak ve kalplere dokunabilmektir. Çabamızı deniz yıldızı hikayesine benzetiyoruz. Bu hikayede sahilde yürüyen bir adam bir çocuğun kıyı boyunca uzanmış denizyıldızlarını tek tek denize fırlatmaya çalıştığını görür. Fakat adam çocuğa kıyıda  binlerce deniz yıldızı olduğunu, suya birkaç deniz yıldızı fırlatmanın bir şey değiştirmeyeceğini söylediğinde çocuk son attığı deniz yıldızını göstererek "Ama onun için çok şey değişti," der.  Bizler de psikolojik destek almakta zorluk yaşayan bir kişiye bile yardımcı olmanın, o kişinin hayatında çok şey değiştirebileceğine inanıyoruz. Tüm denizyıldızlarına yardım edebilmek ümidiyle...',
-                        style: TextStyle(
-                          fontSize: 22,
-                        ),
+                        hakkimizdaText,
+                        style: TextStyle(fontSize: 20, color: Colors.black45),
                       ),
                     ),
                   ),
