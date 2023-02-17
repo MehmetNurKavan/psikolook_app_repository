@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/login/secondPage.dart';
 
@@ -10,23 +9,24 @@ class sayfa extends StatefulWidget {
 }
 
 class _sayfaState extends State<sayfa> {
-  
-void initState() {
+  void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => secondPage()));
+          context, MaterialPageRoute(builder: (context) => const secondPage()));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(image:DecorationImage(image: AssetImage("assets/images/login1.png"),fit: BoxFit.fill)),
-          
-        )
-      ),
+          body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/login1.png"),
+                fit: BoxFit.fill)),
+      )),
     );
   }
 }

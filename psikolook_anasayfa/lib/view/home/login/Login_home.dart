@@ -9,6 +9,7 @@ class LoginHomePage extends StatefulWidget {
   @override
   State<LoginHomePage> createState() => _LoginHomePageState();
 }
+
 class _LoginHomePageState extends State<LoginHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,10 @@ class _LoginHomePageState extends State<LoginHomePage> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/loginPageBackground.png"),fit: BoxFit.fill)
-         ),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/loginPageBackground.png"),
+                  fit: BoxFit.fill)),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -34,18 +36,16 @@ class _LoginHomePageState extends State<LoginHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          decoration:BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                                gradient: LinearGradient(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              gradient: const LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: [
-                                     Color.fromARGB(255, 201, 139, 163),
-                                     Color.fromARGB(255, 202, 141, 164),
-                                     Color.fromARGB(255, 248, 234, 241),
-                                  ]
-                                  )
-                              ),
+                                    Color.fromARGB(255, 201, 139, 163),
+                                    Color.fromARGB(255, 202, 141, 164),
+                                    Color.fromARGB(255, 248, 234, 241),
+                                  ])),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shadowColor: Colors.transparent,
@@ -54,35 +54,36 @@ class _LoginHomePageState extends State<LoginHomePage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              textStyle: TextStyle(fontSize: 24),
+                              textStyle: const TextStyle(fontSize: 24),
                             ),
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignInPage()));
+                                      builder: (context) =>
+                                          const SignInPage()));
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
+                            child: const Padding(
+                              padding: EdgeInsets.only(
                                   left: 30, right: 30, top: 13, bottom: 13),
-                              child: Text("Giriş Yap",style: TextStyle(color: Colors.white),),
-                              
+                              child: Text(
+                                "Giriş Yap",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
                         Container(
-                          decoration:BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                                gradient: LinearGradient(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              gradient: const LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: [
-                                     Color.fromARGB(255, 110, 174, 204),
-                                     Color.fromARGB(255, 209, 231, 249),
-                                     Color.fromARGB(255, 224, 242, 244)
-                                  ]
-                                  )
-                              ),
+                                    Color.fromARGB(255, 110, 174, 204),
+                                    Color.fromARGB(255, 209, 231, 249),
+                                    Color.fromARGB(255, 224, 242, 244)
+                                  ])),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shadowColor: Colors.transparent,
@@ -91,19 +92,22 @@ class _LoginHomePageState extends State<LoginHomePage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              textStyle: TextStyle(fontSize: 24),
+                              textStyle: const TextStyle(fontSize: 24),
                             ),
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignUpPage()));
+                                      builder: (context) =>
+                                          const SignUpPage()));
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
+                            child: const Padding(
+                              padding: EdgeInsets.only(
                                   left: 30, right: 30, top: 13, bottom: 13),
-                              child: Text("Kayıt Ol",style: TextStyle(color: Colors.white),),
-                              
+                              child: Text(
+                                "Kayıt Ol",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
@@ -111,41 +115,40 @@ class _LoginHomePageState extends State<LoginHomePage> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
-                      child: Divider(
+                      child: const Divider(
                         color: Colors.black87,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: Container(
-                        decoration:BoxDecoration(
+                        decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                     Color.fromARGB(255, 238, 211, 204),
-                                     Color.fromARGB(255, 250, 242, 232),
-                                     Color.fromARGB(255, 254, 251, 245),
-                                     Color.fromARGB(255, 242, 230, 220),
-                                  ]
-                                  )
-                              ),
+                            gradient: const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color.fromARGB(255, 238, 211, 204),
+                                  Color.fromARGB(255, 250, 242, 232),
+                                  Color.fromARGB(255, 254, 251, 245),
+                                  Color.fromARGB(255, 242, 230, 220),
+                                ])),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shadowColor: Colors.transparent,
-                             backgroundColor: Colors.transparent,
-                             elevation: 0,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            textStyle: TextStyle(fontSize: 18),
+                            textStyle: const TextStyle(fontSize: 18),
                           ),
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PsikologLoginHome()));
+                                    builder: (context) =>
+                                        const PsikologLoginHome()));
                           },
                           child: Padding(
                             padding:
@@ -153,9 +156,10 @@ class _LoginHomePageState extends State<LoginHomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(
+                                const Text(
                                   "Ruh sağlığı çalışanıysan buraya tıkla",
-                                  style: TextStyle(fontSize: 17,color: Colors.black),
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.black),
                                 ),
                                 Image.asset(
                                   "assets/images/ruh_sagligi_Icon.png",

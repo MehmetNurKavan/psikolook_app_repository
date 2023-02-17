@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
-import 'package:psikolook_anasayfa/view/home/login/signUpPage.dart';
-
-import '../home_page/home_page.dart';
 import 'ForgetPasswordPage.dart';
 
 class SignInPage extends StatefulWidget {
@@ -20,22 +17,18 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin:Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-               Color.fromARGB(255, 255, 235, 240),
-                Color.fromARGB(255, 255, 243, 244),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 254, 248),
-                Color.fromARGB(255, 255, 254, 248),
-              ]
-
-            )
-          ),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+              Color.fromARGB(255, 255, 235, 240),
+              Color.fromARGB(255, 255, 243, 244),
+              Color.fromARGB(255, 255, 249, 246),
+              Color.fromARGB(255, 255, 254, 248),
+              Color.fromARGB(255, 255, 254, 248),
+            ])),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -47,7 +40,7 @@ class _SignInPageState extends State<SignInPage> {
                     FloatingActionButton.small(
                         elevation: 0,
                         backgroundColor: Colors.black,
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back_ios_new,
                         ),
                         onPressed: () {
@@ -61,26 +54,26 @@ class _SignInPageState extends State<SignInPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10.0,
                     ),
-                    Text("E-Mail:",
-                        style:
-                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                    const Text("E-Mail:",
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Center(
+                    const Center(
                       child: TextField(
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 0, style: BorderStyle.none),
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             hintText: "E-Mail Adresiniz",
@@ -93,12 +86,12 @@ class _SignInPageState extends State<SignInPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10.0,
                     ),
-                    Text("Şifre:",
-                        style:
-                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                    const Text("Şifre:",
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -121,9 +114,9 @@ class _SignInPageState extends State<SignInPage> {
                                 icon: Icon(_obscureText
                                     ? Icons.visibility
                                     : Icons.visibility_off)),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 0, style: BorderStyle.none),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             hintText: "Şifreniz",
@@ -142,9 +135,10 @@ class _SignInPageState extends State<SignInPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignInWithPhonePage()));
+                              builder: (context) =>
+                                  const SignInWithPhonePage()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Telefon Numarasıyla Giriş Yap",
                       style: TextStyle(
                           color: Colors.black,
@@ -162,7 +156,7 @@ class _SignInPageState extends State<SignInPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            textStyle: TextStyle(fontSize: 24),
+                            textStyle: const TextStyle(fontSize: 24),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -170,8 +164,8 @@ class _SignInPageState extends State<SignInPage> {
                                 MaterialPageRoute(
                                     builder: (context) => const homePage()));
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
+                          child: const Padding(
+                            padding: EdgeInsets.only(
                                 left: 30, right: 30, top: 13, bottom: 13),
                             child: Text("Giriş Yap"),
                           ),
@@ -184,7 +178,7 @@ class _SignInPageState extends State<SignInPage> {
                                       builder: (context) =>
                                           const ForgetPasswordPage()));
                             },
-                            child: Text("Şifremi Unuttum",
+                            child: const Text("Şifremi Unuttum",
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w400))),

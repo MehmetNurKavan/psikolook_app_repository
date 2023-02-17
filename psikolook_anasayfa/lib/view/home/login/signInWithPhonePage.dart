@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/home_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologK%C4%B1sm%C4%B1Iskeleti.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
-
 import 'ForgetPasswordPage.dart';
 
 class SignInWithPhonePage extends StatefulWidget {
@@ -20,23 +16,20 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
+      backgroundColor: const Color.fromARGB(255, 253, 215, 226),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin:Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 255, 235, 240),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 254, 248),
-                Color.fromARGB(255, 255, 254, 248),
-              ]
-
-            )
-          ),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+              Color.fromARGB(255, 255, 235, 240),
+              Color.fromARGB(255, 255, 249, 246),
+              Color.fromARGB(255, 255, 249, 246),
+              Color.fromARGB(255, 255, 249, 246),
+              Color.fromARGB(255, 255, 254, 248),
+              Color.fromARGB(255, 255, 254, 248),
+            ])),
         child: Padding(
           padding: const EdgeInsets.only(
               top: 50.0, left: 15, right: 15.0, bottom: 0.0),
@@ -47,7 +40,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                   FloatingActionButton.small(
                       elevation: 0,
                       backgroundColor: Colors.black,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back_ios_new,
                       ),
                       onPressed: () {
@@ -61,10 +54,10 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
-                  Text("Telefon:",
+                  const Text("Telefon:",
                       style:
                           TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                 ],
@@ -72,7 +65,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Center(
+                  const Center(
                     child: TextField(
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
@@ -91,10 +84,10 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10.0,
                   ),
-                  Text("Şifre:",
+                  const Text("Şifre:",
                       style:
                           TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                 ],
@@ -106,17 +99,17 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                     child: TextField(
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText1 = !_obscureText1;
-                                  });
-                                },
-                                color: Colors.black,
-                                icon: Icon(_obscureText1
-                                    ? Icons.visibility
-                                    : Icons.visibility_off)),
-                          border: OutlineInputBorder(
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText1 = !_obscureText1;
+                                });
+                              },
+                              color: Colors.black,
+                              icon: Icon(_obscureText1
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
+                          border: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(width: 0, style: BorderStyle.none),
                               borderRadius:
@@ -139,7 +132,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                         MaterialPageRoute(
                             builder: (context) => const SignInPage()));
                   },
-                  child: Text(
+                  child: const Text(
                     "E-Mail ile Giriş Yap",
                     style: TextStyle(
                         color: Colors.black,
@@ -157,7 +150,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          textStyle: TextStyle(fontSize: 24),
+                          textStyle: const TextStyle(fontSize: 24),
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -165,8 +158,8 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                               MaterialPageRoute(
                                   builder: (context) => const homePage()));
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
+                        child: const Padding(
+                          padding: EdgeInsets.only(
                               left: 30, right: 30, top: 13, bottom: 13),
                           child: Text("Giriş Yap"),
                         ),
@@ -179,7 +172,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                                     builder: (context) =>
                                         const ForgetPasswordPage()));
                           },
-                          child: Text("Şifremi Unuttum",
+                          child: const Text("Şifremi Unuttum",
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w400))),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/login/PsikologForgetPassword.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
-import '../psikolook/psikolook_page.dart';
-
+import 'package:psikolook_anasayfa/view/home/login/psikologSingInPhoneNumber.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 
 class PsikologSignInPage extends StatefulWidget {
   const PsikologSignInPage({super.key});
@@ -18,22 +17,18 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin:Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-               Color.fromARGB(255, 255, 235, 240),
-                Color.fromARGB(255, 255, 243, 244),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 254, 248),
-                Color.fromARGB(255, 255, 254, 248),
-              ]
-
-            )
-          ),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+              Color.fromARGB(255, 255, 235, 240),
+              Color.fromARGB(255, 255, 243, 244),
+              Color.fromARGB(255, 255, 249, 246),
+              Color.fromARGB(255, 255, 254, 248),
+              Color.fromARGB(255, 255, 254, 248),
+            ])),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -45,7 +40,7 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                     FloatingActionButton.small(
                         elevation: 0,
                         backgroundColor: Colors.black,
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back_ios_new,
                         ),
                         onPressed: () {
@@ -59,26 +54,26 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10.0,
                     ),
-                    Text("E-Mail:",
-                        style:
-                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                    const Text("E-Mail:",
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Center(
+                    const Center(
                       child: TextField(
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 0, style: BorderStyle.none),
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             hintText: "E-Mail Adresiniz",
@@ -91,12 +86,12 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10.0,
                     ),
-                    Text("Şifre:",
-                        style:
-                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                    const Text("Şifre:",
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -119,9 +114,9 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                                 icon: Icon(_obscureText
                                     ? Icons.visibility
                                     : Icons.visibility_off)),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 0, style: BorderStyle.none),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             hintText: "Şifreniz",
@@ -140,9 +135,10 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignInWithPhonePage()));
+                              builder: (context) =>
+                                  const PsikologSignInWithPhonePage()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Telefon Numarasıyla Giriş Yap",
                       style: TextStyle(
                           color: Colors.black,
@@ -160,16 +156,17 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            textStyle: TextStyle(fontSize: 24),
+                            textStyle: const TextStyle(fontSize: 24),
                           ),
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const PsikolookPage()));
+                                    builder: (context) =>
+                                        const psikolog_page()));
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
+                          child: const Padding(
+                            padding: EdgeInsets.only(
                                 left: 30, right: 30, top: 13, bottom: 13),
                             child: Text("Giriş Yap"),
                           ),
@@ -182,7 +179,7 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                                       builder: (context) =>
                                           const PsikologForgetPasswordPage()));
                             },
-                            child: Text("Şifremi Unuttum",
+                            child: const Text("Şifremi Unuttum",
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w400))),

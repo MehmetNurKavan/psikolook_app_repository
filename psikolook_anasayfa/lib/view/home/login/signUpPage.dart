@@ -1,7 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/drawer/kvkk_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
-import 'package:psikolook_anasayfa/view/home/login/Login_home.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -18,23 +17,19 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin:Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
                 Color.fromARGB(255, 255, 235, 240),
                 Color.fromARGB(255, 255, 243, 244),
                 Color.fromARGB(255, 255, 249, 246),
                 Color.fromARGB(255, 255, 254, 248),
-                Color.fromARGB(255, 255, 254, 248), 
-              ]
-
-            )
-          ),
+                Color.fromARGB(255, 255, 254, 248),
+              ])),
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 30.0, left: 15, right: 15.0, bottom: 25.0),
@@ -49,13 +44,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height*0.10,
+                        height: MediaQuery.of(context).size.height * 0.10,
                         child: FloatingActionButton.small(
                             elevation: 0,
                             backgroundColor: Colors.black,
-                            
-                            child: Icon(
-                              
+                            child: const Icon(
                               Icons.arrow_back_ios_new,
                             ),
                             onPressed: () {
@@ -69,10 +62,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             padding: const EdgeInsets.only(right: 15.0),
                             child: Image.asset(
                               "assets/images/logo_kucuk.png",
-                              height: MediaQuery.of(context).size.height*0.15,
+                              height: MediaQuery.of(context).size.height * 0.15,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           )
                         ],
@@ -80,7 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Column(
@@ -94,10 +87,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Text(
+                        const Text(
                           "Cinsiyetiniz",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -114,14 +107,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     buildSignUpView(
                         "Öğrenciyseniz Sınıfınız", TextInputType.name),
                     buildPassword("Şifreniz", TextInputType.visiblePassword),
-                  buildPassword(
+                    buildPassword(
                         "Şifrenizi Tekrar Giriniz", TextInputType.name),
-                    
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10.0),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15.0,
                     ),
                     Padding(
@@ -131,14 +122,29 @@ class _SignUpPageState extends State<SignUpPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                             TextButton(onPressed: () {
-                               
-                             }, child: Row(
-                               children: [
-                                 Text("KVKK",style: TextStyle(color: Colors.pink,decoration: TextDecoration.underline,),),
-                                 Text("'yı okudum onaylıyorum",style: TextStyle(color: Colors.pink,)),
-                               ],
-                             )),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const KvkkPage()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      const Text(
+                                        "KVKK",
+                                        style: TextStyle(
+                                          color: Colors.pink,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                      const Text("'yı okudum onaylıyorum",
+                                          style: TextStyle(
+                                            color: Colors.pink,
+                                          )),
+                                    ],
+                                  )),
                               SizedBox(
                                 width: 30,
                                 height: 30,
@@ -164,14 +170,23 @@ class _SignUpPageState extends State<SignUpPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                             TextButton(onPressed: () {
-                               
-                             }, child: Row(
-                               children: [
-                                 Text("Kullanıcı Sözleşmesi",style: TextStyle(color: Colors.pink,decoration: TextDecoration.underline,),),
-                                 Text("ni okudum kabul ediyorum",style: TextStyle(color: Colors.pink,)),
-                               ],
-                             )),
+                              TextButton(
+                                  onPressed: () {},
+                                  child: Row(
+                                    children: [
+                                      const Text(
+                                        "Kullanıcı Sözleşmesi",
+                                        style: TextStyle(
+                                          color: Colors.pink,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                      const Text("ni okudum kabul ediyorum",
+                                          style: TextStyle(
+                                            color: Colors.pink,
+                                          )),
+                                    ],
+                                  )),
                               SizedBox(
                                 width: 30,
                                 height: 30,
@@ -197,7 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -209,7 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            textStyle: TextStyle(fontSize: 24),
+                            textStyle: const TextStyle(fontSize: 24),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -217,8 +232,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 MaterialPageRoute(
                                     builder: (context) => const SignInPage()));
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
+                          child: const Padding(
+                            padding: EdgeInsets.only(
                                 left: 30, right: 30, top: 13, bottom: 13),
                             child: Text("Kayıt Ol"),
                           ),
@@ -241,28 +256,28 @@ class _SignUpPageState extends State<SignUpPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 10.0),
+            const SizedBox(width: 10.0),
             Text(value,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 )),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         TextField(
           keyboardType: _kytp,
           textInputAction: TextInputAction.next,
           decoration: InputDecoration(
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                   borderSide: BorderSide(width: 0, style: BorderStyle.none),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               hintText: value,
               filled: true,
-              fillColor: Color.fromARGB(255, 255, 255, 255)),
+              fillColor: const Color.fromARGB(255, 255, 255, 255)),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         )
       ],
@@ -284,8 +299,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     _value = value!;
                   });
                 }),
-            Text("Kadın"),
-            Icon(Icons.female)
+            const Text("Kadın"),
+            const Icon(Icons.female)
           ],
         ),
         Row(
@@ -299,8 +314,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     _value = value!;
                   });
                 }),
-            Text("Erkek"),
-            Icon(Icons.male)
+            const Text("Erkek"),
+            const Icon(Icons.male)
           ],
         ),
         Row(
@@ -314,28 +329,28 @@ class _SignUpPageState extends State<SignUpPage> {
                     _value = value!;
                   });
                 }),
-            Text("Diğer"),
-            Icon(Icons.transgender)
+            const Text("Diğer"),
+            const Icon(Icons.transgender)
           ],
         )
       ],
     );
   }
-buildPassword(value, _kytp){
 
-return Column(
+  buildPassword(value, _kytp) {
+    return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 10.0),
+            const SizedBox(width: 10.0),
             Text(value,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 )),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         TextField(
@@ -343,29 +358,26 @@ return Column(
           keyboardType: TextInputType.visiblePassword,
           textInputAction: TextInputAction.next,
           decoration: InputDecoration(
-            suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText0 = !_obscureText0;
-                                  });
-                                },
-                                color: Colors.black,
-                                icon: Icon(_obscureText0
-                                    ? Icons.visibility
-                                    : Icons.visibility_off)),
-            
-              border: OutlineInputBorder(
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _obscureText0 = !_obscureText0;
+                    });
+                  },
+                  color: Colors.black,
+                  icon: Icon(
+                      _obscureText0 ? Icons.visibility : Icons.visibility_off)),
+              border: const OutlineInputBorder(
                   borderSide: BorderSide(width: 0, style: BorderStyle.none),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               hintText: value,
               filled: true,
-              fillColor: Color.fromARGB(255, 255, 255, 255)),
+              fillColor: const Color.fromARGB(255, 255, 255, 255)),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         )
       ],
     );
-
-  
-}}
+  }
+}
