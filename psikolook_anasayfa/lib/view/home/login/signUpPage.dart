@@ -14,15 +14,30 @@ class _SignUpPageState extends State<SignUpPage> {
   int _value = 1;
   bool isChecked = false;
   bool isChecked2 = false;
+  bool _obscureText0 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
+      
       body: SingleChildScrollView(
         child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin:Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 255, 235, 240),
+                Color.fromARGB(255, 255, 243, 244),
+                Color.fromARGB(255, 255, 249, 246),
+                Color.fromARGB(255, 255, 254, 248),
+                Color.fromARGB(255, 255, 254, 248), 
+              ]
+
+            )
+          ),
           child: Padding(
             padding: const EdgeInsets.only(
-                top: 25.0, left: 15, right: 15.0, bottom: 25.0),
+                top: 30.0, left: 15, right: 15.0, bottom: 25.0),
             child: Column(
               children: [
                 Padding(
@@ -33,23 +48,28 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FloatingActionButton.small(
-                          elevation: 0,
-                          backgroundColor: Color(0xFFFF0390),
-                          child: Icon(
-                            Icons.arrow_back_ios_new,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.10,
+                        child: FloatingActionButton.small(
+                            elevation: 0,
+                            backgroundColor: Colors.black,
+                            
+                            child: Icon(
+                              
+                              Icons.arrow_back_ios_new,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                      ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 15.0),
                             child: Image.asset(
-                              "assets/images/psikolook-.png",
-                              height: 50,
+                              "assets/images/logo_kucuk.png",
+                              height: MediaQuery.of(context).size.height*0.15,
                             ),
                           ),
                           SizedBox(
@@ -93,18 +113,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         "Öğrenciyseniz Bölümünüz", TextInputType.name),
                     buildSignUpView(
                         "Öğrenciyseniz Sınıfınız", TextInputType.name),
-                    buildSignUpView("Şifreniz", TextInputType.name),
-                    buildSignUpView(
+                    buildPassword("Şifreniz", TextInputType.visiblePassword),
+                  buildPassword(
                         "Şifrenizi Tekrar Giriniz", TextInputType.name),
-                    buildSignUpView("Referans Kodunuz", TextInputType.number),
+                    
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                          "Referans kodunuzu girmeden ücretsiz psikolojik destek alamazsınız,referans kodunuzu henüz bilmiyorsanız uygulamaya giriş yaptıktan sonra da girebilirsiniz",
-                          style: TextStyle(
-                            color: Colors.pink,
-                            fontWeight: FontWeight.bold,
-                          )),
+                      
                     ),
                     SizedBox(
                       height: 15.0,
@@ -116,13 +131,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "KVKK'yı okudum onaylıyorum",
-                                style: TextStyle(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13),
-                              ),
+                             TextButton(onPressed: () {
+                               
+                             }, child: Row(
+                               children: [
+                                 Text("KVKK",style: TextStyle(color: Colors.pink,decoration: TextDecoration.underline,),),
+                                 Text("'yı okudum onaylıyorum",style: TextStyle(color: Colors.pink,)),
+                               ],
+                             )),
                               SizedBox(
                                 width: 30,
                                 height: 30,
@@ -148,13 +164,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Kullanıcı Sözleşmesini okudum kabul ediyorum",
-                                style: TextStyle(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13),
-                              ),
+                             TextButton(onPressed: () {
+                               
+                             }, child: Row(
+                               children: [
+                                 Text("Kullanıcı Sözleşmesi",style: TextStyle(color: Colors.pink,decoration: TextDecoration.underline,),),
+                                 Text("ni okudum kabul ediyorum",style: TextStyle(color: Colors.pink,)),
+                               ],
+                             )),
                               SizedBox(
                                 width: 30,
                                 height: 30,
@@ -188,7 +205,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(92, 225, 230, 100),
+                            backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
@@ -243,7 +260,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               hintText: value,
               filled: true,
-              fillColor: Color(0xFFFEF2F5)),
+              fillColor: Color.fromARGB(255, 255, 255, 255)),
         ),
         SizedBox(
           height: 15,
@@ -259,7 +276,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Row(
           children: [
             Radio(
-                activeColor: Colors.pink,
+                activeColor: Colors.black,
                 value: 1,
                 groupValue: _value,
                 onChanged: (value) {
@@ -274,7 +291,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Row(
           children: [
             Radio(
-                activeColor: Colors.pink,
+                activeColor: Colors.black,
                 value: 2,
                 groupValue: _value,
                 onChanged: (value) {
@@ -289,7 +306,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Row(
           children: [
             Radio(
-                activeColor: Colors.pink,
+                activeColor: Colors.black,
                 value: 3,
                 groupValue: _value,
                 onChanged: (value) {
@@ -304,4 +321,51 @@ class _SignUpPageState extends State<SignUpPage> {
       ],
     );
   }
-}
+buildPassword(value, _kytp){
+
+return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: 10.0),
+            Text(value,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        TextField(
+          obscureText: _obscureText0,
+          keyboardType: TextInputType.visiblePassword,
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText0 = !_obscureText0;
+                                  });
+                                },
+                                color: Colors.black,
+                                icon: Icon(_obscureText0
+                                    ? Icons.visibility
+                                    : Icons.visibility_off)),
+            
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 0, style: BorderStyle.none),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              hintText: value,
+              filled: true,
+              fillColor: Color.fromARGB(255, 255, 255, 255)),
+        ),
+        SizedBox(
+          height: 15,
+        )
+      ],
+    );
+
+  
+}}

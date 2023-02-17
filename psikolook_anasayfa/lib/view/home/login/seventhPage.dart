@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/login/eighthPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/sixthPage.dart';
 
-import 'fourthPage.dart';
 
-class thirdPage extends StatefulWidget {
-  const thirdPage({super.key});
+class SeventhPage extends StatefulWidget {
+  const SeventhPage({super.key});
 
   @override
-  State<thirdPage> createState() => _thirdPageState();
+  State<SeventhPage> createState() => _SeventhPageState();
 }
 
-class _thirdPageState extends State<thirdPage> {
+class _SeventhPageState extends State<SeventhPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +30,7 @@ class _thirdPageState extends State<thirdPage> {
 ),
             onPressed: () {
             Navigator.push(
-            context, MaterialPageRoute(builder: (context) => fourthPage()));
+            context, MaterialPageRoute(builder: (context) => EighthPage()));
           },
           child: Padding(
             padding: const EdgeInsets.only(top:5.0,left: 10,right: 10,bottom:5),
@@ -37,8 +38,8 @@ class _thirdPageState extends State<thirdPage> {
           ),),
         ),
         body: Container(
-          
-           decoration: BoxDecoration(image:DecorationImage(image: AssetImage("assets/images/login3.png"),fit: BoxFit.fill)),
+           
+        decoration: BoxDecoration(image:DecorationImage(image: AssetImage("assets/images/login7.png"),fit: BoxFit.fill)),
         ),
       ),
     );

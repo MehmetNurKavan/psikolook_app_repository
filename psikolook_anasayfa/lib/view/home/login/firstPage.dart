@@ -10,21 +10,22 @@ class sayfa extends StatefulWidget {
 }
 
 class _sayfaState extends State<sayfa> {
+  
+void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => secondPage()));
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
-      body: Center(
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => secondPage()));
-          },
-          child: SizedBox(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 1,
-              child: Image.asset("assets/images/psikolook-.png")),
-        ),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(image:DecorationImage(image: AssetImage("assets/images/login1.png"),fit: BoxFit.fill)),
+          
+        )
       ),
     );
   }

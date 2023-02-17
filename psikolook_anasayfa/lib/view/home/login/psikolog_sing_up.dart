@@ -15,15 +15,30 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
   int _value = 1;
   bool isChecked = false;
   bool isChecked2 = false;
+  bool _obscureText00 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
+      
       body: SingleChildScrollView(
         child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin:Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 255, 235, 240),
+                Color.fromARGB(255, 255, 243, 244),
+                Color.fromARGB(255, 255, 249, 246),
+                Color.fromARGB(255, 255, 254, 248),
+                Color.fromARGB(255, 255, 254, 248), 
+              ]
+
+            )
+          ),
           child: Padding(
             padding: const EdgeInsets.only(
-                top: 25.0, left: 15, right: 15.0, bottom: 25.0),
+                top: 30.0, left: 15, right: 15.0, bottom: 25.0),
             child: Column(
               children: [
                 Padding(
@@ -34,27 +49,28 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FloatingActionButton.small(
-                          elevation: 0,
-                          backgroundColor: Color.fromRGBO(92, 225, 230, 100),
-                          child: Icon(
-                            Icons.arrow_back_ios_new,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const LoginHomePage()));
-                          }),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.10,
+                        child: FloatingActionButton.small(
+                            elevation: 0,
+                            backgroundColor: Colors.black,
+                            
+                            child: Icon(
+                              
+                              Icons.arrow_back_ios_new,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                      ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 15.0),
                             child: Image.asset(
-                              "assets/images/psikolook-.png",
-                              height: 50,
+                              "assets/images/logo_kucuk.png",
+                              height: MediaQuery.of(context).size.height*0.15,
                             ),
                           ),
                           SizedBox(
@@ -90,25 +106,24 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                     ),
                     gender(),
                     buildSignUpView("Telefon", TextInputType.number),
-                    buildSignUpView("Şifreniz", TextInputType.name),
+                    buildPassword("Şifreniz", TextInputType.visiblePassword),
+                  buildPassword(
+                        "Şifrenizi Tekrar Giriniz", TextInputType.name),
+                    
+                        buildSignUpView(
+                        "Yüksek Lisans veya Doktora Öğrencisiyseniz \nOkulunuzun Adı", TextInputType.name),
                     buildSignUpView(
-                        "Yüksek Lisans veya Doktora Öğrencisiyseniz Okulunuzun Adı",
-                        TextInputType.number),
-                    buildSignUpView(
-                        "Çalışıorsanız Çalıştığınız Kurum", TextInputType.name),
-                    buildSignUpView("Ünvanınız", TextInputType.name),
-                    buildSignUpView(
-                      "Diplomanız ya da Öğrenci Olduğunza Kanıtlar Nitelikte Belge",
-                      TextInputType.none,
-                    ),
+                        "Çalışıyorsanız Çalıştığınız Kurum", TextInputType.name),
+                        buildSignUpView(
+                        "Unvanınız", TextInputType.name),
+                         buildSignUpView(
+                        "Diplomanız ya da Öğrenci Belgeniz", TextInputType.name),
+                    
+                    
+                    
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
-                      child:
-                          Text("belgeniz onaylandığında size mail gelecektir",
-                              style: TextStyle(
-                                color: Colors.pink,
-                                fontWeight: FontWeight.bold,
-                              )),
+                      
                     ),
                     SizedBox(
                       height: 15.0,
@@ -116,17 +131,22 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0, right: 10),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                           Text("  Belgeniz onaylandığında ana sayfanızda \n  profiliniz onaylandı yazacaktır",style: TextStyle(color: Colors.pink,fontWeight: FontWeight.bold,),),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "KVKK'yı okudum onaylıyorum",
-                                style: TextStyle(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13),
-                              ),
+                             TextButton(onPressed: () {
+                               
+                             }, 
+                             
+                             child: Row(
+                               children: [
+                                 Text("KVKK",style: TextStyle(color: Colors.pink,decoration: TextDecoration.underline,),),
+                                 Text("'yı okudum onaylıyorum",style: TextStyle(color: Colors.pink,)),
+                               ],
+                             )),
                               SizedBox(
                                 width: 30,
                                 height: 30,
@@ -152,13 +172,15 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Kullanıcı Sözleşmesini okudum kabul ediyorum",
-                                style: TextStyle(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13),
-                              ),
+                             TextButton(onPressed: () {
+                               
+                             }, child: Row(
+                               children: [
+                               
+                                 Text("Kullanıcı Sözleşmesi",style: TextStyle(color: Colors.pink,decoration: TextDecoration.underline,),),
+                                 Text("ni okudum kabul ediyorum",style: TextStyle(color: Colors.pink,)),
+                               ],
+                             )),
                               SizedBox(
                                 width: 30,
                                 height: 30,
@@ -192,7 +214,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(92, 225, 230, 100),
+                            backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
@@ -202,8 +224,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PsikologSignInPage()));
+                                    builder: (context) => const SignInPage()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -212,7 +233,8 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    
                   ],
                 ),
               ],
@@ -230,7 +252,10 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(width: 10.0),
-            Text(value, style: TextStyle(fontSize: 11)),
+            Text(value,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
           ],
         ),
         SizedBox(
@@ -245,7 +270,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               hintText: value,
               filled: true,
-              fillColor: Color(0xFFFEF2F5)),
+              fillColor: Color.fromARGB(255, 255, 255, 255)),
         ),
         SizedBox(
           height: 15,
@@ -261,7 +286,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
         Row(
           children: [
             Radio(
-                activeColor: Colors.pink,
+                activeColor: Colors.black,
                 value: 1,
                 groupValue: _value,
                 onChanged: (value) {
@@ -276,7 +301,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
         Row(
           children: [
             Radio(
-                activeColor: Colors.pink,
+                activeColor: Colors.black,
                 value: 2,
                 groupValue: _value,
                 onChanged: (value) {
@@ -291,7 +316,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
         Row(
           children: [
             Radio(
-                activeColor: Colors.pink,
+                activeColor: Colors.black,
                 value: 3,
                 groupValue: _value,
                 onChanged: (value) {
@@ -306,4 +331,51 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
       ],
     );
   }
-}
+buildPassword(value, _kytp){
+
+return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: 10.0),
+            Text(value,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        TextField(
+          obscureText: _obscureText00,
+          keyboardType: TextInputType.visiblePassword,
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText00 = !_obscureText00;
+                                  });
+                                },
+                                color: Colors.black,
+                                icon: Icon(_obscureText00
+                                    ? Icons.visibility
+                                    : Icons.visibility_off)),
+            
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 0, style: BorderStyle.none),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              hintText: value,
+              filled: true,
+              fillColor: Color.fromARGB(255, 255, 255, 255)),
+        ),
+        SizedBox(
+          height: 15,
+        )
+      ],
+    );
+
+  
+}}
