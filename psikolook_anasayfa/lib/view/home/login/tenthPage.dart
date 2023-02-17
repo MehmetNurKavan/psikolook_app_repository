@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/login/eleventhPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/ninthPage.dart';
 
-import 'fourthPage.dart';
 
-class thirdPage extends StatefulWidget {
-  const thirdPage({super.key});
+
+class TenthPage extends StatefulWidget {
+  const TenthPage({super.key});
 
   @override
-  State<thirdPage> createState() => _thirdPageState();
+  State<TenthPage> createState() => _TenthPageState();
 }
 
-class _thirdPageState extends State<thirdPage> {
+class _TenthPageState extends State<TenthPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(top:15.0,right: 15.0),
           child: ElevatedButton(
@@ -29,7 +31,7 @@ class _thirdPageState extends State<thirdPage> {
 ),
             onPressed: () {
             Navigator.push(
-            context, MaterialPageRoute(builder: (context) => fourthPage()));
+            context, MaterialPageRoute(builder: (context) => EleventhPage()));
           },
           child: Padding(
             padding: const EdgeInsets.only(top:5.0,left: 10,right: 10,bottom:5),
@@ -37,8 +39,8 @@ class _thirdPageState extends State<thirdPage> {
           ),),
         ),
         body: Container(
-          
-           decoration: BoxDecoration(image:DecorationImage(image: AssetImage("assets/images/login3.png"),fit: BoxFit.fill)),
+           
+        decoration: BoxDecoration(image:DecorationImage(image: AssetImage("assets/images/login10.png"),fit: BoxFit.fill)),
         ),
       ),
     );
