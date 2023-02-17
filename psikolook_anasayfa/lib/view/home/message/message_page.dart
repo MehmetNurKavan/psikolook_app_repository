@@ -40,44 +40,49 @@ class _MessagePageState extends State<MessagePage> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Container(
-                  color: index.isOdd ? Colors.pink[300] : Colors.pink[100],
+                  /* color: index.isOdd ? Colors.pink[300] : Colors.pink[100], */
                   height: MediaQuery.of(context).size.height * 0.153,
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/woman_picture.png'),
-                    ),
-                    title: const Text('Psikolook'),
-                    subtitle: const Text(
-                      'Hi!!!!',
-                    ),
-                    textColor: Colors.white,
-                    trailing: Column(
-                      children: [
-                        const Expanded(child: Text('1 min')),
-                        Expanded(
-                          child: FloatingActionButton.small(
-                            backgroundColor: Colors.pink,
-                            onPressed: () {},
-                            tooltip: 'Mesaj sayısı',
-                            child: Text(
-                              '1',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.03,
+                  child: Card(
+                    elevation: 3,
+                    shadowColor: Colors.black54,
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/woman_picture.png'),
+                      ),
+                      title: const Text('Psikolook'),
+                      subtitle: const Text(
+                        'Hi!!!!',
+                      ),
+                      textColor: Colors.black87,
+                      trailing: Column(
+                        children: [
+                          const Expanded(child: Text('1 min')),
+                          Expanded(
+                            child: FloatingActionButton.small(
+                              elevation: 0,
+                              backgroundColor: Colors.pink,
+                              onPressed: () {},
+                              tooltip: 'Mesaj sayısı',
+                              child: Text(
+                                '1',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.03,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MessageChatPage()));
+                      },
                     ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MessageChatPage()));
-                    },
                   ),
                 );
               },

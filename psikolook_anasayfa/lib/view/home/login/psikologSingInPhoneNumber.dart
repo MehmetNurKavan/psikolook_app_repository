@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
-import '../psikologHome/psikologHomePageNesxts/psikolog_home.dart';
+
+import '../psikolook/psikolook_page.dart';
 import 'PsikologForgetPassword.dart';
 import 'PsikologsingInPage.dart';
+
+
+
 
 class PsikologSignInWithPhonePage extends StatefulWidget {
   const PsikologSignInWithPhonePage({super.key});
@@ -162,7 +165,7 @@ class _PsikologSignInWithPhonePageState
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const PsikologHome()));
+                                  builder: (context) => const PsikolookPage()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(

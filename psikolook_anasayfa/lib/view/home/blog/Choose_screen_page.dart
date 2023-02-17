@@ -15,18 +15,32 @@ class _ChooseScreenState extends State<ChooseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          backIconButton(),
-          SizedBox(height: 60),
-          chooseElevatedButton("Blog Yazısı Yaz", WriteBlog()),
-          SizedBox(
-            height: 46,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.decal,
+            colors: [
+              Color.fromARGB(255, 255, 236, 241),
+              Color.fromARGB(255, 254, 243, 244),
+              Color.fromARGB(255, 255, 248, 245),
+              Color.fromARGB(255, 255, 252, 247),
+            ],
           ),
-          chooseElevatedButton("Paylaşım Yap", SnapPage()),
-        ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            backIconButton(),
+            const SizedBox(height: 60),
+            chooseElevatedButton("Blog Yazısı Yaz", const WriteBlog()),
+            const SizedBox(
+              height: 46,
+            ),
+            chooseElevatedButton("Paylaşım Yap", const SnapPage()),
+          ],
+        ),
       ),
     );
   }
@@ -66,21 +80,14 @@ class _ChooseScreenState extends State<ChooseScreen> {
 // IconButton önceki sayfaya döndüren...
   Padding backIconButton() {
     return Padding(
-      padding: EdgeInsets.only(left: 34, top: 72),
-      child: Container(
-          height: 38,
-          width: 38,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(19), color: Colors.white),
-          child: Center(
-            child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: CustomColors.backIconColor,
-                )),
+      padding: const EdgeInsets.only(left: 34, top: 72),
+      child: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
           )),
     );
   }

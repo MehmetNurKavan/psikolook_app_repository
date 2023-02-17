@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/utils/customColors.dart';
 import 'package:psikolook_anasayfa/utils/customTextStyle.dart';
 
-class WritePage extends StatefulWidget {
-  const WritePage({super.key});
+class DoShare extends StatefulWidget {
+  const DoShare({super.key});
 
   @override
-  State<WritePage> createState() => _WritePageState();
+  State<DoShare> createState() => _DoShareState();
 }
 
-class _WritePageState extends State<WritePage> {
+class _DoShareState extends State<DoShare> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,17 +41,9 @@ class _WritePageState extends State<WritePage> {
               const SizedBox(
                 height: 61,
               ),
-              imageBox(),
-              const SizedBox(
-                height: 44,
-              ),
               startWrite("Yazmaya başla..."),
               const SizedBox(
                 height: 17,
-              ),
-              minuteWrite(),
-              const SizedBox(
-                height: 29,
               ),
               okElevatedButton(),
               const SizedBox(
@@ -204,7 +196,7 @@ class _WritePageState extends State<WritePage> {
         },
         icon: const Icon(Icons.close),
         color: Colors.black,
-        iconSize: 30,
+        iconSize: 35,
       ),
     );
   }

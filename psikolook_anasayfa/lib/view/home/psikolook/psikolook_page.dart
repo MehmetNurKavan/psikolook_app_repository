@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/bilimekatki/bilime_katki_page.dart';
+import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/buy_sally_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/referansPage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/profil_read.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
 class PsikolookPage extends StatefulWidget {
@@ -26,6 +25,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 252, 247),
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: builHomeRow(context),
       floatingActionButton: buildPsikolookButton(context),
@@ -33,7 +33,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -50,10 +50,11 @@ class _PsikolookPageState extends State<PsikolookPage> {
           primary: false,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
-              child: Container(
+              padding: const EdgeInsets.only(
+                  left: 15, right: 15, top: 30, bottom: 15),
+              child: /* Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     tileMode: TileMode.decal,
@@ -66,20 +67,62 @@ class _PsikolookPageState extends State<PsikolookPage> {
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const referansPage(),
-                        ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0, backgroundColor: Colors.transparent),
-                  child: Text(
-                    'REFERANS KODUN VARSA BURADAN ÜCRETSİZ DESTEK AL',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black87, fontSize: 18),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const referansPage(),
+                          ));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0, backgroundColor: Colors.transparent),
+                    child: const Text(
+                      'REFERANS KODUN VARSA BURADAN ÜCRETSİZ DESTEK AL',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54, fontSize: 18),
+                    ),
+                  ),
+                ),
+              ), */
+                  /*  ElevatedButton(
+                onPressed:
+                 () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const referansPage(),
+                      ));
+                }, 
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: const Color.fromARGB(255, 255, 3, 146),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    )),
+                child: 
+              ), */
+                  Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  color: const Color.fromARGB(255, 255, 3, 146),
+                ),
+                child: Center(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.09,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: const Center(
+                      child: Text(
+                        'SADECE 1 PSİKOLOG SEÇME HAKKIN VAR',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -141,8 +184,9 @@ class _PsikolookPageState extends State<PsikolookPage> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const SizedBox(width: 15),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: TextButton(
@@ -153,10 +197,15 @@ class _PsikolookPageState extends State<PsikolookPage> {
                       textStyle: const TextStyle(fontSize: 15),
                     ),
                     child: const Text('Profili İncele'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProfilRead()));
+                    },
                   ),
                 ),
-                TextButton(
+                /* TextButton(
                   style: TextButton.styleFrom(
                     shape: const StadiumBorder(
                         side: BorderSide(color: Colors.black, width: 1)),
@@ -171,7 +220,7 @@ class _PsikolookPageState extends State<PsikolookPage> {
                         MaterialPageRoute(
                             builder: (context) => const buySallyPage()));
                   },
-                ),
+                ), */
               ],
             ),
           ],
@@ -183,49 +232,62 @@ class _PsikolookPageState extends State<PsikolookPage> {
 
 Container builHomeRow(BuildContext context) {
   return Container(
-    height: MediaQuery.of(context).size.height * 0.09,
-    decoration: BoxDecoration(
+    height: MediaQuery.of(context).size.height * 0.1,
+    decoration: const BoxDecoration(
       color: Colors.black,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(35.0),
         topRight: Radius.circular(35.0),
       ),
     ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        IconButton(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => homePage()));
-          },
-          icon: Icon(Icons.home_outlined, color: Colors.pink),
-        ),
-        IconButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BilimeKatkiPage()));
-          },
-          icon: Icon(Icons.science_outlined, color: Colors.pink),
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.3,
-        ),
-        IconButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ToplulukPage()));
-          },
-          icon: Icon(Icons.person_add_outlined, color: Colors.pink),
-        ),
-        IconButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => HomePage_Person()));
-          },
-          icon: Icon(Icons.person_outline, color: Colors.pink),
-        ),
-      ],
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const homePage()));
+            },
+            icon: Image.asset('assets/images/home_icon.png'),
+            iconSize: 40,
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CokYakindaPage()));
+            },
+            icon: Image.asset('assets/images/lab_icon.png'),
+            iconSize: 40,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.35,
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ToplulukPage()));
+            },
+            icon: Image.asset('assets/images/perosn_two_icon.png'),
+            iconSize: 40,
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePage_Person()));
+            },
+            icon: Image.asset('assets/images/person_icon.png'),
+            iconSize: 40,
+          ),
+        ],
+      ),
     ),
   );
 }

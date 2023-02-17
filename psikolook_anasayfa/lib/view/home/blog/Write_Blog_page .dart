@@ -14,7 +14,7 @@ class _WriteBlogState extends State<WriteBlog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 215, 226),
+      backgroundColor: Colors.black,
       body: Column(
         children: [
           SizedBox(height: 81.7),
@@ -37,7 +37,8 @@ class _WriteBlogState extends State<WriteBlog> {
     return Row(
       children: [
         closeIconButton(),
-        Text("Blog Yazısı Yaz", style: textStyle.witeblogTitleTextStyle)
+        const Text("Blog Yazısı Yaz",
+            style: TextStyle(color: Colors.white, fontSize: 27))
       ],
     );
   }
@@ -99,8 +100,7 @@ class _WriteBlogState extends State<WriteBlog> {
           height: 45,
           width: 45,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: CustomColors.closeIconButtonColor),
+              borderRadius: BorderRadius.circular(10), color: Colors.black),
           child: IconButton(
             onPressed: () {
               Navigator.pop(context);

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikolog_icon.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
@@ -198,3 +198,4 @@ class _psikolog_pageState extends State<psikolog_page> {
     );
   }
 }
+ */

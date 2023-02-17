@@ -7,7 +7,18 @@ class HakkimizdaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Color.fromARGB(255, 253, 215, 226),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.decal,
+            colors: [
+              Color.fromARGB(255, 255, 234, 240),
+              Color.fromARGB(255, 255, 244, 244),
+              Color.fromARGB(255, 255, 254, 248),
+            ],
+          ),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
