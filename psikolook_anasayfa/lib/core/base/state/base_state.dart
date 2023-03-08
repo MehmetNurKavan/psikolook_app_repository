@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 //bu sınıftan trüyerek yolumuzu cizicez
 abstract class BaseState<T extends StatefulWidget> extends State<T> {
@@ -9,3 +9,4 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
   double dynamicWidth(double value) =>
       MediaQuery.of(context).size.width * value;
 }
+ */

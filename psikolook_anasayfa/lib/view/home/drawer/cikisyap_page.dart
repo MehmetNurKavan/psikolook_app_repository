@@ -1,8 +1,9 @@
-import 'dart:ui';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
+import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
+import 'package:psikolook_anasayfa/view/home/login/Login_home.dart';
 
 class CikisYapPage extends StatefulWidget {
   const CikisYapPage({super.key});
@@ -12,6 +13,7 @@ class CikisYapPage extends StatefulWidget {
 }
 
 class _CikisYapPageState extends State<CikisYapPage> {
+  final _auth = FirebaseAuthProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,8 +88,26 @@ class _CikisYapPageState extends State<CikisYapPage> {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      SystemNavigator.pop();
+                    onPressed: () async {
+                      try {
+                        await _auth.logOut();
+                        /* Navigator.of(context).pop(); */
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginHomePage()));
+                      } on Exception catch (e) {
+                        log(e.toString());
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Text(
+                              'Hata!',
+                              style: TextStyle(color: Colors.red, fontSize: 40),
+                            );
+                          },
+                        );
+                      }
                     },
                     child: const Text(
                       'EVET',

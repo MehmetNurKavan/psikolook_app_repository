@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/utils/customColors.dart';
-import 'package:psikolook_anasayfa/utils/customTextStyle.dart';
-import 'package:psikolook_anasayfa/view/home/blog/Write_Blog_page%20.dart';
-import 'package:psikolook_anasayfa/view/home/blog/Snap_page.dart';
+import 'package:provider/provider.dart';
+import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/view/home/blog/my_blogs_page%20.dart';
+import 'package:psikolook_anasayfa/view/home/blog/my_posts_page.dart';
+import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
+import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
 
 class ChooseScreen extends StatefulWidget {
   const ChooseScreen({super.key});
@@ -12,6 +15,17 @@ class ChooseScreen extends StatefulWidget {
 }
 
 class _ChooseScreenState extends State<ChooseScreen> {
+    @override
+  void initState() {
+    super.initState();
+    addData();
+  }
+
+  addData() async {
+    UserProvider _userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    await _userProvider.refreshUser();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +48,18 @@ class _ChooseScreenState extends State<ChooseScreen> {
           children: [
             backIconButton(),
             const SizedBox(height: 60),
-            chooseElevatedButton("Blog Yazısı Yaz", const WriteBlog()),
+            chooseElevatedButton("Blog Yazısı Yaz", MyBlogsPage(uid: FirebaseAuth.instance.currentUser!.uid)),
             const SizedBox(
               height: 46,
             ),
-            chooseElevatedButton("Paylaşım Yap", const SnapPage()),
+            chooseElevatedButton(
+                "Paylaşım Yap",
+                MyPostsPage(
+                  uid: FirebaseAuth.instance.currentUser!.uid
+                )),
+                const SizedBox(
+              height: 46,
+            ),
           ],
         ),
       ),
@@ -50,7 +71,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 55),
-        child: Container(
+        child: SizedBox(
             height: 123,
             width: 304,
             child: Directionality(
@@ -63,15 +84,15 @@ class _ChooseScreenState extends State<ChooseScreen> {
                           builder: (context) => pageClassName,
                         ));
                   },
-                  child: Text(elevatedButtonText,
-                      style: textStyle.chooseElevatedButtonStyle),
                   style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateProperty.all(
                           CustomColors.customElevatedButtonColor),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18))))),
+                              borderRadius: BorderRadius.circular(18)))),
+                  child: Text(elevatedButtonText,
+                      style: textStyle.chooseElevatedButtonStyle)),
             )),
       ),
     );

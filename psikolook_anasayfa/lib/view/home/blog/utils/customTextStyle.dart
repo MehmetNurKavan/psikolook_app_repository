@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:psikolook_anasayfa/utils/customColors.dart';
+import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
 
 
 class textStyle{

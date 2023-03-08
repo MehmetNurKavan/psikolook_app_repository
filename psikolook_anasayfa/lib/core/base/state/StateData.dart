@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 class StateData extends ChangeNotifier {
   String adSoyad = 'Neriman Alaş';
@@ -8,3 +8,4 @@ class StateData extends ChangeNotifier {
     notifyListeners();
   }
 }
+ */

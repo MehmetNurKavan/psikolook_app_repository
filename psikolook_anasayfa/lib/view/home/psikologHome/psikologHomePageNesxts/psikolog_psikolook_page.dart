@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
@@ -6,8 +8,8 @@ import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/palnlanPage.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
-import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
+import 'package:psikolook_anasayfa/widget/post_card.dart';
 
 class PsikologPsikolookIcon extends StatefulWidget {
   const PsikologPsikolookIcon({super.key});
@@ -106,21 +108,35 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
                 flex: 5,
                 child: Container(
                   alignment: Alignment.topCenter,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    scrollDirection: Axis.horizontal,
-                    childAspectRatio: 2 / 3,
-                    children: [
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                    ],
-                  ),
+                  child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('posts')
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (ctx, index) => Container(
+                          margin: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.width * 0.3 
+                          : 
+                          0,
+                          vertical: MediaQuery.of(context).size.width > 600 ? 15 : 0,
+                        ),
+                        child: PostCard(
+                          snap: snapshot.data!.docs[index].data(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 ),
               ),
             ),
@@ -205,7 +221,7 @@ Card buildTopCardView(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
       side: const BorderSide(
-          width: 1.5, color: Color.fromARGB(255, 201, 201, 201)),
+          width: 0.4, color: Color.fromARGB(255, 201, 201, 201)),
     ),
     margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
     child: Container(
@@ -383,7 +399,7 @@ Card buildMidCardView(context, psikologAvatar, history, otherPsikologName) {
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
         side: const BorderSide(
-            width: 1.5, color: Color.fromARGB(255, 201, 201, 201))),
+            width: 0.4, color: Color.fromARGB(255, 201, 201, 201))),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -461,11 +477,6 @@ SizedBox buildPsikolookButton(context) {
     child: FloatingActionButton(
       tooltip: 'Psikolook',
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const PsikolookPage(),
-            ));
       },
       backgroundColor: Colors.transparent, //arka planrengini kaldırdı
       elevation: 0,
@@ -550,7 +561,9 @@ Container buildButtonNavigatorBar(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PsikologProfil()));
+                      builder: (context) => PsikologProfil(
+                            uid: FirebaseAuth.instance.currentUser!.uid,
+                          )));
             },
             icon: Image.asset('assets/images/person_icon.png'),
             iconSize: 40,

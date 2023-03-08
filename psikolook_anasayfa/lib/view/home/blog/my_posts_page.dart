@@ -1,16 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/utils/customColors.dart';
-import 'package:psikolook_anasayfa/utils/customTextStyle.dart';
-import 'package:psikolook_anasayfa/view/home/blog/do_share.dart';
+import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
+import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
+import 'package:psikolook_anasayfa/view/home/blog/post_share.dart';
+import 'package:psikolook_anasayfa/view/shimmer/skeleton.dart';
+import 'package:psikolook_anasayfa/widget/post_card.dart';
 
-class SnapPage extends StatefulWidget {
-  const SnapPage({super.key});
+class MyPostsPage extends StatefulWidget {
+  final String uid;
+  const MyPostsPage({super.key, required this.uid});
 
   @override
-  State<SnapPage> createState() => _SnapPageState();
+  State<MyPostsPage> createState() => _MyPostsPageState();
 }
 
-class _SnapPageState extends State<SnapPage> {
+class _MyPostsPageState extends State<MyPostsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +41,43 @@ class _SnapPageState extends State<SnapPage> {
             const SizedBox(
               height: 81.7,
             ),
-            snapCardField(),
+            //snapCardField(),
+            FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('posts')
+                  .where('uid', isEqualTo: widget.uid)
+                  .get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: NewsCardSkelton(),
+                  );
+                } else if (snapshot.hasData != null) {
+                  return shareCard();
+                }
+                return GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 2 / 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    /* DocumentSnapshot snap =
+                        (snapshot.data! as dynamic).docs[index]; */
+                        //!
+                    return Container(
+                      child: PostCard(
+                        snap: snapshot.data?.docs[index].data() ??'', //!dikkat
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
             const SizedBox(
               height: 24,
             ),
@@ -119,8 +159,9 @@ class _SnapPageState extends State<SnapPage> {
           const Text(
             textAlign: TextAlign.center,
             "Henüz hiç paylaşımın yok,\nhadi paylaşım yaparak kalplere dokun",
-            style: textStyle.cardTextStyle,
+            style: TextStyle(fontSize: 13),
           ),
+          const SizedBox(height: 50),
         ],
       ),
     );
@@ -135,7 +176,7 @@ class _SnapPageState extends State<SnapPage> {
       child: IconButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const DoShare()));
+              MaterialPageRoute(builder: (context) => const PostShare()));
         },
         icon: Image.asset('assets/images/heart.png'),
       ),
@@ -152,6 +193,53 @@ class _SnapPageState extends State<SnapPage> {
         icon: const Icon(Icons.close),
         color: Colors.black,
         iconSize: 35,
+      ),
+    );
+  }
+}
+
+class NewsCardSkelton extends StatelessWidget {
+  const NewsCardSkelton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 340,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(39)),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Icon(Icons.person, color: Colors.grey, size: 34),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Skeleton(width: 75),
+                    const SizedBox(height: 10),
+                    const Skeleton(width: 100),
+                  ],
+                ),
+                const ListTile(
+                  
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.keyboard_arrow_down_sharp))
+              ],
+            ),
+          ),
+          Skeleton(width: MediaQuery.of(context).size.width * 0.8),
+          const SizedBox(height: 50),
+        ],
       ),
     );
   }
