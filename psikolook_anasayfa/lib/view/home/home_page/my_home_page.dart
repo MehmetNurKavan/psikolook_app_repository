@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/blog_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
@@ -8,6 +9,8 @@ import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
 import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
 import 'package:psikolook_anasayfa/view/home/psikolook/psikolook_page.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
+import 'package:psikolook_anasayfa/widget/blog_card.dart';
+import 'package:psikolook_anasayfa/widget/post_card.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -50,6 +53,8 @@ class _homePageState extends State<homePage> {
       floatingActionButton: buildPsikolookButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -105,7 +110,7 @@ class _homePageState extends State<homePage> {
               visible: isVisible,
               child: Expanded(
                 flex: 5,
-                child: Container(
+                child: /* Container(
                   alignment: Alignment.topCenter,
                   child: GridView.count(
                     crossAxisCount: 1,
@@ -122,6 +127,35 @@ class _homePageState extends State<homePage> {
                           context, psikologAvatar, history, otherPsikologName),
                     ],
                   ),
+                ), */
+                    StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('posts')
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (ctx, index) => Container(
+                          margin: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.width * 0.3 
+                          : 
+                          0,
+                          vertical: MediaQuery.of(context).size.width > 600 ? 15 : 0,
+                        ),
+                        child: PostCard(
+                          snap: snapshot.data!.docs[index].data(),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -129,7 +163,7 @@ class _homePageState extends State<homePage> {
               visible: isNotVisible,
               child: Expanded(
                 flex: 5,
-                child: Container(
+                child: /* Container(
                   alignment: Alignment.topLeft,
                   child: GridView.count(
                     crossAxisCount: 1,
@@ -143,6 +177,35 @@ class _homePageState extends State<homePage> {
                       buildBlogCardView(context, dkk4, baslik4, image4),
                     ],
                   ),
+                ), */
+                    StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('blogs')
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (ctx, index) => Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.width * 0.3 
+                          : 
+                          0,
+                          vertical: MediaQuery.of(context).size.width > 600 ? 15 : 0,
+                        ),
+                        child: BlogCard(
+                          snap: snapshot.data!.docs[index].data(),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -203,10 +266,9 @@ Card buildMeetingCardView(context, psikologName, psikologText, psikologImage) {
     elevation: 0,
     color: const Color.fromARGB(255, 251, 249, 249),
     shape: RoundedRectangleBorder(
-      
       borderRadius: BorderRadius.circular(20.0),
       side: const BorderSide(
-          width: 1.5, color: Color.fromARGB(255, 201, 201, 201)),
+          width: 0.4, color: Color.fromARGB(255, 201, 201, 201)),
     ),
     margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
     child: Container(
@@ -327,12 +389,13 @@ Card buildMeetingCardView(context, psikologName, psikologText, psikologImage) {
 InkWell buildBlogCardView(context, dkk, baslik, image) {
   return InkWell(
     onTap: () {
-      Navigator.push(
+      /* Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => BlogPage(),
+          builder: (context) =>
+              BlogPage(snap: ),
         ),
-      );
+      ); */
     },
     child: Card(
       shape: RoundedRectangleBorder(
@@ -388,83 +451,6 @@ InkWell buildBlogCardView(context, dkk, baslik, image) {
       ),
     ),
   );
-}
-
-Card buildMidCardView(context, psikologAvatar, history, otherPsikologName) {
-  return Card(
-    elevation: 0,
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-        side: const BorderSide(
-            width: 1.5, color: Color.fromARGB(255, 201, 201, 201))),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        SizedBox(
-          //height: MediaQuery.of(context).size.height * 0.07,
-          child: ListTile(
-            //minLeadingWidth: 1,aralarınadki bosluk sanırım
-            contentPadding: const EdgeInsets.all(1),
-            //horizontalTitleGap: 3.0, //başlık ve avatar arasındaki mesafe olamlı
-            //minVerticalPadding: 10,
-            //minLeadingWidth: 10,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                backgroundImage: AssetImage(psikologAvatar),
-              ),
-            ),
-            title: Text(otherPsikologName),
-            subtitle: Text(history),
-            //isThreeLine: true, //alanını genisletiyor,yerlestiriyor
-            //dense: true, //alanını daraltiyor gibi
-            trailing:
-                const Icon(Icons.keyboard_arrow_down, color: Colors.black38),
-          ),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-          child: const SingleChildScrollView(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            child: Text('Henüz takip ettiğiniz psikolog yok.',
-                style: TextStyle(fontWeight: FontWeight.w300)),
-          ),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const IconButton(
-                onPressed: share,
-                icon: Icon(Icons.share_outlined),
-              ),
-              const SizedBox(),
-              const SizedBox(),
-              const SizedBox(),
-              const Text('143'),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.chat_bubble_outline,
-                      color: Color.fromARGB(255, 174, 220, 225))),
-              const Text('942'),
-              IconButton(
-                  onPressed: () {},
-                  icon: Image.asset('assets/images/infinity_add_icon.png')),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Future<void> share() async {
-  await FlutterShare.share(
-      title: 'Psikolook paylaş',
-      text: 'Psikolook',
-      linkUrl: 'https://flutter.dev/', //burası backende giriyor
-      chooserTitle: 'Paylaş');
 }
 
 SizedBox buildPsikolookButton(context) {

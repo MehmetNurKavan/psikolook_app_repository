@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/gecici/product/common/signin_widget.dart';
+import 'package:psikolook_anasayfa/gecici/services/firebase_exceptions.dart';
+import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
+import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
-import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
-import 'ForgetPasswordPage.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -11,13 +13,34 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  bool _obscureText = true;
+  final auth = FirebaseAuthProvider();
+  String email = '';
+  String password = '';
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  final String _errorMessage = 'Birşeyler Ters Gitti :/';
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -48,146 +71,52 @@ class _SignInPageState extends State<SignInPage> {
                         }),
                   ],
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.2,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    const Text("E-Mail:",
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Center(
-                      child: TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 0, style: BorderStyle.none),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            hintText: "E-Mail Adresiniz",
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    const Text("Şifre:",
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
-                      child: TextField(
-                        obscureText: _obscureText,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                                color: Colors.black,
-                                icon: Icon(_obscureText
-                                    ? Icons.visibility
-                                    : Icons.visibility_off)),
-                            border: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 0, style: BorderStyle.none),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            hintText: "Şifreniz",
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.transparent.withOpacity(0),
-                        shadowColor: Colors.transparent.withOpacity(0),
-                        foregroundColor: Colors.transparent.withOpacity(0)),
-                    onPressed: () {
-                      Navigator.push(
+                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                SignInWidget(
+                  emailChanged: (email) => this.email = email,
+                  passwordChanged: (password) => this.password = password,
+                  onPressed: () async {
+                    try {
+                      showDialog(
+                        context: context,
+                        builder: ((context) => const Center(
+                              child: CircularProgressIndicator(),
+                            )),
+                      );
+                      await auth.logIn(
+                        email: email,
+                        password: password,
+                      );
+
+                      Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  const SignInWithPhonePage()));
-                    },
-                    child: const Text(
-                      "Telefon Numarasıyla Giriş Yap",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            textStyle: const TextStyle(fontSize: 24),
+                            builder: (context) => homePage(),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const homePage()));
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                                left: 30, right: 30, top: 13, bottom: 13),
-                            child: Text("Giriş Yap"),
-                          ),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ForgetPasswordPage()));
-                            },
-                            child: const Text("Şifremi Unuttum",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w400))),
-                      ],
-                    ),
-                  ],
+                          (route) => false);
+                    } on UserNotFoundAuthException {
+                      await fireShowDialog(
+                        title: 'Kullancı Bulunamadı.',
+                        context,
+                        content: 'Email ve Şifrenizi Konrol Ediniz',
+                      );
+                    } on WrongPasswordAuthException {
+                      await fireShowDialog(
+                        title: 'Yanlış Şifre',
+                        context,
+                        content: 'Email ve Şifrenizi Konrol Ediniz',
+                      );
+                    } on GenericAuthException {
+                      await fireShowDialog(
+                        title: 'Hata!',
+                        context,
+                        content: _errorMessage,
+                      );
+                    }
+                  },
+                  emailController: _emailController,
+                  passwordController: _passwordController,
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                Image.asset("assets/images/logo_kucuk.png"),
               ],
             ),
           ),
@@ -195,4 +124,153 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
   }
+
+/*   void signIn() async {
+    if (formkey.currentState!.validate()) {
+      formkey.currentState!.save();
+      final result = await authService.signIn(email, password);
+      if (result == "success") {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => homePage()),
+            (route) => false);
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Hata!"),
+                content: Text(result!),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("Geri Dön",style: TextStyle(color: Colors.pink)))
+                ],
+              );
+            });
+      }
+    }
+  } */
 }
+ 
+// ignore_for_file: use_build_context_synchronously
+
+/* import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/constant/colors.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/constant/constants.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/product/common/animated_texts.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/product/common/bottom_widget.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/product/common/show_dialog.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/services/firebase_exceptions.dart';
+import 'package:psikolook_anasayfa/view/home/gecici/services/firebase_service.dart';
+import 'package:psikolook_anasayfa/view/home/login/chat_page.dart';
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final auth = FirebaseAuthProvider();
+  String email = '';
+  String password = '';
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  final String _errorMessage = 'Something Bad Happened :/';
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ProductColors.registerContainerColor,
+      ),
+      backgroundColor: ProductColors.scaffoldColor,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: ProductColors.registerContainerColor,
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.1,
+            left: 0,
+            right: 0,
+            bottom: MediaQuery.of(context).size.height * 0.6,
+            child: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  AnimatedTextWidget(),
+                  // Maybe we can add a logo here or something else to make it more beautiful
+                ],
+              ),
+            ),
+          ),
+          BottomWidget(
+            emailChanged: (email) => this.email = email,
+            passwordChanged: (password) => this.password = password,
+            heroTag: 'login',
+            onPressed: () async {
+              try {
+                showDialog(
+                  context: context,
+                  builder: ((context) => const Center(
+                        child: CircularProgressIndicator(),
+                      )),
+                );
+                await auth.logIn(
+                  email: email,
+                  password: password,
+                );
+
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatPage(),
+                    ),
+                    (route) => false);
+              } on UserNotFoundAuthException {
+                await fireShowDialog(
+                  title: 'User Not Found',
+                  context,
+                  content: 'Check Your Email and Password',
+                );
+              } on WrongPasswordAuthException {
+                await fireShowDialog(
+                  title: 'Wrong Password',
+                  context,
+                  content: 'Check Your Email or Password',
+                );
+              } on GenericAuthException {
+                await fireShowDialog(
+                  title: 'Error',
+                  context,
+                  content: _errorMessage,
+                );
+              }
+            },
+            buttonText: Constants.logInText,
+            emailController: _emailController,
+            passwordController: _passwordController,
+          )
+        ],
+      ),
+    );
+  }
+}
+ */

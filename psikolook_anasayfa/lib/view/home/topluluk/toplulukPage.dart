@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/view/home/topluluk/chat_page.dart';
 
 class ToplulukPage extends StatefulWidget {
   const ToplulukPage({super.key});
@@ -42,7 +43,10 @@ class _ToplulukPageState extends State<ToplulukPage> {
                   child: ListTile(
                     title: const Text('Psikolook'),
                     textColor: Colors.black87,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ChatPage()));
+                    },
                   ),
                 );
               },

@@ -17,7 +17,7 @@ class _SeansGecmisiPAgeState extends State<SeansGecmisiPAge> {
   String metin = 'STK yönlendirmesi var ücret ödemesi yok';
   @override
   Widget build(BuildContext context) {
-    String adSoyad1 = Provider.of<StateData>(context).adSoyad;
+    /* String adSoyad1 = Provider.of<StateData>(context).adSoyad; */
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -58,7 +58,7 @@ class _SeansGecmisiPAgeState extends State<SeansGecmisiPAge> {
                   style: TextStyle(color: Colors.black, fontSize: 23),
                 ),
                 const SizedBox(height: 40),
-                buildSeansGecmisiCard(1, '$adSoyad1'),
+                /* buildSeansGecmisiCard(1, '$adSoyad1'), */
                 const SizedBox(height: 15),
                 buildSeansGecmisiCard(1, 'Alperen Kalaycı'),
                 const SizedBox(height: 15),

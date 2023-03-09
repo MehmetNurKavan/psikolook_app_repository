@@ -13,7 +13,7 @@ class _ProfilReadState extends State<ProfilRead> {
   String name = 'Uzman Klinik Psikolog Aslı Kaya';
   int history = 1;
   String blogText =
-      'Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.';
+      'Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.Believe in yourself, take on your challenges dig deep within yourswelf to conquer fears. Never let anyone bring your down. You got to keep going.';
   String biyografi =
       'Hacetepe Üniversitesi(ingilizce)Tıp fakültesinden mezun oldu. 1998-2001 yılları marmara üniversitesinde tıp okudu, dekan yardımcılıgna kadar yükseldi, mastur ve foktorasını LOS Angles ta yaptı.Hacetepe Üniversitesi(ingilizce)Tıp fakültesinden mezun oldu. 1998-2001 yılları marmara üniversitesinde tıp okudu, dekan yardımcılıgna kadar yükseldi, mastur ve foktorasını LOS Angles ta yaptı.';
   String ilgiAlani =
@@ -261,7 +261,7 @@ class _ProfilReadState extends State<ProfilRead> {
                 Visibility(
                   visible: isvisible,
                   child: Container(
-                    height: 200,
+                    height: MediaQuery.of(context).size.height * .35,
                     alignment: Alignment.topLeft,
                     child: GridView.count(
                       crossAxisCount: 1,
@@ -452,10 +452,10 @@ class _ProfilReadState extends State<ProfilRead> {
             ),
           ),
           SizedBox(
-            //height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.height * 0.5,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: Text(
                 blogText,
                 style: const TextStyle(fontWeight: FontWeight.w300),

@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/blog/Choose_screen_page.dart';
+import 'package:provider/provider.dart';
+import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/view/home/blog/choose_screen_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
@@ -264,7 +267,9 @@ class _psikolog_pageState extends State<psikolog_page> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PsikologProfil()));
+                        builder: (context) => PsikologProfil(
+                              uid: FirebaseAuth.instance.currentUser!.uid,
+                            )));
               },
               icon: Image.asset('assets/images/person_icon.png'),
               iconSize: 40,

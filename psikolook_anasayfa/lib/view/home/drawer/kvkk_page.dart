@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/utils/customTextStyle.dart';
+import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
 
 class KvkkPage extends StatefulWidget {
   const KvkkPage({super.key});
