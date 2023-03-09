@@ -24,9 +24,12 @@ class _sayfaState extends State<sayfa> {
           body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/images/login1.png"),
-                fit: BoxFit.fill)),
-      )),
+                image: AssetImage("assets/images/FirstPageBackGround.png"),
+                fit: BoxFit.cover)),
+      
+            child: Center(child: Image.asset("assets/images/logo_kucuk.png")),
+      
+      ),),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:psikolook_anasayfa/view/home/login/sixthPage.dart';
 
 class FifthPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _FifthPageState extends State<FifthPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(top: 15.0, right: 15.0),
           child: ElevatedButton(
@@ -37,13 +38,44 @@ class _FifthPageState extends State<FifthPage> {
             ),
           ),
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/login5.png"),
-                  fit: BoxFit.fill)),
-        ),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("assets/images/LoginTheme.png"),fit: BoxFit.fill),
+          ),
+        child: Column(
+          children: [
+            SizedBox(
+            height: MediaQuery.of(context).size.height*0.20,
+
+            ),
+            Column(children: [
+          customSizedBox(),
+          Text("Aynı zamanda Psikolook'ların",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 20)),),
+          Text("blog yazılarını okuyabilir,",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("paylaşımlarını ",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),),
+              Text("takip edebilirsin",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 20)),),
+            ],
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height*0.15,
+            ),
+          
+          Image.asset("assets/images/Image4.png"),
+          Image.asset("assets/images/logo_kucuk.png"),
+          ],),
+          ],
+        )
+        ), 
       ),
+     ),
     );
   }
 }
+Widget customSizedBox() => SizedBox(
+        height: 30,
+      );

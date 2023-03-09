@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'fourthPage.dart';
 
 class thirdPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _thirdPageState extends State<thirdPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(top: 15.0, right: 15.0),
           child: ElevatedButton(
@@ -37,13 +38,40 @@ class _thirdPageState extends State<thirdPage> {
             ),
           ),
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/login3.png"),
-                  fit: BoxFit.fill)),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("assets/images/LoginTheme.png"),fit: BoxFit.fill),
+          ),
+        child: Column(
+          children: [
+            SizedBox(
+            height: MediaQuery.of(context).size.height*0.20,
+
+            ),
+            Column(children: [
+          customSizedBox(),
+          Text("Psikolook sana en uygun ",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 22)),),
+          Text("psikologu / danışmanı ",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 22,fontWeight: FontWeight.bold)),),
+          Text("bulmanı sağlar",style: GoogleFonts.montserrat(textStyle:TextStyle(fontSize: 22)),),
+          SizedBox(
+            height: MediaQuery.of(context).size.height*0.15,
+            ),
+          Image.asset("assets/images/Image2.png"),
+          Image.asset("assets/images/logo_kucuk.png"),
+          ],),
+          ],
+        )
         ),
       ),
+
+     ),
     );
   }
 }
+Widget customSizedBox() => SizedBox(
+        height: 30,
+      );
+    
+  
