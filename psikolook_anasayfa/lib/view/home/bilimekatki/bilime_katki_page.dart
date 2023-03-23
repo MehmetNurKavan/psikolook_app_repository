@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class BilimeKatkiPage extends StatefulWidget {
-  const BilimeKatkiPage({super.key});
+  const BilimeKatkiPage({Key? key}) : super(key: key);
 
   @override
   State<BilimeKatkiPage> createState() => _BilimeKatkiPageState();
@@ -17,14 +18,7 @@ class _BilimeKatkiPageState extends State<BilimeKatkiPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 204, 204),
-              Color.fromARGB(255, 250, 234, 240),
-              Color.fromARGB(255, 247, 230, 243),
-              Color.fromARGB(255, 247, 230, 243),
-              Color.fromARGB(255, 219, 233, 234),
-              Color.fromARGB(255, 192, 222, 228),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: CustomScrollView(

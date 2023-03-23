@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
 
 class KvkkPage extends StatefulWidget {
-  const KvkkPage({super.key});
+  const KvkkPage({Key? key}) : super(key: key);
 
   @override
   State<KvkkPage> createState() => _KvkkPageState();
@@ -14,16 +15,12 @@ class _KvkkPageState extends State<KvkkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 234, 240),
-              Color.fromARGB(255, 255, 244, 244),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Padding(

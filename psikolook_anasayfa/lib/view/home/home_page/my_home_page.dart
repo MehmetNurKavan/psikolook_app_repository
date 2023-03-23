@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/blog_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/meeting_page.dart';
 import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
@@ -13,7 +12,7 @@ import 'package:psikolook_anasayfa/widget/blog_card.dart';
 import 'package:psikolook_anasayfa/widget/post_card.dart';
 
 class homePage extends StatefulWidget {
-  const homePage({super.key});
+  const homePage({Key? key}) : super(key: key);
 
   @override
   State<homePage> createState() => _homePageState();
@@ -55,20 +54,12 @@ class _homePageState extends State<homePage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              //Color.fromARGB(255, 255, 204, 204),
-              Color.fromARGB(255, 248, 230, 228),
-              Color.fromARGB(255, 250, 234, 240),
-              Color.fromARGB(255, 247, 230, 243),
-              Color.fromARGB(255, 247, 230, 243),
-              Color.fromARGB(255, 219, 233, 234),
-              Color.fromARGB(255, 192, 222, 228),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Column(

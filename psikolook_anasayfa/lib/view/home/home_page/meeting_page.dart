@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class MeetingPage extends StatefulWidget {
-  const MeetingPage({super.key});
+  const MeetingPage({Key? key}) : super(key: key);
 
   @override
   State<MeetingPage> createState() => _MeetingPageState();
@@ -12,17 +13,12 @@ class _MeetingPageState extends State<MeetingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 234, 240),
-              Color.fromARGB(255, 255, 244, 244),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Column(

@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class HomePage_Person extends StatefulWidget {
-  const HomePage_Person({super.key});
+  const HomePage_Person({Key? key}) : super(key: key);
 
   @override
   State<HomePage_Person> createState() => _HomePage_PersonState();
@@ -39,14 +40,7 @@ class _HomePage_PersonState extends State<HomePage_Person> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Column(

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/choose_screen_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
@@ -15,7 +16,7 @@ import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolo
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
 class psikolog_page extends StatefulWidget {
-  const psikolog_page({super.key});
+  const psikolog_page({Key? key}) : super(key: key);
 
   @override
   State<psikolog_page> createState() => _psikolog_pageState();
@@ -32,19 +33,12 @@ class _psikolog_pageState extends State<psikolog_page> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: buildPsikolookButton(context),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 248, 230, 228),
-              Color.fromARGB(255, 250, 234, 240),
-              Color.fromARGB(255, 247, 230, 243),
-              Color.fromARGB(255, 247, 230, 243),
-              Color.fromARGB(255, 219, 233, 234),
-              Color.fromARGB(255, 192, 222, 228),
-            ],
+            colors: backGroundColor
           ),
         ),
         width: MediaQuery.of(context).size.width,

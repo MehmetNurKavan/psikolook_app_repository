@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/widget/post_card.dart';
 
@@ -84,17 +85,12 @@ class _PsikologProfilState extends State<PsikologProfil> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor
           ),
         ),
         child:isLoading
@@ -124,9 +120,9 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                         size: 30)),
                                 CircleAvatar(
                                   backgroundColor: Colors.grey,
-                                  /* backgroundImage: NetworkImage(
+                                  backgroundImage: NetworkImage(
                                     userData['photoUrl'],
-                                  ), */
+                                  ),
                                   radius:
                                       MediaQuery.of(context).size.width * 0.15,
                                 ),
@@ -458,7 +454,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                 .collection('posts')
                                 .where('uid', isEqualTo: widget.uid)
                                 .get(),
-                            builder: (context, snapshot) {
+                            builder: (context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return const Center(

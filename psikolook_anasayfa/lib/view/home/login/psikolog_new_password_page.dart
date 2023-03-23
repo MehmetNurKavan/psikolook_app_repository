@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'PsikologNewPasswordSuccesful.dart';
 
 class PsikologNewPasswordPage extends StatefulWidget {
-  const PsikologNewPasswordPage({super.key});
+  const PsikologNewPasswordPage({Key? key}) : super(key: key);
 
   @override
   State<PsikologNewPasswordPage> createState() =>
@@ -14,18 +15,11 @@ class _PsikologNewPasswordPageState extends State<PsikologNewPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ])),
+                colors: backGroundColor)),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(

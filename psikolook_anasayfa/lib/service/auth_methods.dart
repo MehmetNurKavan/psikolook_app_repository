@@ -123,13 +123,13 @@ class AuthMethods {
   Future<String?> forgotPassword(String email) async {
     String? res;
     try {
-      final result = await _auth.sendPasswordResetEmail(email: email);
-      print("Mail kutunuzu kontrol ediniz");
+      await _auth.sendPasswordResetEmail(email: email).then((value) => value);
+      res = 'e-posta adresinizi kontrol ediniz';
     } on FirebaseAuthException catch (e) {
-      if (e.code == "email-already-in-use") {
-        res = "Mail Zaten Kayitli.";
-      }
+      print(e);
+      res= e.message.toString();
     }
     return res;
   }
+  
 }

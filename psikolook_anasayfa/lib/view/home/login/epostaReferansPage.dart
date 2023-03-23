@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/login/newpasswordPage.dart';
-
+//!sayfa şu anda kullnamadık
 class epostaRefreancePage extends StatefulWidget {
-  const epostaRefreancePage({super.key});
+  const epostaRefreancePage({Key? key}) : super(key: key);
 
   @override
   State<epostaRefreancePage> createState() => _epostaRefreancePageState();
@@ -14,18 +15,11 @@ class _epostaRefreancePageState extends State<epostaRefreancePage> {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ])),
+                colors: backGroundColor)),
         child: SingleChildScrollView(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,

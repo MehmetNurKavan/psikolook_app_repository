@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/service/auth_methods.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/login/PsikologForgetPassword.dart';
 import 'package:psikolook_anasayfa/view/home/login/psikologSingInPhoneNumber.dart';
@@ -7,7 +8,7 @@ import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts
 import 'package:psikolook_anasayfa/widget/text_field_input.dart';
 
 class PsikologSignInPage extends StatefulWidget {
-  const PsikologSignInPage({super.key});
+  const PsikologSignInPage({Key? key}) : super(key: key);
 
   @override
   State<PsikologSignInPage> createState() => _PsikologSignInPageState();
@@ -54,17 +55,11 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                Color.fromARGB(255, 255, 235, 240),
-                Color.fromARGB(255, 255, 243, 244),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 254, 248),
-                Color.fromARGB(255, 255, 254, 248),
-              ])),
+                  colors: backGroundColor)),
           child: SingleChildScrollView(
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -92,11 +87,11 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(
+                      children: const[
+                        SizedBox(
                           width: 10.0,
                         ),
-                        const Text("E-Mail:",
+                        Text("E-Mail:",
                             style: TextStyle(
                                 fontSize: 13, fontWeight: FontWeight.bold)),
                       ],
@@ -127,13 +122,14 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                         ),
                       ],
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(
+                      children: const[
+                        SizedBox(
                           width: 10.0,
                         ),
-                        const Text("Şifre:",
+                        Text("Şifre:",
                             style: TextStyle(
                                 fontSize: 13, fontWeight: FontWeight.bold)),
                       ],
@@ -167,6 +163,7 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                         ),
                       ],
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     TextButton(
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.transparent.withOpacity(0),
@@ -192,7 +189,7 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                         /* !_isLoading
                             ? Container()
                             : const CircularProgressIndicator(), */
-                        SizedBox(width: 50),
+                        const SizedBox(width: 50),
                         Column(
                           children: [
                             /* InkWell(
@@ -217,7 +214,6 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
                             ),
                             onTap: loginUser,
                           ), */
-
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.black,
@@ -256,25 +252,6 @@ class _PsikologSignInPageState extends State<PsikologSignInPage> {
               ),
             ),
           )),
-    );
-  }
-
-  showLoaderDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: new Row(
-        children: [
-          CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Yükleniyor...")),
-        ],
-      ),
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 }

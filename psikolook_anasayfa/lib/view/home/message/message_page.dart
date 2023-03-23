@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/message/messsage_chat.dart';
 
 class MessagePage extends StatefulWidget {
-  const MessagePage({super.key});
+  const MessagePage({Key? key}) : super(key: key);
 
   @override
   State<MessagePage> createState() => _MessagePageState();

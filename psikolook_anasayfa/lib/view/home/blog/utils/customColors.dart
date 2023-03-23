@@ -1,7 +1,6 @@
 import 'package:flutter/animation.dart';
 
 class CustomColors {
-  static const backgroundColor = Color(0xfffFDD7E2);
   static const customElevatedButtonColor = Color(0xfffffffff);
   static const customTextColor = Color(0xfff000000);
   static const customElevatedTextColor = Color(0x73000000);

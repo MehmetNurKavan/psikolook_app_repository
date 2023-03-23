@@ -1,12 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
 import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
 import 'package:psikolook_anasayfa/view/home/login/Login_home.dart';
 
 class CikisYapPage extends StatefulWidget {
-  const CikisYapPage({super.key});
+  const CikisYapPage({Key? key}) : super(key: key);
 
   @override
   State<CikisYapPage> createState() => _CikisYapPageState();
@@ -25,17 +26,12 @@ class _CikisYapPageState extends State<CikisYapPage> {
   Center buildCikisYap(BuildContext context) {
     return Center(
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 234, 240),
-              Color.fromARGB(255, 255, 244, 244),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
         child: Card(
           shape: const RoundedRectangleBorder(

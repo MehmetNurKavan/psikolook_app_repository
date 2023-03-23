@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class HakkimizdaPage extends StatelessWidget {
-  const HakkimizdaPage({super.key});
+  const HakkimizdaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,7 @@ class HakkimizdaPage extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 234, 240),
-              Color.fromARGB(255, 255, 244, 244),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Column(

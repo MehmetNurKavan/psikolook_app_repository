@@ -531,6 +531,7 @@ import 'package:psikolook_anasayfa/gecici/product/common/signup_widget.dart';
 import 'package:psikolook_anasayfa/gecici/services/firebase_exceptions.dart';
 import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 
@@ -614,17 +615,11 @@ class _SignUpPageState extends State<SignUpPage> {
         body: Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-            Color.fromARGB(255, 255, 235, 240),
-            Color.fromARGB(255, 255, 243, 244),
-            Color.fromARGB(255, 255, 249, 246),
-            Color.fromARGB(255, 255, 254, 248),
-            Color.fromARGB(255, 255, 254, 248),
-          ])),
+              colors: backGroundColor)),
       child: Padding(
         padding: const EdgeInsets.only(
             top: 50.0, left: 15, right: 15.0, bottom: 0.0),

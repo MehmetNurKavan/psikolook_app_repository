@@ -1,11 +1,8 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
-
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/gecici/constant/constants.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/widget/message_buble.dart';
 import 'package:psikolook_anasayfa/gecici/services/auth_user.dart';
 import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
@@ -20,7 +17,6 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late final _textController;
   final _auth = FirebaseAuthProvider();
-
   AuthUser? loggedInUser;
 
   void checkUser() {
@@ -52,10 +48,12 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('assets/images/backgroun1.png'),
-          fit: BoxFit.cover,
-        )),
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
+        ),
         child: Column(
           children: [
             const Center(

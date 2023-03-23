@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class BlogPage extends StatelessWidget {
   final snap;
-  const BlogPage({super.key, this.snap});
+  const BlogPage({Key? key, this.snap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +23,12 @@ class BlogPage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       body: SingleChildScrollView(
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           )),
           child: Column(
             children: [

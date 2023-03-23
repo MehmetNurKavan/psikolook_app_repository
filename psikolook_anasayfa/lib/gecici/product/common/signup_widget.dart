@@ -84,6 +84,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -438,7 +439,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   }
 
   //simdilik kullanımdan kaldırıdm
-  gender() {
+ /*  gender() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -489,5 +490,5 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         )
       ],
     );
-  }
+  } */
 }

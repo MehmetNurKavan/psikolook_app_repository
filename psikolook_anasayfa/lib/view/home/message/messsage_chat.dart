@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/message/acil_button.dart';
 
 class MessageChatPage extends StatefulWidget {
-  const MessageChatPage({super.key});
+  const MessageChatPage({Key? key}) : super(key: key);
 
   @override
   State<MessageChatPage> createState() => _MessageChatPageState();
@@ -21,11 +22,7 @@ class _MessageChatPageState extends State<MessageChatPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 234, 240),
-              Color.fromARGB(255, 255, 244, 244),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: ListView(

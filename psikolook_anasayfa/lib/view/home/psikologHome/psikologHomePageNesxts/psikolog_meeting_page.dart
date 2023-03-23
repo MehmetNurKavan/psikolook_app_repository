@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class PsikologMeetingPage extends StatefulWidget {
-  const PsikologMeetingPage({super.key});
+  const PsikologMeetingPage({Key? key}) : super(key: key);
 
   @override
   State<PsikologMeetingPage> createState() => _PsikologMeetingPageState();
@@ -13,17 +14,12 @@ class _PsikologMeetingPageState extends State<PsikologMeetingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 234, 240),
-              Color.fromARGB(255, 255, 244, 244),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: SingleChildScrollView(

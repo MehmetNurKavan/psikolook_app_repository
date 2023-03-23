@@ -24,15 +24,15 @@ class Blog {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return Blog(
-        description: snapshot["description"],
-        uid: snapshot["uid"],
-        blogId: snapshot["blogId"],
-        datePublished: snapshot["datePublished"],
-        username: snapshot["username"],
-        blogUrl: snapshot['blogUrl'],
-        blogText: snapshot['blogText'],
-        blogTime:snapshot['blogTime'],
-        );
+      description: snapshot["description"] ?? '',
+      uid: snapshot["uid"] ?? '',
+      blogId: snapshot["blogId"] ?? '',
+      datePublished: snapshot["datePublished"] ?? '',
+      username: snapshot["username"] ?? '',
+      blogUrl: snapshot['blogUrl'] ?? '',
+      blogText: snapshot['blogText'] ?? '',
+      blogTime: snapshot['blogTime'] ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +43,6 @@ class Blog {
         "datePublished": datePublished,
         'blogUrl': blogUrl,
         'blogText': blogText,
-        'blogTime':blogTime,
+        'blogTime': blogTime,
       };
 }

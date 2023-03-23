@@ -29,7 +29,7 @@ Future<dynamic> showErorDialog(BuildContext context,
       title: Center(
           child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
           color: Colors.pink,
@@ -66,7 +66,7 @@ Future<dynamic> fireShowDialog(BuildContext context,
       title: Center(
           child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
           color: Colors.pink,
@@ -101,6 +101,24 @@ Future<dynamic> fireShowDialog(BuildContext context,
     ),
   );
 }
+showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children:const[
+          CircularProgressIndicator(),
+          Text("Yükleniyor..."),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
 /* Future<List<dynamic>> open({ List<String> ?types, bool multiple = false}) async {
 

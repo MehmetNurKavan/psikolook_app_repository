@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DestekAlPage extends StatefulWidget {
-  const DestekAlPage({super.key});
+  const DestekAlPage({Key? key}) : super(key: key);
 
   @override
   State<DestekAlPage> createState() => _DestekAlPage();
@@ -24,11 +25,7 @@ class _DestekAlPage extends State<DestekAlPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           tileMode: TileMode.decal,
-          colors: [
-            Color.fromARGB(255, 255, 234, 240),
-            Color.fromARGB(255, 255, 244, 244),
-            Color.fromARGB(255, 255, 254, 248),
-          ],
+          colors: backGroundColor
         ),
       ),
       child: Card(

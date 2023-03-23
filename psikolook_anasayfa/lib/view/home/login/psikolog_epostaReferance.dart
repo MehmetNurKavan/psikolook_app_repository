@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/login/psikolog_new_password_page.dart';
 
 class PsikologEpostaRefreancePage extends StatefulWidget {
-  const PsikologEpostaRefreancePage({super.key});
+  const PsikologEpostaRefreancePage({Key? key}) : super(key: key);
 
   @override
   State<PsikologEpostaRefreancePage> createState() =>
@@ -16,18 +17,11 @@ class _PsikologEpostaRefreancePageState
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ])),
+                colors: backGroundColor)),
         child: SingleChildScrollView(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,

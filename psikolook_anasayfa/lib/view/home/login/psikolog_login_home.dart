@@ -3,7 +3,7 @@ import 'package:psikolook_anasayfa/view/home/login/PsikologsingInPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/psikolog_sing_up.dart';
 
 class PsikologLoginHome extends StatefulWidget {
-  const PsikologLoginHome({super.key});
+  const PsikologLoginHome({Key? key}) : super(key: key);
 
   @override
   State<PsikologLoginHome> createState() => _PsikologLoginHomeState();

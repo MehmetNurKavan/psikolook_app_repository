@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/chat_page.dart';
 
 class ToplulukPage extends StatefulWidget {
-  const ToplulukPage({super.key});
+  const ToplulukPage({Key? key}) : super(key: key);
 
   @override
   State<ToplulukPage> createState() => _ToplulukPageState();
 }
 
 class _ToplulukPageState extends State<ToplulukPage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +20,7 @@ class _ToplulukPageState extends State<ToplulukPage> {
             snap: false,
             floating: true,
             expandedHeight: MediaQuery.of(context).size.height * 0.2,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.black, 
             iconTheme: const IconThemeData(color: Colors.white70),
             flexibleSpace: const FlexibleSpaceBar(
               title: Text('Topluluk', style: TextStyle(color: Colors.white70)),

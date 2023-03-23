@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
 import 'package:psikolook_anasayfa/view/home/blog/post_share.dart';
-import 'package:psikolook_anasayfa/view/shimmer/skeleton.dart';
+import 'package:psikolook_anasayfa/widget/skeleton.dart';
 import 'package:psikolook_anasayfa/widget/post_card.dart';
 
 class MyPostsPage extends StatefulWidget {
   final String uid;
-  const MyPostsPage({super.key, required this.uid});
+  const MyPostsPage({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<MyPostsPage> createState() => _MyPostsPageState();
@@ -19,17 +20,12 @@ class _MyPostsPageState extends State<MyPostsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor,
           ),
         ),
         child: Column(
@@ -47,7 +43,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
                   .collection('posts')
                   .where('uid', isEqualTo: widget.uid)
                   .get(),
-              builder: (context, snapshot) {
+              builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: NewsCardSkelton(),
@@ -157,8 +153,8 @@ class _MyPostsPageState extends State<MyPostsPage> {
             ),
           ),
           const Text(
-            textAlign: TextAlign.center,
             "Henüz hiç paylaşımın yok,\nhadi paylaşım yaparak kalplere dokun",
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 13),
           ),
           const SizedBox(height: 50),

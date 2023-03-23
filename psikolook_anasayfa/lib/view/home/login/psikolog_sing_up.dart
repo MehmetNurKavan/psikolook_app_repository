@@ -2,13 +2,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:psikolook_anasayfa/service/auth_methods.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/kvkk_page.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'package:psikolook_anasayfa/widget/text_field_input.dart';
 
 class psikologSignUpPage extends StatefulWidget {
-  const psikologSignUpPage({super.key});
+  const psikologSignUpPage({Key? key}) : super(key: key);
 
   @override
   State<psikologSignUpPage> createState() => _psikologSignUpPageState();
@@ -84,6 +85,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
       showSnackBar(context, res);
     }
   }
+
   selectImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     // set state because we need to display the image we selected on the circle avatar
@@ -94,22 +96,15 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    
 /*     final fileName =
         file != null ? p.basename(file!.path) : 'Henüz dosya seçilemedi'; */
     return Scaffold(
       body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                Color.fromARGB(255, 255, 235, 240),
-                Color.fromARGB(255, 255, 243, 244),
-                Color.fromARGB(255, 255, 249, 246),
-                Color.fromARGB(255, 255, 254, 248),
-                Color.fromARGB(255, 255, 254, 248),
-              ])),
+                  colors: backGroundColor)),
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -155,33 +150,35 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                   Column(
                     children: [
                       Stack(
-                children: [
-                  _image != null
-                      ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(_image!),
-                          backgroundColor: Colors.transparent,
-                        )
-                      :  CircleAvatar(
-                          radius: 64,
-                          backgroundColor: Colors.white
-                          ,
-                          child: Container(
-                            height: 95,
-                            child: Image.asset('assets/images/default-usr.png'),
-                          ),
-                          //AssetImage('assets/images/default-usr.png',),
-                        ),
-                  Positioned(
-                    bottom: -10,
-                    left: 80,
-                    child: IconButton(
-                      onPressed: selectImage,
-                      icon: const Icon(Icons.add_a_photo),
-                    ),
-                  )
-                ],
-              ),
+                        children: [
+                          _image != null
+                              ? CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage: MemoryImage(_image!),
+                                  backgroundColor: Colors.transparent,
+                                )
+                              : CircleAvatar(
+                                  radius: 64,
+                                  backgroundColor: Colors.white,
+                                  child: SizedBox(
+                                    height: 95,
+                                    child: Image.asset(
+                                        'assets/images/default-usr.png'),
+                                  ),
+                                  //AssetImage('assets/images/default-usr.png',),
+                                ),
+                          Positioned(
+                            bottom: -10,
+                            left: 80,
+                            child: IconButton(
+                              onPressed: selectImage,
+                              icon: const Icon(Icons.add_a_photo),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -192,13 +189,13 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                         hintText: "Adınız Soyadınız",
                         textInputType: TextInputType.name,
                         textEditingController: _usernameController,
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -209,12 +206,12 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "E-Posta",
                           textEditingController: _emailController,
                           textInputType: TextInputType.emailAddress),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -225,11 +222,12 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Yaş",
                           textInputType: TextInputType.number,
                           textEditingController: _ageController),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -242,13 +240,13 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       /*  gender(_genderController.text), */
                       TextFieldInput(
                           hintText: 'Cinsiyetniz',
                           textEditingController: _genderController,
                           textInputType: TextInputType.text),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -259,12 +257,12 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: 'Telefonunuzu Giriniz',
                           textEditingController: _numberController,
                           textInputType: TextInputType.number),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -275,62 +273,65 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                        TextField(
-                          controller: _passwordController,
-                          obscureText: _obscureText,
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                  color: Colors.black,
-                                  icon:
-                                      Icon(_obscureText ? Icons.visibility : Icons.visibility_off)),
-                              border: const OutlineInputBorder(
-                                  borderSide: BorderSide(width: 0, style: BorderStyle.none),
-                                  borderRadius: BorderRadius.all(Radius.circular(20))),
-                              hintText: "Şifrenizi Giriniz",
-                              filled: true,
-                              fillColor: Colors.white),
-                        ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: _obscureText,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                color: Colors.black,
+                                icon: Icon(_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off)),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 0, style: BorderStyle.none),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            hintText: "Şifrenizi Giriniz",
+                            filled: true,
+                            fillColor: Colors.white),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 10.0),
-                          const Text(
+                        children: const[
+                          SizedBox(width: 10.0),
+                          Text(
                               'Yüksek Lisans veya Doktora Öğrencisiyseniz \nOkulunuzun Adı',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Okulunuzun Adını Giriniz",
                           textInputType: TextInputType.name,
                           textEditingController: _schoolNameController),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 10.0),
-                          const Text('Çalışıyorsanız Çalıştığınız Kurum',
+                        children: const[
+                          SizedBox(width: 10.0),
+                          Text('Çalışıyorsanız Çalıştığınız Kurum',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Kurum Adını Giriniz",
                           textEditingController: _institutionNameController,
                           textInputType: TextInputType.name),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -341,12 +342,12 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Unvanınızı Giriniz",
                           textInputType: TextInputType.name,
                           textEditingController: _degreeController),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       //"Diplomanız ya da Öğrenci Belgeniz"
                       /* StorageMethods().uploadPdfToStorage('pdfs', _pdf, true); */
                       Row(
@@ -359,7 +360,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       /* Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -409,7 +410,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                       const Padding(
                         padding: EdgeInsets.only(left: 10.0),
                       ),
-                      const SizedBox(height: 15.0),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0, right: 10),
                         child: Column(
@@ -519,9 +520,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

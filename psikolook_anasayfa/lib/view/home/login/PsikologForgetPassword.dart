@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/login/psikolog_epostaReferance.dart';
-
+import 'package:psikolook_anasayfa/service/auth_methods.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
+import 'package:psikolook_anasayfa/utils/utils.dart';
+//!henüz kullanmadık bu sayfayı
 class PsikologForgetPasswordPage extends StatefulWidget {
-  const PsikologForgetPasswordPage({super.key});
+  const PsikologForgetPasswordPage({Key? key}) : super(key: key);
 
   @override
   State<PsikologForgetPasswordPage> createState() =>
@@ -11,22 +14,36 @@ class PsikologForgetPasswordPage extends StatefulWidget {
 
 class _PsikologForgetPasswordPageState
     extends State<PsikologForgetPasswordPage> {
+  final _emaliController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emaliController.dispose();
+    super.dispose();
+  }
+
+  void resetPassword() async {
+    // signup user using our authmethodds
+    String? res = await AuthMethods().forgotPassword(_emaliController.text);
+    // if string returned is sucess, user has been created
+    if (res == "e-posta adresinizi kontrol ediniz") {
+      setState(() {
+        Navigator.pop(context);
+      });
+    }
+    showSnackBar(context, res!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        height: double.infinity,
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ])),
+                colors: backGroundColor)),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -57,25 +74,27 @@ class _PsikologForgetPasswordPageState
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
                 Row(
-                  children: [
-                    const SizedBox(
+                  children: const <Widget>[
+                    SizedBox(
                       width: 10,
                     ),
-                    const Text("E-Postanızı Giriniz:",
+                    Text("E-Postanızı Giriniz:",
                         style: TextStyle(
                             fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
-                const TextField(
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: _emaliController,
                   keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  textInputAction: TextInputAction.done,
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderSide:
                             BorderSide(width: 0, style: BorderStyle.none),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      hintText: "E-Postanızı Giriniiz",
+                      hintText: "E-Postanızı Giriniz",
                       filled: true,
                       fillColor: Colors.white),
                 ),
@@ -89,11 +108,7 @@ class _PsikologForgetPasswordPageState
                     textStyle: const TextStyle(fontSize: 24),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const PsikologEpostaRefreancePage()));
+                    resetPassword();
                   },
                   child: const Padding(
                     padding: EdgeInsets.only(

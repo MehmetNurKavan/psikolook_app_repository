@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 
 class ucretpage extends StatefulWidget {
-  const ucretpage({super.key});
+  const ucretpage({Key? key}) : super(key: key);
 
   @override
   State<ucretpage> createState() => _ucretpageState();
@@ -15,17 +16,12 @@ class _ucretpageState extends State<ucretpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: SingleChildScrollView(

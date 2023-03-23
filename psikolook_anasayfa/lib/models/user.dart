@@ -6,7 +6,7 @@ class User {
   final String photoUrl;
   final String username;
   final String bio;
-  final List<String> followers;
+  final List followers;
   final String number;
   final String age;
   final String gender;
@@ -33,18 +33,18 @@ class User {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return User(
-      username: snapshot["username"],
-      uid: snapshot["uid"],
-      email: snapshot["email"],
-      photoUrl: snapshot["photoUrl"],
-      bio: snapshot["bio"],
-      followers: snapshot["followers"],
-      number: snapshot["number"],
-      age: snapshot["age"],
-      gender: snapshot["gender"],
-      schoolName: snapshot["schoolName"],
-      institutionName: snapshot["institutionName"],
-      degree: snapshot["degree"],
+      username: snapshot["username"] ?? '',
+      uid: snapshot["uid"] ?? '',
+      email: snapshot["email"] ?? '',
+      photoUrl: snapshot["photoUrl"] ?? '',
+      bio: snapshot["bio"] ?? '',
+      followers: snapshot["followers"] ?? '',
+      number: snapshot["number"] ?? '',
+      age: snapshot["age"] ?? '',
+      gender: snapshot["gender"] ?? '',
+      schoolName: snapshot["schoolName"] ?? '',
+      institutionName: snapshot["institutionName"] ?? '',
+      degree: snapshot["degree"] ?? '',
     );
   }
 

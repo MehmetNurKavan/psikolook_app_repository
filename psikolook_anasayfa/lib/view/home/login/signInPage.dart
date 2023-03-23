@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/gecici/product/common/signin_widget.dart';
 import 'package:psikolook_anasayfa/gecici/services/firebase_exceptions.dart';
 import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
   State<SignInPage> createState() => _SignInPageState();
@@ -41,17 +42,11 @@ class _SignInPageState extends State<SignInPage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 243, 244),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ])),
+                colors: backGroundColor)),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -96,20 +91,20 @@ class _SignInPageState extends State<SignInPage> {
                           (route) => false);
                     } on UserNotFoundAuthException {
                       await fireShowDialog(
-                        title: 'Kullancı Bulunamadı.',
                         context,
+                        title: 'Kullancı Bulunamadı.',
                         content: 'Email ve Şifrenizi Konrol Ediniz',
                       );
                     } on WrongPasswordAuthException {
                       await fireShowDialog(
-                        title: 'Yanlış Şifre',
                         context,
+                        title: 'Yanlış Şifre',
                         content: 'Email ve Şifrenizi Konrol Ediniz',
                       );
                     } on GenericAuthException {
                       await fireShowDialog(
-                        title: 'Hata!',
                         context,
+                        title: 'Hata!',
                         content: _errorMessage,
                       );
                     }

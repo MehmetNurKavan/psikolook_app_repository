@@ -4,7 +4,7 @@ import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/signUpPage.dart';
 
 class LoginHomePage extends StatefulWidget {
-  const LoginHomePage({super.key});
+  const LoginHomePage({Key? key}) : super(key: key);
 
   @override
   State<LoginHomePage> createState() => _LoginHomePageState();

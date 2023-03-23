@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/my_blogs_page%20.dart';
 import 'package:psikolook_anasayfa/view/home/blog/my_posts_page.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
 
 class ChooseScreen extends StatefulWidget {
-  const ChooseScreen({super.key});
+  const ChooseScreen({Key? key}) : super(key: key);
 
   @override
   State<ChooseScreen> createState() => _ChooseScreenState();
@@ -30,17 +31,12 @@ class _ChooseScreenState extends State<ChooseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Column(

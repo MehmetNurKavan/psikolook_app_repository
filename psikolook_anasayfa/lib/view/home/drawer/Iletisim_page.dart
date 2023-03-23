@@ -1,15 +1,15 @@
-import 'dart:ui';
+/* import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class IletisimPage extends StatefulWidget {
-  const IletisimPage({super.key});
+  const IletisimPage({Key? key}) : super(key: key);
 
   @override
   State<IletisimPage> createState() => _IletisimPageState();
 }
-
+//!kullanılmıyor
 class _IletisimPageState extends State<IletisimPage> {
   @override
   Widget build(BuildContext context) {
@@ -103,3 +103,4 @@ class _IletisimPageState extends State<IletisimPage> {
     );
   }
 }
+ */

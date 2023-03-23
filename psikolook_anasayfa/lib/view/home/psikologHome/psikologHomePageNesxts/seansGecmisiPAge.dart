@@ -1,13 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/core/base/state/StateData.dart';
-
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'on_seans_page.dart';
 
 class SeansGecmisiPAge extends StatefulWidget {
-  const SeansGecmisiPAge({super.key});
+  const SeansGecmisiPAge({Key? key}) : super(key: key);
 
   @override
   State<SeansGecmisiPAge> createState() => _SeansGecmisiPAgeState();
@@ -20,18 +17,12 @@ class _SeansGecmisiPAgeState extends State<SeansGecmisiPAge> {
     /* String adSoyad1 = Provider.of<StateData>(context).adSoyad; */
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
         child: SingleChildScrollView(
           child: Padding(

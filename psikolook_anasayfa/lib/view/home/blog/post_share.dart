@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
@@ -72,17 +73,12 @@ class _PostShareState extends State<PostShare> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: SingleChildScrollView(
@@ -105,7 +101,7 @@ class _PostShareState extends State<PostShare> {
                     padding: const EdgeInsets.only(right: 44.0),
                     child: ElevatedButton(
                         onPressed: () => sharePost(
-                              userProvider.getUser.uid ,
+                              userProvider.getUser.uid,
                               userProvider.getUser.username,
                               userProvider.getUser.photoUrl,
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
@@ -6,8 +7,7 @@ import 'package:psikolook_anasayfa/view/home/psikolook/profil_read.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 
 class PsikolookPage extends StatefulWidget {
-  const PsikolookPage({super.key});
-
+  const PsikolookPage({Key? key}) : super(key: key);
   @override
   State<PsikolookPage> createState() => _PsikolookPageState();
 }
@@ -33,17 +33,12 @@ class _PsikolookPageState extends State<PsikolookPage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: ListView(

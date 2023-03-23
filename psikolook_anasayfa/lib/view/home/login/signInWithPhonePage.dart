@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'ForgetPasswordPage.dart';
 
 class SignInWithPhonePage extends StatefulWidget {
-  const SignInWithPhonePage({super.key});
+  const SignInWithPhonePage({Key? key}) : super(key: key);
 
   @override
   State<SignInWithPhonePage> createState() => _SignInWithPhonePageState();
@@ -16,20 +17,12 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromARGB(255, 253, 215, 226),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-              Color.fromARGB(255, 255, 235, 240),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 249, 246),
-              Color.fromARGB(255, 255, 254, 248),
-              Color.fromARGB(255, 255, 254, 248),
-            ])),
+                colors: backGroundColor)),
         child: Padding(
           padding: const EdgeInsets.only(
               top: 50.0, left: 15, right: 15.0, bottom: 0.0),
@@ -62,6 +55,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                           TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                 ],
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -81,6 +75,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                   ),
                 ],
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -92,6 +87,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                           TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                 ],
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -121,6 +117,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                   ),
                 ],
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               TextButton(
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.transparent.withOpacity(0),
@@ -139,6 +136,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                   )),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

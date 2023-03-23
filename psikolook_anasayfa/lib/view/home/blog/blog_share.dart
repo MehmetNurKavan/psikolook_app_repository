@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:psikolook_anasayfa/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
@@ -125,17 +126,12 @@ class _BlogShareState extends State<BlogShare> {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors:backGroundColor
           ),
         ),
         child: 

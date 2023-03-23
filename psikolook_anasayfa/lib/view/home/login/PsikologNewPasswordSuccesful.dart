@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
-
+//!sayfa henüz kullanmadık bir yerde
 class PsikologNewPasswordSuccesfullPage extends StatefulWidget {
-  const PsikologNewPasswordSuccesfullPage({super.key});
+  const PsikologNewPasswordSuccesfullPage({Key? key}) : super(key: key);
 
   @override
   State<PsikologNewPasswordSuccesfullPage> createState() =>
@@ -15,17 +16,12 @@ class _PsikologNewPasswordSuccesfullPageState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             tileMode: TileMode.decal,
-            colors: [
-              Color.fromARGB(255, 255, 236, 241),
-              Color.fromARGB(255, 254, 243, 244),
-              Color.fromARGB(255, 255, 248, 245),
-              Color.fromARGB(255, 255, 252, 247),
-            ],
+            colors: backGroundColor
           ),
         ),
         child: Column(

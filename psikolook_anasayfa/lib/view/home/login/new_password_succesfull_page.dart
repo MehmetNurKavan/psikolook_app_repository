@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
-
+//!sayfa henüz kullanmadık bir yerde
 class NewPasswordSuccesfullPage extends StatefulWidget {
-  const NewPasswordSuccesfullPage({super.key});
+  const NewPasswordSuccesfullPage({Key? key}) : super(key: key);
 
   @override
   State<NewPasswordSuccesfullPage> createState() =>
