@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
-import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
 import 'package:psikolook_anasayfa/view/home/login/Login_home.dart';
 
 class CikisYapPage extends StatefulWidget {
@@ -14,7 +13,7 @@ class CikisYapPage extends StatefulWidget {
 }
 
 class _CikisYapPageState extends State<CikisYapPage> {
-  final _auth = FirebaseAuthProvider();
+  final _auth = AuthMethods();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,27 +47,23 @@ class _CikisYapPageState extends State<CikisYapPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(),
-                Container(
-                  child: const Text(
-                    'Emin misin ?',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold),
-                  ),
+                const Text(
+                  'Emin misin ?',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold),
                 ),
-                Container(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Column(
-                      children: [
-                        const Text('Gidişin bizi üzüyor...',
-                            textAlign: TextAlign.center),
-                        Text(
-                            'Bir sorun olduysa uygulamaya dönüp bizden destek alabilirsin',
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Column(
+                    children: const [
+                      Text('Gidişin bizi üzüyor...',
+                          textAlign: TextAlign.center),
+                      Text(
+                          'Bir sorun olduysa uygulamaya dönüp bizden destek alabilirsin',
+                          textAlign: TextAlign.center),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -86,18 +81,18 @@ class _CikisYapPageState extends State<CikisYapPage> {
                     ),
                     onPressed: () async {
                       try {
-                        await _auth.logOut();
+                        await _auth.signOut();
                         /* Navigator.of(context).pop(); */
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginHomePage()));
+                                builder: (context) => const LoginHomePage()));
                       } on Exception catch (e) {
                         log(e.toString());
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return Text(
+                            return const Text(
                               'Hata!',
                               style: TextStyle(color: Colors.red, fontSize: 40),
                             );

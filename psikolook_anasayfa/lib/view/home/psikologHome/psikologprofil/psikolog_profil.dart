@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
-import 'package:psikolook_anasayfa/widget/post_card.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/update_psikolog_profil.dart';
+import 'package:psikolook_anasayfa/widget/my_post_card.dart';
 
 class PsikologProfil extends StatefulWidget {
   final String uid;
@@ -29,7 +30,6 @@ class _PsikologProfilState extends State<PsikologProfil> {
   int blogLen = 0;
   int postLen = 0;
   int followers = 0;
-  int following = 0;
   bool isFollowing = false;
   bool isLoading = false;
 
@@ -65,7 +65,6 @@ class _PsikologProfilState extends State<PsikologProfil> {
       postLen = postSnap.docs.length;
       userData = userSnap.data()!;
       followers = userSnap.data()!['followers'].length;
-      following = userSnap.data()!['following'].length;
       isFollowing = userSnap
           .data()!['followers']
           .contains(FirebaseAuth.instance.currentUser!.uid);
@@ -81,24 +80,38 @@ class _PsikologProfilState extends State<PsikologProfil> {
     });
   }
 
+  _interestField() {
+    if (userData['interestField'].toString() != '') {
+      return userData['interestField'];
+    } else {
+      return 'Lütfen düzenleye tıklayıp ilgilendiğiniz alanı yazınız!';
+    }
+  }
+  _bioField() {
+    if (userData['bio'].toString() != '') {
+      return userData['bio'];
+    } else {
+      return 'Lütfen düzenleye tıklayıp biyografinizi yazınız!';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: backGroundColor
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
-        child:isLoading
+        child: isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
               )
             : SingleChildScrollView(
-                child:  Column(
+                child: Column(
                   children: [
                     Container(
                       decoration: const BoxDecoration(color: Colors.black),
@@ -141,6 +154,44 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
+                                    const SizedBox(height: 20),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.black),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            side: const BorderSide(
+                                                color: Colors.white,
+                                                width: 1.5),
+                                          ))),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdatePsikologProfil(
+                                                        uid: FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid)));
+                                      },
+                                      child: const Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 5.0,
+                                            left: 10,
+                                            right: 10,
+                                            bottom: 5),
+                                        child: Text(
+                                          "Düzenle",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -153,7 +204,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                   children: [
                                     Text(
                                       '$followers',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white, fontSize: 22),
                                     ),
                                     const Text(
@@ -167,7 +218,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                   children: [
                                     Text(
                                       '$postLen',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white, fontSize: 22),
                                     ),
                                     const Text(
@@ -181,7 +232,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                   children: [
                                     Text(
                                       '$blogLen',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white, fontSize: 22),
                                     ),
                                     const Text(
@@ -211,36 +262,29 @@ class _PsikologProfilState extends State<PsikologProfil> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          TextField(
-                            keyboardType: TextInputType.name,
-                            textInputAction: TextInputAction.none,
-                            minLines: 5,
-                            maxLines: null,
-                            onChanged: (String deger) {
-                              if (deger.length > 3) {
-                                print(deger);
-                              }
-                            },
-                            onSubmitted: (String deger) {
-                              print("submit " + deger);
-                            },
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              hintText: 'Buraya biyografini yaz',
-                              hintStyle: TextStyle(color: Colors.black45),
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(22.0)
                                 ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  const Text('Biyografi:',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 20),
+                                  Text(_bioField().toString(), textAlign: TextAlign.start),
+                                ],
                               ),
                             ),
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 25),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.95,
+                            width: MediaQuery.of(context).size.width * 0.9,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(22.0)),
@@ -248,52 +292,24 @@ class _PsikologProfilState extends State<PsikologProfil> {
                               padding: const EdgeInsets.all(20.0),
                               child: Column(
                                 children: [
-                                  const Text('İLGİLENDİĞİ ALANLAR:',
+                                  const Text('İlgilendiğiniz Alanlar:',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold)),
                                   const SizedBox(height: 20),
-                                  TextField(
-                                    keyboardType: TextInputType.name,
-                                    textInputAction: TextInputAction.none,
-                                    minLines: 3,
-                                    maxLines: null,
-                                    style: const TextStyle(color: Colors.white),
-                                    onChanged: (String deger) {
-                                      if (deger.length > 3) {
-                                        print(deger);
-                                      }
-                                    },
-                                    onSubmitted: (String deger) {
-                                      print("submit " + deger);
-                                    },
-                                    cursorColor: Colors.black,
-                                    decoration: const InputDecoration(
-                                      hintText:
-                                          'Buraya ilgilendiğin konuları yaz',
-                                      hintStyle:
-                                          TextStyle(color: Colors.black45),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(12),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  Text(_interestField.toString(),
+                                      textAlign: TextAlign.start),
                                 ],
                               ),
                             ),
                           ),
                           const SizedBox(height: 10),
                           Row(
-                            children: [
-                              const SizedBox(
+                            children: const [
+                              SizedBox(
                                 width: 15,
                               ),
-                              const Text(
+                              Text(
                                 'TAKVİM',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -476,7 +492,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                   DocumentSnapshot snap =
                                       (snapshot.data! as dynamic).docs[index];
                                   return Container(
-                                    child: PostCard(
+                                    child: MyPostCard(
                                       snap: snapshot.data!.docs[index].data(),
                                     ),
                                   );

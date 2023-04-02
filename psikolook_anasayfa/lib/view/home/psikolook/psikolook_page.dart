@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
@@ -35,11 +36,10 @@ class _PsikolookPageState extends State<PsikolookPage> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: backGroundColor
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
         child: ListView(
           primary: false,
@@ -243,7 +243,7 @@ Container builHomeRow(BuildContext context) {
           IconButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const homePage()));
+                  MaterialPageRoute(builder: (context) => const HomePage()));
             },
             icon: Image.asset('assets/images/home_icon.png'),
             iconSize: 40,
@@ -276,7 +276,7 @@ Container builHomeRow(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HomePage_Person()));
+                      builder: (context) => HomePagePerson(uid: FirebaseAuth.instance.currentUser!.uid)));
             },
             icon: Image.asset('assets/images/person_icon.png'),
             iconSize: 40,

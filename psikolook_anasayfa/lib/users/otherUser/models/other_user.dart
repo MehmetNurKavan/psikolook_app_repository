@@ -1,50 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class OtherUser {
   final String email;
   final String uid;
-  final String photoUrl;
   final String username;
-  final String bio;
-  final List followers;
+  final String photoUrl;
   final String number;
   final String age;
   final String gender;
-  final String degree;
+  final String complaint;
+  final String job;
   final String schoolName;
-  final String institutionName;
+  final String schoolJob;
+  final String schoolClass;
 
-  const User({
-    required this.username,
-    required this.uid,
-    required this.photoUrl,
+  const OtherUser({
     required this.email,
-    required this.bio,
-    required this.followers,
+    required this.uid,
+    required this.username,
+    required this.photoUrl,
     required this.number,
     required this.age,
     required this.gender,
-    required this.degree,
+    required this.complaint,
+    required this.job,
     required this.schoolName,
-    required this.institutionName,
+    required this.schoolJob,
+    required this.schoolClass,
   });
 
-  static User fromSnap(DocumentSnapshot snap) {
+  static OtherUser fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
-    return User(
-      username: snapshot["username"] ?? '',
-      uid: snapshot["uid"] ?? '',
+    return OtherUser(
       email: snapshot["email"] ?? '',
+      uid: snapshot["uid"] ?? '',
+      username: snapshot["username"] ?? '',
       photoUrl: snapshot["photoUrl"] ?? '',
-      bio: snapshot["bio"] ?? '',
-      followers: snapshot["followers"] ?? '',
       number: snapshot["number"] ?? '',
       age: snapshot["age"] ?? '',
       gender: snapshot["gender"] ?? '',
+      complaint: snapshot["complaint"] ?? '',
+      job: snapshot["job"] ?? '',
       schoolName: snapshot["schoolName"] ?? '',
-      institutionName: snapshot["institutionName"] ?? '',
-      degree: snapshot["degree"] ?? '',
+      schoolJob: snapshot["schoolJob"] ?? '',
+      schoolClass: snapshot["schoolClass"] ?? '',
     );
   }
 
@@ -53,13 +53,13 @@ class User {
         "uid": uid,
         "email": email,
         "photoUrl": photoUrl,
-        "bio": bio,
-        "followers": followers,
         'number': number,
         'age': age,
         'gender': gender,
+        'complaint': complaint,
+        'job': job,
         'schoolName': schoolName,
-        'institutionName': institutionName,
-        'degree': degree,
+        'schoolJob': schoolJob,
+        'schoolClass': schoolClass,
       };
 }

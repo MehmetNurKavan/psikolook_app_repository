@@ -136,7 +136,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                   )),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -154,7 +154,7 @@ class _SignInWithPhonePageState extends State<SignInWithPhonePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const homePage()));
+                                  builder: (context) => const HomePage()));
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(

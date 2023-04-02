@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:psikolook_anasayfa/service/auth_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/kvkk_page.dart';
@@ -60,8 +60,9 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
       password: _passwordController.text,
       username: _usernameController.text,
       bio: '',
+      interestField: '',
       file: _image!,
-      number: _numberController.text,
+      number: '90'.toString() + _numberController.text,
       age: _ageController.text,
       gender: _genderController.text,
       schoolName: _schoolNameController.text,
@@ -189,13 +190,15 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                         hintText: "Adınız Soyadınız",
                         textInputType: TextInputType.name,
                         textEditingController: _usernameController,
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -206,12 +209,14 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "E-Posta",
                           textEditingController: _emailController,
                           textInputType: TextInputType.emailAddress),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -222,12 +227,14 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Yaş",
                           textInputType: TextInputType.number,
                           textEditingController: _ageController),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -240,13 +247,15 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       /*  gender(_genderController.text), */
                       TextFieldInput(
                           hintText: 'Cinsiyetniz',
                           textEditingController: _genderController,
                           textInputType: TextInputType.text),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -257,12 +266,30 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                      TextFieldInput(
-                          hintText: 'Telefonunuzu Giriniz',
-                          textEditingController: _numberController,
-                          textInputType: TextInputType.number),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
+                      TextField(
+                        controller: _numberController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.number,
+                        maxLength: 10,
+                        decoration: const InputDecoration(
+                          prefix: Padding(
+                            padding: EdgeInsets.all(4),
+                            child: Text('+90'),
+                          ),
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 0, style: BorderStyle.none),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          hintText: "Telefonunuzu Giriniz",
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -273,7 +300,8 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextField(
                         controller: _passwordController,
                         obscureText: _obscureText,
@@ -298,10 +326,11 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                             filled: true,
                             fillColor: Colors.white),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: const[
+                        children: const [
                           SizedBox(width: 10.0),
                           Text(
                               'Yüksek Lisans veya Doktora Öğrencisiyseniz \nOkulunuzun Adı',
@@ -310,15 +339,17 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Okulunuzun Adını Giriniz",
                           textInputType: TextInputType.name,
                           textEditingController: _schoolNameController),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: const[
+                        children: const [
                           SizedBox(width: 10.0),
                           Text('Çalışıyorsanız Çalıştığınız Kurum',
                               style: TextStyle(
@@ -326,12 +357,14 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Kurum Adını Giriniz",
                           textEditingController: _institutionNameController,
                           textInputType: TextInputType.name),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -342,12 +375,14 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
                           hintText: "Unvanınızı Giriniz",
                           textInputType: TextInputType.name,
                           textEditingController: _degreeController),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       //"Diplomanız ya da Öğrenci Belgeniz"
                       /* StorageMethods().uploadPdfToStorage('pdfs', _pdf, true); */
                       Row(
@@ -360,7 +395,8 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                               )),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       /* Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -410,7 +446,8 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                       const Padding(
                         padding: EdgeInsets.only(left: 10.0),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0, right: 10),
                         child: Column(
@@ -520,7 +557,8 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

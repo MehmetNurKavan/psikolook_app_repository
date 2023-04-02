@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/service/firestore_methods.dart';
-import 'package:psikolook_anasayfa/utils/utils.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/blog_page.dart';
+import 'package:psikolook_anasayfa/widget/blog_page.dart';
 
 class BlogCard extends StatefulWidget {
   final snap;
@@ -20,20 +18,8 @@ class _BlogCardState extends State<BlogCard> {
     super.initState();
   }
 
-  deleteBlogs(String postId) async {
-    try {
-      await FireStoreMethods().deleteBlog(postId);
-    } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return InkWell(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -45,7 +31,7 @@ class _BlogCardState extends State<BlogCard> {
             borderRadius: BorderRadius.circular(30.0),
             image: DecorationImage(
               image: NetworkImage(
-                widget.snap['postUrl'].toString(),
+                widget.snap['blogUrl'].toString(),
               ),
               fit: BoxFit.cover,
             ),
@@ -54,7 +40,7 @@ class _BlogCardState extends State<BlogCard> {
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
                   height: 50,
@@ -66,6 +52,13 @@ class _BlogCardState extends State<BlogCard> {
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.0,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 10.0,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ],
                       ),
                       //maxLines: 3,
                     ),
@@ -78,6 +71,13 @@ class _BlogCardState extends State<BlogCard> {
                       '${widget.snap['blogTime']} dkk',
                       style: const TextStyle(
                         color: Colors.white70,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 10.0,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ],
                       ),
                     ),
                   ],

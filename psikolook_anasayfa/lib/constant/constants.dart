@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/gecici/constant/colors.dart';
+import 'package:psikolook_anasayfa/constant/colors.dart';
 
 class Constants {
   //-------------STRINGS----------------

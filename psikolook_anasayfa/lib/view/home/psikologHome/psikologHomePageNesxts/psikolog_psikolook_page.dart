@@ -10,10 +10,12 @@ import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
+import 'package:psikolook_anasayfa/widget/blog_card.dart';
 import 'package:psikolook_anasayfa/widget/post_card.dart';
 
 class PsikologPsikolookIcon extends StatefulWidget {
-  const PsikologPsikolookIcon({Key? key}) : super(key: key);
+  final String uid;
+  const PsikologPsikolookIcon({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<PsikologPsikolookIcon> createState() => _PsikologPsikolookIconState();
@@ -54,11 +56,10 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: backGroundColor
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -71,27 +72,6 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
                     enyakinSeansTarih, enyakinSeansSaat, psikologImage),
               ),
             ),
-            Visibility(
-              visible: isNotVisible,
-              child: Expanded(
-                flex: 5,
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    primary: false,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(10),
-                    children: [
-                      buildBlogCardView(dkk1, baslik1, image1),
-                      buildBlogCardView(dkk2, baslik2, image2),
-                      buildBlogCardView(dkk3, baslik3, image3),
-                      buildBlogCardView(dkk4, baslik4, image4),
-                    ],
-                  ),
-                ),
-              ),
-            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
@@ -101,55 +81,41 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
                 flex: 5,
                 child: Container(
                   alignment: Alignment.topCenter,
-                  child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('posts')
-                      .snapshots(),
-                  builder: (context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (ctx, index) => Container(
-                          margin: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.width * 0.3 
-                          : 
-                          0,
-                          vertical: MediaQuery.of(context).size.width > 600 ? 15 : 0,
-                        ),
-                        child: PostCard(
-                          snap: snapshot.data!.docs[index].data(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                ),
-              ),
-            ),
-            Visibility(
-              visible: isNotVisible,
-              child: Expanded(
-                flex: 5,
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    primary: false,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(10),
-                    children: [
-                      buildBlogCardView(dkk1, baslik1, image1),
-                      buildBlogCardView(dkk2, baslik2, image2),
-                      buildBlogCardView(dkk3, baslik3, image3),
-                      buildBlogCardView(dkk4, baslik4, image4),
-                    ],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('posts')
+                          .snapshots(),
+                      builder: (context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (ctx, index) => SizedBox(
+                            /* margin: EdgeInsets.symmetric(
+                              horizontal: MediaQuery.of(context).size.width > 600
+                                  ? MediaQuery.of(context).size.width * 0.3
+                                  : 0,
+                              vertical: MediaQuery.of(context).size.width > 600
+                                  ? 15
+                                  : 0,
+                            ), */
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: PostCard(
+                              snap: snapshot.data!.docs[index].data(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -180,21 +146,88 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
                 ),
               ),
             ),
-            Expanded(
-              flex: 5,
-              child: Container(
-                alignment: Alignment.topLeft,
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  primary: false,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(10),
-                  children: [
-                    buildBlogCardView(dkk1, baslik1, image1),
-                    buildBlogCardView(dkk2, baslik2, image2),
-                    buildBlogCardView(dkk3, baslik3, image3),
-                    buildBlogCardView(dkk4, baslik4, image4),
-                  ],
+            Visibility(
+              visible: isVisible,
+              child: Expanded(
+                flex: 4,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('blogs')
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 1.5,
+                          childAspectRatio: 1,
+                        ),
+                        itemBuilder: (context, index) {
+                          /* DocumentSnapshot snap =
+                            (snapshot.data! as dynamic).docs[index]; */
+                          //!
+                          return BlogCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: isNotVisible,
+              child: Expanded(
+                flex: 9,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('blogs')
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 1,
+                        ),
+                        itemBuilder: (context, index) {
+                          return BlogCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -469,8 +502,7 @@ SizedBox buildPsikolookButton(context) {
     width: MediaQuery.of(context).size.width * 0.4,
     child: FloatingActionButton(
       tooltip: 'Psikolook',
-      onPressed: () {
-      },
+      onPressed: () {},
       backgroundColor: Colors.transparent, //arka planrengini kaldırdı
       elevation: 0,
       child: Image.asset('assets/images/psikolook_logo.png'),

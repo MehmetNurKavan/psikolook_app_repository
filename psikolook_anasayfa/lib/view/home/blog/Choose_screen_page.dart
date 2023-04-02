@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/my_blogs_page%20.dart';
 import 'package:psikolook_anasayfa/view/home/blog/my_posts_page.dart';
@@ -23,8 +23,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
   }
 
   addData() async {
-    UserProvider _userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    PsikologUserProvider _userProvider =
+        Provider.of<PsikologUserProvider>(context, listen: false);
     await _userProvider.refreshUser();
   }
   @override

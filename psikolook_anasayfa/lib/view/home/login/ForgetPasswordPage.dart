@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/service/auth_methods.dart';
+import 'package:psikolook_anasayfa/users/otherUser/service/other_auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 
@@ -21,7 +21,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 
   void resetPassword() async {
     // signup user using our authmethodds
-    String? res = await AuthMethods().forgotPassword(_emaliController.text);
+    String? res = await OtherAuthMethods().forgotPassword(_emaliController.text);
     // if string returned is sucess, user has been created
     if (res == "e-posta adresinizi kontrol ediniz") {
       setState(() {

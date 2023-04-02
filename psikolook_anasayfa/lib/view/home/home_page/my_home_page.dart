@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
@@ -11,14 +12,14 @@ import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 import 'package:psikolook_anasayfa/widget/blog_card.dart';
 import 'package:psikolook_anasayfa/widget/post_card.dart';
 
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   bool isVisible = true;
   bool isNotVisible = false;
   String dkk1 = '8';
@@ -56,11 +57,10 @@ class _homePageState extends State<homePage> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: backGroundColor
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -73,27 +73,6 @@ class _homePageState extends State<homePage> {
                     context, psikologName, psikologText, psikologImage),
               ),
             ),
-            Visibility(
-              visible: isNotVisible,
-              child: Expanded(
-                flex: 5,
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    primary: false,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(10),
-                    children: [
-                      buildBlogCardView(context, dkk1, baslik1, image1),
-                      buildBlogCardView(context, dkk2, baslik2, image2),
-                      buildBlogCardView(context, dkk3, baslik3, image3),
-                      buildBlogCardView(context, dkk4, baslik4, image4),
-                    ],
-                  ),
-                ),
-              ),
-            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
@@ -101,102 +80,36 @@ class _homePageState extends State<homePage> {
               visible: isVisible,
               child: Expanded(
                 flex: 5,
-                child: /* Container(
+                child: Container(
                   alignment: Alignment.topCenter,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    scrollDirection: Axis.horizontal,
-                    childAspectRatio: 2 / 3,
-                    children: [
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                      buildMidCardView(
-                          context, psikologAvatar, history, otherPsikologName),
-                    ],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('posts')
+                          .snapshots(),
+                      builder: (context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (ctx, index) => SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: PostCard(
+                              snap: snapshot.data!.docs[index].data(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ), */
-                    StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('posts')
-                      .snapshots(),
-                  builder: (context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (ctx, index) => Container(
-                          margin: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.width * 0.3 
-                          : 
-                          0,
-                          vertical: MediaQuery.of(context).size.width > 600 ? 15 : 0,
-                        ),
-                        child: PostCard(
-                          snap: snapshot.data!.docs[index].data(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            Visibility(
-              visible: isNotVisible,
-              child: Expanded(
-                flex: 5,
-                child: /* Container(
-                  alignment: Alignment.topLeft,
-                  child: GridView.count(
-                    crossAxisCount: 1,
-                    primary: false,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(10),
-                    children: [
-                      buildBlogCardView(context, dkk1, baslik1, image1),
-                      buildBlogCardView(context, dkk2, baslik2, image2),
-                      buildBlogCardView(context, dkk3, baslik3, image3),
-                      buildBlogCardView(context, dkk4, baslik4, image4),
-                    ],
-                  ),
-                ), */
-                    StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('blogs')
-                      .snapshots(),
-                  builder: (context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (ctx, index) => Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width > 600 ? MediaQuery.of(context).size.width * 0.3 
-                          : 
-                          0,
-                          vertical: MediaQuery.of(context).size.width > 600 ? 15 : 0,
-                        ),
-                        child: BlogCard(
-                          snap: snapshot.data!.docs[index].data(),
-                        ),
-                      ),
-                    );
-                  },
                 ),
               ),
             ),
@@ -226,21 +139,85 @@ class _homePageState extends State<homePage> {
                 ),
               ),
             ),
-            Expanded(
-              flex: 5,
-              child: Container(
-                alignment: Alignment.topLeft,
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  primary: false,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(10),
-                  children: [
-                    buildBlogCardView(context, dkk1, baslik1, image1),
-                    buildBlogCardView(context, dkk2, baslik2, image2),
-                    buildBlogCardView(context, dkk3, baslik3, image3),
-                    buildBlogCardView(context, dkk4, baslik4, image4),
-                  ],
+            Visibility(
+              visible: isVisible,
+              child: Expanded(
+                flex: 4,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('blogs')
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 1.5,
+                          childAspectRatio: 1,
+                        ),
+                        itemBuilder: (context, index) {
+                          return BlogCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: isNotVisible,
+              child: Expanded(
+                flex: 9,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('blogs')
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 1,
+                        ),
+                        itemBuilder: (context, index) {
+                          return BlogCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -502,7 +479,7 @@ Container buildButtonNavigatorBar(BuildContext context) {
           IconButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const homePage()));
+                  MaterialPageRoute(builder: (context) => const HomePage()));
             },
             icon: Image.asset('assets/images/home_icon.png'),
             iconSize: 40,
@@ -538,7 +515,9 @@ Container buildButtonNavigatorBar(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HomePage_Person()));
+                      builder: (context) => HomePagePerson(
+                            uid: FirebaseAuth.instance.currentUser!.uid,
+                          )));
             },
             icon: Image.asset('assets/images/person_icon.png'),
             iconSize: 40,

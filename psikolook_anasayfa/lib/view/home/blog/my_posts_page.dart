@@ -5,7 +5,7 @@ import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customTextStyle.dart';
 import 'package:psikolook_anasayfa/view/home/blog/post_share.dart';
 import 'package:psikolook_anasayfa/widget/skeleton.dart';
-import 'package:psikolook_anasayfa/widget/post_card.dart';
+import 'package:psikolook_anasayfa/widget/my_post_card.dart';
 
 class MyPostsPage extends StatefulWidget {
   final String uid;
@@ -29,53 +29,49 @@ class _MyPostsPageState extends State<MyPostsPage> {
           ),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const SizedBox(
-              height: 81.7,
-            ),
             barField(),
-            const SizedBox(
-              height: 81.7,
-            ),
             //snapCardField(),
-            FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('posts')
-                  .where('uid', isEqualTo: widget.uid)
-                  .get(),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: NewsCardSkelton(),
-                  );
-                } else if (snapshot.hasData != null) {
-                  return shareCard();
-                }
-                return GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: (snapshot.data! as dynamic).docs.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 2 / 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    /* DocumentSnapshot snap =
-                        (snapshot.data! as dynamic).docs[index]; */
-                        //!
-                    return Container(
-                      child: PostCard(
-                        snap: snapshot.data?.docs[index].data() ??'', //!dikkat
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 275,
+              child: FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection('posts')
+                    .where('uid', isEqualTo: widget.uid)
+                    .get(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: NewsCardSkelton(),
+                    );
+                  } else if (snapshot.hasData != null) {
+                    return SizedBox(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (ctx, index) => SizedBox(
+                          /* margin: EdgeInsets.symmetric(
+                              horizontal: MediaQuery.of(context).size.width > 600
+                                  ? MediaQuery.of(context).size.width * 0.3
+                                  : 0,
+                              vertical: MediaQuery.of(context).size.width > 600
+                                  ? 15
+                                  : 0,
+                            ), */
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: MyPostCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          ),
+                        ),
                       ),
                     );
-                  },
-                );
-              },
-            ),
-            const SizedBox(
-              height: 24,
+                  } else {
+                    return shareCard();
+                  }
+                },
+              ),
             ),
             hearthIcon(),
           ],
@@ -108,7 +104,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
   }
 
 //close icon içeriyor
-  Row barField() {
+  Widget barField() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -134,12 +130,12 @@ class _MyPostsPageState extends State<MyPostsPage> {
                   width: 10,
                 ),
                 Column(
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       "Psikolook",
                       style: textStyle.userNameTextStyle,
                     ),
-                    const Text(
+                    Text(
                       "1 hours ago",
                       style: textStyle.onlineTextStyle,
                     )
@@ -218,14 +214,11 @@ class NewsCardSkelton extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Skeleton(width: 75),
-                    const SizedBox(height: 10),
-                    const Skeleton(width: 100),
+                  children: const [
+                    Skeleton(width: 75),
+                    SizedBox(height: 10),
+                    Skeleton(width: 100),
                   ],
-                ),
-                const ListTile(
-                  
                 ),
                 IconButton(
                     onPressed: () {},

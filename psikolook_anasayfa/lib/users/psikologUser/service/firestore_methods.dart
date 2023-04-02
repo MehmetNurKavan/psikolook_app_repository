@@ -1,20 +1,16 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:psikolook_anasayfa/models/blog.dart';
-import 'package:psikolook_anasayfa/models/post.dart';
-import 'package:psikolook_anasayfa/service/storage_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/blog.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/date_Available.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/post.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadBlog(
-      String description,
-      Uint8List file,
-      String uid,
-      String username,
-      String blogText,
-      String blogTime) async {
+  Future<String> uploadBlog(String description, Uint8List file, String uid,
+      String username, String blogText, String blogTime) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -51,14 +47,13 @@ class FireStoreMethods {
     return res;
   }
 
-  Future<String> uploadPost(String description, String uid, String username,
-      String profImage, String postText) async {
+  Future<String> uploadPost(
+      String uid, String username, String profImage, String postText) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
       String postId = const Uuid().v1(); // creates unique id based on time
       Post post = Post(
-        description: description,
         uid: uid,
         username: username,
         likes: [],
@@ -166,5 +161,48 @@ class FireStoreMethods {
       print(e.toString());
     }
   }
+
+  Future<String> uploadDateAvailable(String uid,
+  String username, String dateDay, addDate) async {
+    String res = "Some error occurred";
+    try {
+      String dateId = const Uuid().v1();
+        DateAvailable dateAveliable = DateAvailable(
+        uid: uid,
+        username: username,
+        dateId: dateId,
+        addDate: [addDate],
+        dateDay: dateDay
+      );
+      _firestore.collection('dateAveliable').doc(dateId).set(dateAveliable.toJson());
+      _firestore.collection('dateAveliable').doc(dateId).update({
+          'addDate': FieldValue.arrayUnion([uid])
+        });
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+  /* Future<String> addTime(String dateId, String uid, List addTime) async {
+    String res = "Some error occurred";
+    try {
+      if (addTime.contains(uid)) {
+        // if the likes list contains the user uid, we need to remove it
+        _firestore.collection('dateAveliable').doc(dateId).update({
+          'addTime': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        // else we need to add uid to the likes array
+        _firestore.collection('dateAveliable').doc(dateId).update({
+          'addTime': FieldValue.arrayUnion([uid])
+        });
+      }
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  } */
 
 }

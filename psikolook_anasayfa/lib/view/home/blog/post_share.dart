@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
-import 'package:psikolook_anasayfa/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
@@ -16,7 +16,6 @@ class PostShare extends StatefulWidget {
 
 class _PostShareState extends State<PostShare> {
   bool isLoading = false;
-  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _postTextController = TextEditingController();
   void sharePost(
     String uid,
@@ -30,7 +29,6 @@ class _PostShareState extends State<PostShare> {
     try {
       // upload to storage and db
       String res = await FireStoreMethods().uploadPost(
-        _descriptionController.text,
         uid,
         username,
         profImage,
@@ -39,6 +37,7 @@ class _PostShareState extends State<PostShare> {
       if (res == "success") {
         setState(() {
           isLoading = false;
+          Navigator.pop(context);
         });
         showSnackBar(
           context,
@@ -61,13 +60,12 @@ class _PostShareState extends State<PostShare> {
   @override
   void dispose() {
     super.dispose();
-    _descriptionController.dispose();
     _postTextController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final PsikologUserProvider userProvider = Provider.of<PsikologUserProvider>(context);
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
@@ -75,56 +73,50 @@ class _PostShareState extends State<PostShare> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: backGroundColor
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
-        child: SingleChildScrollView(
+        child: ListView(
           primary: false,
-          child: Column(
-            children: [
-              isLoading ? const LinearProgressIndicator() : Container(),
-              SizedBox(height: height * 0.05),
-              barField(), //0.1
-              SizedBox(height: height * 0.025),
-              textField("Başlığını Buraya Yaz"), //0.1
-              SizedBox(height: height * 0.025),
-              startWrite("Yazmaya başla..."), //0.6
-              SizedBox(height: height * 0.025),
-              /*  okElevatedButton(userProvider), */
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 44.0),
-                    child: ElevatedButton(
-                        onPressed: () => sharePost(
-                              userProvider.getUser.uid,
-                              userProvider.getUser.username,
-                              userProvider.getUser.photoUrl,
-                            ),
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(22),
-                                        topRight: Radius.circular(22),
-                                        bottomLeft: Radius.circular(22)))),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black)),
-                        child: const Text(
-                          "TAMAM",
-                          style: TextStyle(fontSize: 25),
-                        )),
-                  ),
-                ],
-              ),
-              //SizedBox(height: _hight * 0.025),
-            ],
-          ),
+          children: [
+            SizedBox(height: height * 0.075),
+            barField(), //0.1
+            SizedBox(height: height * 0.05),
+            startWrite("Yazmaya başla..."), //0.6
+            SizedBox(height: height * 0.05),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 44.0),
+                  child: ElevatedButton(
+                      onPressed: () => sharePost(
+                            userProvider.getUser.uid,
+                            userProvider.getUser.username,
+                            userProvider.getUser.photoUrl,
+                          ),
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(22),
+                                          topRight: Radius.circular(22),
+                                          bottomLeft: Radius.circular(22)))),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black)),
+                      child: const Text(
+                        "TAMAM",
+                        style: TextStyle(fontSize: 25),
+                      )),
+                ),
+              ],
+            ),
+            const SizedBox(height: 50),
+            isLoading ? const LinearProgressIndicator() : Container(),
+          ],
         ),
       ),
     );
@@ -137,7 +129,7 @@ class _PostShareState extends State<PostShare> {
       children: [
         SizedBox(width: MediaQuery.of(context).size.width * 0.2),
         const Text(
-          "Blog Yazısı Yaz",
+          "Paylaşım Yap",
           style: TextStyle(fontSize: 27, color: Colors.black),
         ),
         closeIconButton(),
@@ -174,45 +166,29 @@ class _PostShareState extends State<PostShare> {
     );
   } */
 
-  Padding startWrite(String hintText) {
+  Widget startWrite(String hintText) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 44.0),
-      child: Expanded(
-        child: Container(
-          width: 358,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(17)),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 38.0),
-            child: TextFormField(
-              controller: _postTextController,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: hintText,
-                  hintStyle: textStyle.startWriteBlogHintStyle),
-              maxLines: null,
-              minLines: 15,
-            ),
+      padding: const EdgeInsets.all(30.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(17)),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+          child: TextFormField(
+            maxLength: 280,
+            controller: _postTextController,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: textStyle.startWriteBlogHintStyle),
+            maxLines: null,
+            minLines: 7,
           ),
         ),
       ),
     );
   }
 
-  Padding textField(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 56.0),
-      child: TextField(
-        controller: _descriptionController,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-            hintText: title,
-            hintStyle: textStyle.textFieldHintStyle,
-            border: const UnderlineInputBorder(
-                borderSide: BorderSide(color: CustomColors.textFieldColor))),
-      ),
-    );
-  }
 
   Padding closeIconButton() {
     return Padding(

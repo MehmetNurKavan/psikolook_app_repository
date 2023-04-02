@@ -21,15 +21,17 @@ class BlogPage extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors: backGroundColor
-          )),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          tileMode: TileMode.decal,
+          colors: backGroundColor
+        )),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(
@@ -38,11 +40,11 @@ class BlogPage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        snap['blogsUrl'].toString(),
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+              image: NetworkImage(
+                snap['blogUrl'].toString(),
+              ),
+              fit: BoxFit.cover,
+            ),
                   ),
                 ),
               ),

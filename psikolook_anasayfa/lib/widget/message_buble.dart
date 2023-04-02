@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:psikolook_anasayfa/gecici/constant/constants.dart';
+import 'package:psikolook_anasayfa/constant/constants.dart';
 import 'dart:math' as math show Random;
 
 class MessageBubble extends StatefulWidget {

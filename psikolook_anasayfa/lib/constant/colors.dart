@@ -7,5 +7,5 @@ class ProductColors {
   static const Color registerBottomColor = Colors.white;
   static const Color textFieldBackground = Colors.black38;
   static final Color buttonColor = Colors.deepPurple.shade600;
-  static const Color regularWhite= Colors.white;
+  static const Color regularWhite = Colors.white;
 }

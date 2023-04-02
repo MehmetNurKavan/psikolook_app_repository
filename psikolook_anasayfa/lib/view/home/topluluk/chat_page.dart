@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/gecici/constant/constants.dart';
+import 'package:psikolook_anasayfa/constant/constants.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/widget/message_buble.dart';
-import 'package:psikolook_anasayfa/gecici/services/auth_user.dart';
-import 'package:psikolook_anasayfa/gecici/services/firebase_service.dart';
+import 'package:psikolook_anasayfa/users/services/auth_user.dart';
+import 'package:psikolook_anasayfa/users/services/firebase_service.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);

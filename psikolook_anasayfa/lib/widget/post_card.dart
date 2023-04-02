@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:psikolook_anasayfa/models/user.dart' as model;
+import 'package:psikolook_anasayfa/users/psikologUser/models/psikolog_user.dart'
+    as model;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
-import 'package:psikolook_anasayfa/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/widget/like_animation.dart';
 
@@ -47,21 +48,9 @@ class _PostCardState extends State<PostCard> {
     setState(() {});
   }
 
-  deletePost(String postId) async {
-    try {
-      await FireStoreMethods().deletePost(postId);
-    } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final model.User user = Provider.of<UserProvider>(context).getUser;
-    final width = MediaQuery.of(context).size.width;
+    /* final model.PsikologUser user = Provider.of<PsikologUserProvider>(context).getUser; */
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -87,163 +76,80 @@ class _PostCardState extends State<PostCard> {
                   .format(widget.snap['datePublished'].toDate())),
               //isThreeLine: true, //alanını genisletiyor,yerlestiriyor
               //dense: true, //alanını daraltiyor gibi
-              trailing: widget.snap['uid'].toString() == user.uid
+              /* trailing: widget.snap['uid'].toString() == user.uid
                   ? IconButton(
-                      onPressed: () {
-                        showDialog(
-                          useRootNavigator: false,
-                          context: context,
-                          builder: (context) {
-                            return Dialog(
-                              child: ListView(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 16),
-                                  shrinkWrap: true,
-                                  children: [
-                                    'Delete',
-                                  ]
-                                      .map(
-                                        (e) => InkWell(
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 12,
-                                                      horizontal: 16),
-                                              child: Text(e),
-                                            ),
-                                            onTap: () {
-                                              deletePost(
-                                                widget.snap['postId']
-                                                    .toString(),
-                                              );
-                                              // remove the dialog box
-                                              Navigator.of(context).pop();
-                                            }),
-                                      )
-                                      .toList()),
-                            );
-                          },
-                        );
-                      },
-                      icon: const Icon(Icons.more_vert),
+                      onPressed: () {},
+                      icon: const Icon(Icons.close),
                     )
-                  : Container(),
+                  : Container(), */
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: 50,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Text(' ${widget.snap['description']}',
-                  style: TextStyle(fontWeight: FontWeight.w300)),
+              child: Text(
+                widget.snap['postText'].toString(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.w300),
+              ),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: share,
-                  icon: Icon(Icons.share_outlined),
-                ),
-                const SizedBox(),
-                const SizedBox(),
-                const SizedBox(),
-                Text('View all $commentLen comments'),
-                IconButton(
-                    onPressed: () {
-                      /* Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CommentsScreen(
-                            postId: widget.snap['postId'].toString(),
-                          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: share,
+                icon: const Icon(Icons.share_outlined),
+              ),
+              const SizedBox(),
+              const SizedBox(),
+              const SizedBox(),
+              Text('$commentLen'),
+              IconButton(
+                  onPressed: () {
+                    /* Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CommentsScreen(
+                          postId: widget.snap['postId'].toString(),
                         ),
-                      ); */
-                    },
-                    icon: const Icon(Icons.chat_bubble_outline,
-                        color: Color.fromARGB(255, 174, 220, 225))),
-                /* Text(''),
-                IconButton(
-                    onPressed: () {
+                      ),
+                    ); */
+                  },
+                  icon: const Icon(Icons.chat_bubble_outline,
+                      color: Color.fromARGB(255, 174, 220, 225))),
+
+              Text(
+                widget.snap['likes'].length.toString(),
+              ),
+              //!you need change fav icon. you add to infinity icon
+              IconButton(
+                onPressed: () {},
+                icon: Image.asset('assets/images/infinity_add_icon.png'),
+              )
+              /* LikeAnimation(
+                isAnimating: widget.snap['likes'].contains(user.uid),
+                smallLike: true,
+                child: IconButton(
+                  icon: widget.snap['likes'].contains(user.uid)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        )
+                      : const Icon(
+                          Icons.favorite_border,
+                        ),
+                  onPressed: () {
+                    setState(() {
                       FireStoreMethods().likePost(
                         widget.snap['postId'].toString(),
                         user.uid,
                         widget.snap['likes'],
                       );
-                    },
-                    icon: Image.asset('assets/images/infinity_add_icon.png'),
-                    ), */
-                Text(
-                  '${widget.snap['likes'].length} likes',
+                    });
+                  },
                 ),
-                LikeAnimation(
-                  isAnimating: widget.snap['likes'].contains(user.uid),
-                  smallLike: true,
-                  child: IconButton(
-                    icon: widget.snap['likes'].contains(user.uid)
-                        ? const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          )
-                        : const Icon(
-                            Icons.favorite_border,
-                          ),
-                    onPressed: () => FireStoreMethods().likePost(
-                      widget.snap['postId'].toString(),
-                      user.uid,
-                      widget.snap['likes'],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // IMAGE SECTION OF THE POST
-          GestureDetector(
-            onDoubleTap: () {
-              FireStoreMethods().likePost(
-                widget.snap['postId'].toString(),
-                user.uid,
-                widget.snap['likes'],
-              );
-              setState(() {
-                isLikeAnimating = true;
-              });
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  width: double.infinity,
-                  child: Image.network(
-                    widget.snap['postUrl'].toString(),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: isLikeAnimating ? 1 : 0,
-                  child: LikeAnimation(
-                    isAnimating: isLikeAnimating,
-                    child: const Icon(
-                      Icons.favorite,
-                      color: Colors.white,
-                      size: 100,
-                    ),
-                    duration: const Duration(
-                      milliseconds: 400,
-                    ),
-                    onEnd: () {
-                      setState(() {
-                        isLikeAnimating = false;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ), */
+            ],
           ),
         ],
       ),

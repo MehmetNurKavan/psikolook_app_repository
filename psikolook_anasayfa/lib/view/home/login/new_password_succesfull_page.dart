@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
+
 //!sayfa henüz kullanmadık bir yerde
 class NewPasswordSuccesfullPage extends StatefulWidget {
   const NewPasswordSuccesfullPage({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _NewPasswordSuccesfullPageState extends State<NewPasswordSuccesfullPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const homePage()));
+                                  builder: (context) => const HomePage()));
                         },
                         child: const Text("TAMAM"),
                       ),

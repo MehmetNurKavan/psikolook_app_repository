@@ -1,40 +1,44 @@
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:psikolook_anasayfa/users/otherUser/service/other_auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
-import 'package:psikolook_anasayfa/view/home/drawer/kvkk_page.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
+import 'package:psikolook_anasayfa/view/home/profil/person_page.dart';
 import 'package:psikolook_anasayfa/widget/text_field_input.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class UpdatPersonPage extends StatefulWidget {
+  final String uid;
+  const UpdatPersonPage({Key? key, required this.uid}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<UpdatPersonPage> createState() => _UpdatPersonPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _UpdatPersonPageState extends State<UpdatPersonPage> {
+  var userData = {};
   bool isChecked = false;
   bool isChecked2 = false;
   bool _isLoading = false;
   bool _obscureText = true;
+  bool isLoading = false;
 /*   UploadTask? task;
   File? file;
  */
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _complaintController = TextEditingController();
-  final TextEditingController _numberController = TextEditingController();
-  final TextEditingController _password0Controller = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _jobController = TextEditingController();
-  final TextEditingController _schoolNameController = TextEditingController();
-  final TextEditingController _schoolJobController = TextEditingController();
-  final TextEditingController _schoolClassController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _complaintController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _password0Controller = TextEditingController();
+  final _ageController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _jobController = TextEditingController();
+  final _schoolNameController = TextEditingController();
+  final _schoolJobController = TextEditingController();
+  final _schoolClassController = TextEditingController();
   Uint8List? _image;
 
   @override
@@ -54,26 +58,53 @@ class _SignUpPageState extends State<SignUpPage> {
     _schoolClassController.dispose();
   }
 
-  void signUpUser() async {
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('OtherUsers')
+          .doc(widget.uid)
+          .get();
+
+      userData = userSnap.data()!;
+      setState(() {});
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void updateUser() async {
     // set loading to true
     setState(() {
       _isLoading = true;
     });
 
     // signup user using our authmethodds
-    String res = await OtherAuthMethods().signUpUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-      username: _usernameController.text,
+    String res = await OtherAuthMethods().updateOtherUser(
+      username: _usernameController.text.trim(),
       file: _image!,
-      number: '90'.toString() + _numberController.text,
-      age: _ageController.text,
-      gender: _genderController.text,
-      schoolName: _schoolNameController.text,
-      complaint: _complaintController.text,
-      job: _jobController.text,
-      schoolClass: _schoolClassController.text,
-      schoolJob: _schoolJobController.text,
+      number: '90'.toString() + _numberController.text.trim(),
+      age: _ageController.text.trim(),
+      gender: _genderController.text.trim(),
+      schoolName: _schoolNameController.text.trim(),
+      complaint: _complaintController.text.trim(),
+      job: _jobController.text.trim(),
+      schoolClass: _schoolClassController.text.trim(),
+      schoolJob: _schoolJobController.text.trim(),
     );
     // if string returned is sucess, user has been created
     if (res == "Kayıt Başarılı") {
@@ -82,7 +113,9 @@ class _SignUpPageState extends State<SignUpPage> {
       });
       // navigate to the home screen
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomePagePerson(uid: FirebaseAuth.instance.currentUser!.uid)),
           (route) => false);
     } else {
       setState(() {
@@ -160,20 +193,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         children: [
                           _image != null
                               ? CircleAvatar(
-                                  radius: 64,
+                                  backgroundColor: Colors.grey,
                                   backgroundImage: MemoryImage(_image!),
-                                  backgroundColor: Colors.transparent,
+                                  radius:
+                                      MediaQuery.of(context).size.width * 0.15,
                                 )
                               : CircleAvatar(
                                   radius: 64,
-                                  backgroundColor: Colors.white,
-                                  child: SizedBox(
-                                    height: 95,
-                                    child: Image.asset(
-                                        'assets/images/default-usr.png'),
-                                  ),
-                                  //AssetImage('assets/images/default-usr.png',),
-                                ),
+                                  backgroundImage:
+                                      NetworkImage(userData['photoUrl'] ?? '')),
                           Positioned(
                             bottom: -10,
                             left: 80,
@@ -199,13 +227,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                        hintText: "Adınız Soyadınız",
+                        hintText: userData['username'] ?? '',
                         textInputType: TextInputType.name,
                         textEditingController: _usernameController,
                       ),
-                      SizedBox(
+                      /*SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
-                      Row(
+                        Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: const [
                           SizedBox(width: 10.0),
@@ -218,9 +246,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText: "E-Posta",
+                          hintText: userData['email']??'',
                           textEditingController: _emailController,
-                          textInputType: TextInputType.emailAddress),
+                          textInputType: TextInputType.emailAddress), */
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       Row(
@@ -236,7 +264,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText: "Yaş",
+                          hintText: userData['age'] ?? '',
                           textInputType: TextInputType.number,
                           textEditingController: _ageController),
                       SizedBox(
@@ -257,7 +285,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: MediaQuery.of(context).size.height * 0.02),
                       /*  gender(_genderController.text), */
                       TextFieldInput(
-                          hintText: 'Cinsiyetniz',
+                          hintText: userData['gender'] ?? '',
                           textEditingController: _genderController,
                           textInputType: TextInputType.text),
                       SizedBox(
@@ -279,17 +307,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         maxLength: 10,
-                        decoration: const InputDecoration(
-                          prefix: Padding(
+                        decoration: InputDecoration(
+                          prefix: const Padding(
                             padding: EdgeInsets.all(4),
                             child: Text('+90'),
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(width: 0, style: BorderStyle.none),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          hintText: "Telefonunuzu Giriniz",
+                          hintText: userData['number'] ?? '',
                           filled: true,
                           fillColor: Colors.white,
                         ),
@@ -309,8 +337,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText:
-                              "Neden psikolojik destek almak istiyorsunuz?.",
+                          hintText: userData['complaint'] ?? '',
                           textInputType: TextInputType.name,
                           textEditingController: _complaintController),
                       SizedBox(
@@ -328,8 +355,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText:
-                              "Mesleğiniz Varsa Giriniz Yoksa Yok Yazınız",
+                          hintText: userData['job'] ?? '',
                           textEditingController: _jobController,
                           textInputType: TextInputType.name),
                       SizedBox(
@@ -347,7 +373,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText: "Okuduğunuz Okul Adını Giriniz",
+                          hintText: userData['schoolName'] ?? '',
                           textInputType: TextInputType.name,
                           textEditingController: _schoolNameController),
                       SizedBox(
@@ -367,7 +393,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText: "Okuduğunuz Böülümü Giriniz",
+                          hintText: userData['schoolJob'] ?? '',
                           textInputType: TextInputType.name,
                           textEditingController: _schoolJobController),
                       SizedBox(
@@ -385,12 +411,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       TextFieldInput(
-                          hintText: "Okuduğunuz Sınıfı Giriniz",
+                          hintText: userData['schoolClass'] ?? '',
                           textInputType: TextInputType.name,
                           textEditingController: _schoolClassController),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
-                      Row(
+                      /* Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: const [
                           SizedBox(width: 10.0),
@@ -422,114 +448,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                     width: 0, style: BorderStyle.none),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            hintText: "Şifrenizi Giriniz",
+                            hintText: "********",
                             filled: true,
                             fillColor: Colors.white),
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const KvkkPage()));
-                                    },
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          "KVKK",
-                                          style: TextStyle(
-                                            color: Colors.pink,
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                        ),
-                                        Text("'yı okudum onaylıyorum",
-                                            style: TextStyle(
-                                              color: Colors.pink,
-                                            )),
-                                      ],
-                                    )),
-                                SizedBox(
-                                  width: 30,
-                                  height: 30,
-                                  child: Card(
-                                    child: Checkbox(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      checkColor: Colors.pink,
-                                      activeColor: Colors.pink,
-                                      fillColor: MaterialStateProperty.all(
-                                          Colors.white),
-                                      value: isChecked,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          isChecked = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
-                                    onPressed: () {},
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          "Kullanıcı Sözleşmesi",
-                                          style: TextStyle(
-                                            color: Colors.pink,
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                        ),
-                                        Text("ni okudum kabul ediyorum",
-                                            style: TextStyle(
-                                              color: Colors.pink,
-                                            )),
-                                      ],
-                                    )),
-                                SizedBox(
-                                  width: 30,
-                                  height: 30,
-                                  child: Card(
-                                    child: Checkbox(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      checkColor: Colors.pink,
-                                      activeColor: Colors.pink,
-                                      fillColor: MaterialStateProperty.all(
-                                          Colors.white),
-                                      value: isChecked2,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          isChecked2 = value!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      ), */
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
                       Row(
@@ -547,11 +469,11 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               textStyle: const TextStyle(fontSize: 24),
                             ),
-                            onPressed: signUpUser,
+                            onPressed: updateUser,
                             child: const Padding(
                                 padding: EdgeInsets.only(
                                     left: 30, right: 30, top: 13, bottom: 13),
-                                child: Text("Kayıt Ol")),
+                                child: Text("Güncelle")),
                           ),
                         ],
                       ),
@@ -563,101 +485,4 @@ class _SignUpPageState extends State<SignUpPage> {
           )),
     );
   }
-
-/*   Future selectedFile() async {
-    final result = await FilePicker.platform.pickFiles(
-        allowMultiple: false,
-        type: FileType.custom,
-        allowedExtensions: ['pdf']);
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
-  }
-
-  Future upLoadFile() async {
-    if (file == null) return;
-    final fileName = p.basename(file!.path);
-    final destination = 'pdf/$fileName';
-    task = StorageMethods.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
-    final snapshot = await task!.whenComplete(
-      () {},
-    );
-    final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download-link: $urlDownload');
-  }
-
-  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-        stream: task.snapshotEvents,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final snap = snapshot.data!;
-            final progress = snap.bytesTransferred / snap.totalBytes;
-            final percentage = (progress * 100).toStringAsFixed(0);
-            return Text(
-              '$percentage %',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            );
-          } else {
-            return Container();
-          }
-        },
-      ); */
-
-  /*  gender(selectedGender) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Row(
-          children: [
-            Radio(
-                activeColor: Colors.black,
-                value: 1,
-                groupValue: _value,
-                onChanged: (value) {
-                  setState(() {
-                    _value = value!;
-                    selectedGender = "Kadın";
-                  });
-                }),
-            const Text("Kadın"),
-            const Icon(Icons.female)
-          ],
-        ),
-        Row(
-          children: [
-            Radio(
-                activeColor: Colors.black,
-                value: 2,
-                groupValue: _value,
-                onChanged: (value) {
-                  setState(() {
-                    _value = value!;
-                    selectedGender = "Erkek";
-                  });
-                }),
-            const Text("Erkek"),
-            const Icon(Icons.male)
-          ],
-        ),
-        Row(
-          children: [
-            Radio(
-                activeColor: Colors.black,
-                value: 3,
-                groupValue: _value,
-                onChanged: (value) {
-                  setState(() {
-                    _value = value!;
-                    selectedGender = "Diğer";
-                  });
-                }),
-            const Text("Diğer"),
-            const Icon(Icons.transgender)
-          ],
-        )
-      ],
-    );
-  } */
 }

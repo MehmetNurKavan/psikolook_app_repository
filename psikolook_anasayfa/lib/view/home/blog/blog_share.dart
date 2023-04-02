@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
@@ -29,8 +29,7 @@ class _BlogShareState extends State<BlogShare> {
       context: parentContext,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text(
-              'Resim seçiniz'),
+          title: const Text('Resim seçiniz'),
           children: <Widget>[
             SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
@@ -93,6 +92,7 @@ class _BlogShareState extends State<BlogShare> {
           'Paylaşıldı!!',
         );
         clearImage();
+        Navigator.pop(context);
       } else {
         showSnackBar(context, res);
       }
@@ -123,131 +123,135 @@ class _BlogShareState extends State<BlogShare> {
 
   @override
   Widget build(BuildContext context) {
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final PsikologUserProvider userProvider = Provider.of<PsikologUserProvider>(context);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            tileMode: TileMode.decal,
-            colors:backGroundColor
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: backGroundColor),
         ),
-        child: 
-        _file == null
-        ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top:50.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children:[ closeIconButton(),]),
-                ),
-                const Text(('Blog Yazısı Yaz'),style: TextStyle(fontSize: 24)),
-                const SizedBox(height: 50),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.8,
-                  height: MediaQuery.of(context).size.height*0.5,
-                  child: Card(
-                    elevation: 0,
-                    shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(100),
-                      topRight: Radius.circular(100)),
-                          ),
-                          color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Text(('Harika!'),style: TextStyle(fontSize: 30,color: Colors.pink,fontWeight: FontWeight.bold)),
-                        const Text(('Blog yazınız için\nbir fotoğraf seçiniz!'),style: TextStyle(fontSize: 18)),
-                        SizedBox(
-                          child: IconButton(
-                            iconSize: 125,
-                            icon:  Image.asset('assets/images/gallery_photo.png'
+        child: _file == null
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            closeIconButton(),
+                          ]),
+                    ),
+                    const Text(('Blog Yazısı Yaz'),
+                        style: TextStyle(fontSize: 24)),
+                    const SizedBox(height: 50),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: Card(
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(100),
+                              topRight: Radius.circular(100)),
+                        ),
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Text(('Harika!'),
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.pink,
+                                    fontWeight: FontWeight.bold)),
+                            const Text(
+                                ('Blog yazınız için\nbir fotoğraf seçiniz!'),
+                                style: TextStyle(fontSize: 18)),
+                            SizedBox(
+                              child: IconButton(
+                                iconSize: 125,
+                                icon: Image.asset(
+                                    'assets/images/gallery_photo.png'),
+                                onPressed: () => _selectImage(context),
+                              ),
                             ),
-                            onPressed: () => _selectImage(context),
-                          ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
+                  ],
+                ),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 81.7,
+                    ),
+                    barField(),
+                    const SizedBox(
+                      height: 53,
+                    ),
+                    textField("Başlığını Buraya Yaz"),
+                    const SizedBox(
+                      height: 61,
+                    ),
+                    imageBox(),
+                    const SizedBox(
+                      height: 44,
+                    ),
+                    startWrite("Yazmaya başla..."),
+                    const SizedBox(
+                      height: 17,
+                    ),
+                    minuteWrite(),
+                    const SizedBox(
+                      height: 29,
+                    ),
+                    /* okElevatedButton(userProvider), */
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 44.0),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                shareBlogs(
+                                  userProvider.getUser.uid,
+                                  userProvider.getUser.username,
+                                  userProvider.getUser.photoUrl,
+                                );
+                              },
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(22),
+                                              topRight: Radius.circular(22),
+                                              bottomLeft:
+                                                  Radius.circular(22)))),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.black)),
+                              child: const Text(
+                                "TAMAM",
+                                style: TextStyle(fontSize: 25),
+                              )),
                         ),
                       ],
                     ),
-                  ),
+                    const SizedBox(height: 50),
+                    isLoading ? const LinearProgressIndicator() : Container(),
+                  ],
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height*0.2,),
-              ],
-            ),
-          )
-        : 
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              isLoading
-                    ? const LinearProgressIndicator()
-                    : const Padding(padding: EdgeInsets.only(top: 0.0)),
-                const Divider(),
-              const SizedBox(
-                height: 81.7,
               ),
-              barField(),
-              const SizedBox(
-                height: 53,
-              ),
-              textField("Başlığını Buraya Yaz"),
-              const SizedBox(
-                height: 61,
-              ),
-              imageBox(),
-              const SizedBox(
-                height: 44,
-              ),
-              startWrite("Yazmaya başla..."),
-              const SizedBox(
-                height: 17,
-              ),
-              minuteWrite(),
-              const SizedBox(
-                height: 29,
-              ),
-              /* okElevatedButton(userProvider), */
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 44.0),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          shareBlogs(
-                            userProvider.getUser.uid,
-                            userProvider.getUser.username,
-                            userProvider.getUser.photoUrl,
-                          );
-                        },
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(22),
-                                        topRight: Radius.circular(22),
-                                        bottomLeft: Radius.circular(22)))),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black)),
-                        child: const Text(
-                          "TAMAM",
-                          style: TextStyle(fontSize: 25),
-                        )),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 45,
-              )
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -298,48 +302,39 @@ class _BlogShareState extends State<BlogShare> {
     );
   } */
 
-  Padding minuteWrite() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 44.0),
-      child: Container(
-        width: 358,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(17)),
-        child: TextFormField(
-          controller: _blogTimeController,
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          decoration: const InputDecoration(
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: CustomColors.textFieldColor)),
-              hintText: "Yazın kaç dakikada okunuyor?",
-              suffixText: 'dkk ',
-              hintStyle: TextStyle(color: Colors.black, fontSize: 20)),
-        ),
+  Widget minuteWrite() {
+    return Container(
+      width: 300,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(17)),
+      child: TextFormField(
+        controller: _blogTimeController,
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        decoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: "Yazın kaç dakikada okunuyor?",
+            suffixText: 'dkk ',
+            hintStyle: TextStyle(color: Color(0xFF66889B), fontSize: 18)),
       ),
     );
   }
 
-  Padding startWrite(String hintText) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 44.0),
-      child: Expanded(
-        child: Container(
-          width: 358,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(17)),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 38.0),
-            child: TextFormField(
-              controller: _blogTextController,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: hintText,
-                  hintStyle: textStyle.startWriteBlogHintStyle),
-              maxLines: null,
-              minLines: 15,
-            ),
-          ),
+  Widget startWrite(String hintText) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(17)),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+        child: TextFormField(
+          controller: _blogTextController,
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: hintText,
+              hintStyle: textStyle.startWriteBlogHintStyle),
+          maxLines: null,
+          minLines: 15,
         ),
       ),
     );
@@ -372,6 +367,14 @@ class _BlogShareState extends State<BlogShare> {
                     onPressed: () => _selectImage(context),
                     icon: const Icon(
                       Icons.image_rounded,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(1.0, 1.0),
+                          blurRadius: 10.0,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ],
                       size: 29,
                     )),
               ),

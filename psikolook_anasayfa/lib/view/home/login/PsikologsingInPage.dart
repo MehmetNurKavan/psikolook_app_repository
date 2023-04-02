@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/service/auth_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/login/PsikologForgetPassword.dart';

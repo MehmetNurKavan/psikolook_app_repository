@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/blog/choose_screen_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/destekAl_page.dart';
@@ -175,7 +173,7 @@ class _psikolog_pageState extends State<psikolog_page> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const PsikologPsikolookIcon(),
+                builder: (context) => PsikologPsikolookIcon(uid: FirebaseAuth.instance.currentUser!.uid,),
               ));
         },
         backgroundColor: Colors.transparent, //arka planrengini kaldırdı

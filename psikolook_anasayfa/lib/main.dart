@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/otherUser/providers/other_user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/responsive/mobile_screen_layout.dart';
 import 'package:psikolook_anasayfa/responsive/responsive_layout.dart';
 import 'package:psikolook_anasayfa/responsive/web_screen_layout.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => UserProvider(),
+          create: (_) => OtherUserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PsikologUserProvider(),
         ),
       ],
       child: MaterialApp(

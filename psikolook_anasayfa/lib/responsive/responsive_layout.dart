@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/otherUser/providers/other_user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/utils/global_variable.dart';
 
 class ResponsiveLayout extends StatefulWidget {
@@ -21,12 +22,19 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   void initState() {
     super.initState();
     addData();
+    addData2();
   }
 
   addData() async {
-    UserProvider _userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    PsikologUserProvider _userProvider =
+        Provider.of<PsikologUserProvider>(context, listen: false);
     await _userProvider.refreshUser();
+  }
+
+  addData2() async {
+    OtherUserProvider _otherUserProvider =
+        Provider.of<OtherUserProvider>(context, listen: false);
+    await _otherUserProvider.refreshUser();
   }
 
   @override

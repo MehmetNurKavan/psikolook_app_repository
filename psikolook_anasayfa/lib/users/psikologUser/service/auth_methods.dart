@@ -1,21 +1,21 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:psikolook_anasayfa/models/user.dart' as model;
-import 'package:psikolook_anasayfa/service/storage_methods.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/psikolog_user.dart' as model;
+import 'package:psikolook_anasayfa/users/psikologUser/service/storage_methods.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // get user details
-  Future<model.User> getUserDetails() async {
+  Future<model.PsikologUser> getUserDetails() async {
     User currentUser = _auth.currentUser!;
 
     DocumentSnapshot documentSnapshot =
         await _firestore.collection('PsikologUsers').doc(currentUser.uid).get();
 
-    return model.User.fromSnap(documentSnapshot);
+    return model.PsikologUser.fromSnap(documentSnapshot);
   }
 
   // Signing Up User
@@ -25,6 +25,7 @@ class AuthMethods {
       required String password,
       required String username,
       required String bio,
+      required String interestField,
       required Uint8List file,
       required String number,
       required String age,
@@ -52,12 +53,13 @@ class AuthMethods {
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
 
-        model.User _user = model.User(
+        model.PsikologUser _user = model.PsikologUser(
             username: username,
             uid: cred.user!.uid,
             photoUrl: photoUrl,
             email: email,
             bio: bio,
+            interestField: interestField,
             followers: [],
             age: age,
             gender: gender,
@@ -127,9 +129,8 @@ class AuthMethods {
       res = 'e-posta adresinizi kontrol ediniz';
     } on FirebaseAuthException catch (e) {
       print(e);
-      res= e.message.toString();
+      res = e.message.toString();
     }
     return res;
   }
-  
 }
