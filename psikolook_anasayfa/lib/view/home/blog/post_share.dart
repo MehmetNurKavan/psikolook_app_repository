@@ -65,7 +65,8 @@ class _PostShareState extends State<PostShare> {
 
   @override
   Widget build(BuildContext context) {
-    final PsikologUserProvider userProvider = Provider.of<PsikologUserProvider>(context);
+    final PsikologUserProvider userProvider =
+        Provider.of<PsikologUserProvider>(context);
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
@@ -188,7 +189,6 @@ class _PostShareState extends State<PostShare> {
       ),
     );
   }
-
 
   Padding closeIconButton() {
     return Padding(

@@ -16,11 +16,11 @@ class FirebaseAuthProvider /* implements AuthProvider  */ {
     await Firebase.initializeApp();
   }
 
-  Future<DocumentReference<Map<String, dynamic>>> add(
+/*   Future<DocumentReference<Map<String, dynamic>>> add(
       Map<String, dynamic> data) async {
     return FirebaseFirestore.instance.collection('messages').add(data);
   }
-
+  //bunları normal kodda biraz değişik şekilde kullandım
   @override
   Stream<QuerySnapshot<Object?>> snapshots(
       {bool includeMetadataChanges = false}) {
@@ -28,6 +28,6 @@ class FirebaseAuthProvider /* implements AuthProvider  */ {
         .collection('messages')
         .orderBy('timestamp')
         .snapshots();
-  }
+  } */
 
 }

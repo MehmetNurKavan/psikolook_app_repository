@@ -4,7 +4,7 @@ class DateAvailable {
   final String uid;
   final String username;
   final String dateId;
-  final addDate;
+  final String addDate;
   final String dateDay;
 
   const DateAvailable(
@@ -29,7 +29,7 @@ class DateAvailable {
         "uid": uid,
         "username": username,
         "dateId": dateId,
-        "datePublished": addDate,
-        "dateDay": [dateDay]
+        "addDate": addDate,
+        "dateDay": dateDay
       };
 }

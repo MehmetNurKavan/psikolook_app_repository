@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/blog.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/date_Available.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/group.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/post.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/storage_methods.dart';
 import 'package:uuid/uuid.dart';
@@ -162,28 +163,31 @@ class FireStoreMethods {
     }
   }
 
-  Future<String> uploadDateAvailable(String uid,
-  String username, String dateDay, addDate) async {
+  Future<String> uploadDateAvailable(
+      String uid, String username, String dateDay, addDate) async {
     String res = "Some error occurred";
     try {
       String dateId = const Uuid().v1();
-        DateAvailable dateAveliable = DateAvailable(
-        uid: uid,
-        username: username,
-        dateId: dateId,
-        addDate: [addDate],
-        dateDay: dateDay
-      );
-      _firestore.collection('dateAveliable').doc(dateId).set(dateAveliable.toJson());
-      _firestore.collection('dateAveliable').doc(dateId).update({
+      DateAvailable dateAveliable = DateAvailable(
+          uid: uid,
+          username: username,
+          dateId: dateId,
+          addDate: addDate,
+          dateDay: dateDay);
+      _firestore
+          .collection('dateAvailable')
+          .doc(dateId)
+          .set(dateAveliable.toJson());
+      /* _firestore.collection('dateAveliable').doc(dateId).update({
           'addDate': FieldValue.arrayUnion([uid])
-        });
+        }); */
       res = "success";
     } catch (err) {
       res = err.toString();
     }
     return res;
   }
+
   /* Future<String> addTime(String dateId, String uid, List addTime) async {
     String res = "Some error occurred";
     try {
@@ -204,5 +208,31 @@ class FireStoreMethods {
     }
     return res;
   } */
-
+  Future<String> uploadNewTopluluk(String uid, String toplulukTitle) async {
+    // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
+    String res = "Some error occurred";
+    try {
+      String groupId = const Uuid().v1(); // creates unique id based on time
+      Topluluk group = Topluluk(
+        groupId: groupId,
+        toplulukTitle: toplulukTitle,
+      );
+      _firestore.collection('Topluluk').doc(groupId).set(group.toMap());
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+   // Delete Post
+  Future<String> deleteToplulukGroup(String groupId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('Topluluk').doc(groupId).delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 }

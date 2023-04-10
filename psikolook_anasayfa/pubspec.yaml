@@ -30,6 +30,7 @@ dependencies:
   uuid: ^3.0.7
   pinput: ^2.2.31
   country_picker: ^2.0.20
+  flutter_localization: ^0.1.10
 
 
 dev_dependencies:
@@ -41,10 +42,11 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
+  
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  generate: true
   uses-material-design: true
 
   assets:

@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
+  flutter_localization
   smart_auth
   url_launcher_linux
 )

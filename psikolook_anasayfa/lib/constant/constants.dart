@@ -17,7 +17,7 @@ class Constants {
     vertical: 5,
   );
   static const bubblePadding = EdgeInsets.symmetric(
-    vertical: 20,
+    vertical: 15,
     horizontal: 20,
   );
 
@@ -33,19 +33,15 @@ class Constants {
   static const BorderRadius textFieldRadius =
       BorderRadius.all(Radius.circular(12));
   static const chatBubbleRadius = EdgeInsets.symmetric(
-    horizontal: 10,
+    horizontal: 0,
     vertical: 20,
   );
   static const myChatBubbleRadius = BorderRadius.only(
     topLeft: Radius.circular(30),
-    topRight: Radius.circular(30),
     bottomLeft: Radius.circular(30),
-    bottomRight: Radius.circular(30),
   );
   static const otherChatBubbleRadius = BorderRadius.only(
-    topLeft: Radius.circular(30),
     topRight: Radius.circular(30),
-    bottomLeft: Radius.circular(30),
     bottomRight: Radius.circular(30),
   );
 

@@ -23,16 +23,28 @@ class _DateTimeCardState extends State<DateTimeCard> {
   Widget build(BuildContext context) {
     bool isChecked = true;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(),
+            const SizedBox(width: 20),
+            Text('${widget.snap['dateDay']} :',
+                style: const TextStyle(
+                    fontSize: 28)),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Text(widget.snap['addDate'], style: const TextStyle(fontSize: 28)),
+            const SizedBox(width: 30),
             Checkbox(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
               checkColor: Colors.transparent,
-              activeColor: Colors.black,
+              activeColor: const Color(0xFF6EAECC),
               value: isChecked,
               onChanged: (bool? value) {
                 setState(() {
@@ -43,7 +55,8 @@ class _DateTimeCardState extends State<DateTimeCard> {
             const SizedBox(),
           ],
         ),
-        Text(widget.snap['dateDay'], style: const TextStyle(fontSize: 28)),
+        Divider(),
+        const SizedBox(height: 10),
       ],
     );
   }

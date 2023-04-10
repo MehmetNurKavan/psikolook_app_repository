@@ -13,39 +13,43 @@ class OtherUser {
   final String schoolName;
   final String schoolJob;
   final String schoolClass;
+  final bool kvkk;
+  final bool userContract;
 
-  const OtherUser({
-    required this.email,
-    required this.uid,
-    required this.username,
-    required this.photoUrl,
-    required this.number,
-    required this.age,
-    required this.gender,
-    required this.complaint,
-    required this.job,
-    required this.schoolName,
-    required this.schoolJob,
-    required this.schoolClass,
-  });
+  const OtherUser(
+      {required this.email,
+      required this.uid,
+      required this.username,
+      required this.photoUrl,
+      required this.number,
+      required this.age,
+      required this.gender,
+      required this.complaint,
+      required this.job,
+      required this.schoolName,
+      required this.schoolJob,
+      required this.schoolClass,
+      required this.kvkk,
+      required this.userContract});
 
   static OtherUser fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return OtherUser(
-      email: snapshot["email"] ?? '',
-      uid: snapshot["uid"] ?? '',
-      username: snapshot["username"] ?? '',
-      photoUrl: snapshot["photoUrl"] ?? '',
-      number: snapshot["number"] ?? '',
-      age: snapshot["age"] ?? '',
-      gender: snapshot["gender"] ?? '',
-      complaint: snapshot["complaint"] ?? '',
-      job: snapshot["job"] ?? '',
-      schoolName: snapshot["schoolName"] ?? '',
-      schoolJob: snapshot["schoolJob"] ?? '',
-      schoolClass: snapshot["schoolClass"] ?? '',
-    );
+        email: snapshot["email"] ?? '',
+        uid: snapshot["uid"] ?? '',
+        username: snapshot["username"] ?? '',
+        photoUrl: snapshot["photoUrl"] ?? '',
+        number: snapshot["number"] ?? '',
+        age: snapshot["age"] ?? '',
+        gender: snapshot["gender"] ?? '',
+        complaint: snapshot["complaint"] ?? '',
+        job: snapshot["job"] ?? '',
+        schoolName: snapshot["schoolName"] ?? '',
+        schoolJob: snapshot["schoolJob"] ?? '',
+        schoolClass: snapshot["schoolClass"] ?? '',
+        kvkk: snapshot["kvkk"] ?? '',
+        userContract: snapshot["userContract"] ?? '');
   }
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +65,7 @@ class OtherUser {
         'schoolName': schoolName,
         'schoolJob': schoolJob,
         'schoolClass': schoolClass,
+        'kvkk': kvkk,
+        'userContract': userContract
       };
 }

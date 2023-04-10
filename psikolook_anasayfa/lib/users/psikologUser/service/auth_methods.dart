@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:psikolook_anasayfa/users/psikologUser/models/psikolog_user.dart' as model;
+import 'package:psikolook_anasayfa/users/psikologUser/models/psikolog_user.dart'
+    as model;
 import 'package:psikolook_anasayfa/users/psikologUser/service/storage_methods.dart';
+import 'package:psikolook_anasayfa/utils/utils.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -32,7 +34,9 @@ class AuthMethods {
       required String gender,
       required String schoolName,
       required String degree,
-      required String institutionName}) async {
+      required String institutionName,
+      required bool kvkk,
+      required bool userContract}) async {
     String res = "Some error Occurred";
     try {
       if (email.isNotEmpty ||
@@ -49,7 +53,8 @@ class AuthMethods {
           email: email,
           password: password,
         );
-
+        //e-posta adresinde herhangi bir hata yoksa kimlik doğrulaması için e-posta gönderir.
+        cred.user!.sendEmailVerification();
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
 
@@ -66,14 +71,16 @@ class AuthMethods {
             number: number,
             schoolName: schoolName,
             degree: degree,
-            institutionName: institutionName);
+            institutionName: institutionName,
+            kvkk: kvkk,
+            userContract: userContract);
         // adding user in our database
         await _firestore
             .collection("PsikologUsers")
             .doc(cred.user!.uid)
             .set(_user.toJson());
-
-        res = "Kayıt Başarılı";
+        res =
+            "Kayıt Başarılı, E-posta adresinize aktivasyon maili gönderildi. Lütfen aktivasyon işlemini tamamlayıp giriş yapınız.";
       } else {
         res = "Lütfen tüm değerleri giriniz!";
       }
@@ -100,7 +107,7 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
-    String res = "Some error Occurred";
+    String res = "Bir hata oluştu";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         // logging in user with email and password
@@ -108,9 +115,17 @@ class AuthMethods {
           email: email,
           password: password,
         );
-        res = "success";
+        User fbUser = (await _auth.signInWithEmailAndPassword(
+                email: email, password: password))
+            .user!;
+        if (fbUser != null && fbUser.emailVerified == true) {
+          res = "success";
+        } else {
+          //E-postanın aktivasyon işlemleri kontrol ediliyor.
+          res = 'Lütfen e-posta adresinizin aktivasyon işlemlerini tamamlayın.';
+        }
       } else {
-        res = "Please enter all the fields";
+        res = "Lütfen tüm değerleri giriniz.";
       }
     } catch (err) {
       return err.toString();
@@ -130,6 +145,31 @@ class AuthMethods {
     } on FirebaseAuthException catch (e) {
       print(e);
       res = e.message.toString();
+    }
+    return res;
+  }
+
+  Future<String> updatePsikologBioandInterestet({
+    required final String bio,
+    required final String interestField,
+  }) async {
+    String res = "Some error Occurred";
+    try {
+      if (bio.isNotEmpty || interestField.isNotEmpty) {
+        // adding user in our database
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'bio': bio, 'interestField': interestField});
+        res = "Kayıt Başarılı";
+      } else {
+        res = "Lütfen tüm değerleri giriniz!";
+      }
+    } on FirebaseAuthException catch (e) {
+      print('HATA!');
+      print(e.code);
+    } catch (err) {
+      return err.toString();
     }
     return res;
   }

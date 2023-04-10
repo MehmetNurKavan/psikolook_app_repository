@@ -1,11 +1,14 @@
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:psikolook_anasayfa/users/otherUser/service/other_auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/kvkk_page.dart';
+import 'package:psikolook_anasayfa/view/home/drawer/user_contrant.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
+import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'package:psikolook_anasayfa/widget/text_field_input.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -16,8 +19,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool isChecked = false;
-  bool isChecked2 = false;
   bool _isLoading = false;
   bool _obscureText = true;
 /*   UploadTask? task;
@@ -35,6 +36,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _schoolNameController = TextEditingController();
   final TextEditingController _schoolJobController = TextEditingController();
   final TextEditingController _schoolClassController = TextEditingController();
+  bool kvkk = false;
+  bool userContract = false;
   Uint8List? _image;
 
   @override
@@ -55,41 +58,48 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void signUpUser() async {
-    // set loading to true
+    showLoaderDialog(context);
     setState(() {
       _isLoading = true;
     });
-
-    // signup user using our authmethodds
-    String res = await OtherAuthMethods().signUpUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-      username: _usernameController.text,
-      file: _image!,
-      number: '90'.toString() + _numberController.text,
-      age: _ageController.text,
-      gender: _genderController.text,
-      schoolName: _schoolNameController.text,
-      complaint: _complaintController.text,
-      job: _jobController.text,
-      schoolClass: _schoolClassController.text,
-      schoolJob: _schoolJobController.text,
-    );
-    // if string returned is sucess, user has been created
-    if (res == "Kayıt Başarılı") {
-      setState(() {
-        _isLoading = false;
-      });
-      // navigate to the home screen
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomePage()),
-          (route) => false);
+    if (kvkk == true && userContract == true) {
+      // signup user using our authmethodds
+      String res = await OtherAuthMethods().signUpUser(
+          email: _emailController.text,
+          password: _passwordController.text,
+          username: _usernameController.text,
+          file: _image!,
+          number: '90'.toString() + _numberController.text,
+          age: _ageController.text,
+          gender: _genderController.text,
+          schoolName: _schoolNameController.text,
+          complaint: _complaintController.text,
+          job: _jobController.text,
+          schoolClass: _schoolClassController.text,
+          schoolJob: _schoolJobController.text,
+          kvkk: kvkk,
+          userContract: userContract);
+      // if string returned is sucess, user has been created
+      if (res == "Kayıt Başarılı, E-posta adresinize aktivasyon maili gönderildi. Lütfen aktivasyon işlemini tamamlayıp giriş yapınız.") {
+        setState(() {
+          _isLoading = false;
+          showSnackBar(context, res);
+          // navigate to the home screen
+          Navigator.of(context).pop();
+          //kayıt oldugunda otomatik giirş yapmasın diye çıkış da yapiyoruz
+          FirebaseAuth.instance.signOut();
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+          Navigator.of(context).pop();
+          showSnackBar(context, res);
+        });
+        // show the error
+      }
     } else {
-      setState(() {
-        _isLoading = false;
-      });
-      // show the error
-      showSnackBar(context, res);
+      showSnackBar(context,
+          'Lütfen Kvkk veya Kullanıcı Sözleşmelerini okuyup onayladıktan sonra kayıt yapınız');
     }
   }
 
@@ -437,12 +447,13 @@ class _SignUpPageState extends State<SignUpPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
+                                    onPressed: () async {
+                                      bool data = await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const KvkkPage()));
+                                      kvkk = data;
                                     },
                                     child: Row(
                                       children: const [
@@ -472,12 +483,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       activeColor: Colors.pink,
                                       fillColor: MaterialStateProperty.all(
                                           Colors.white),
-                                      value: isChecked,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          isChecked = value!;
-                                        });
-                                      },
+                                      value: kvkk,
+                                      onChanged: (bool? value) {},
                                     ),
                                   ),
                                 ),
@@ -487,7 +494,14 @@ class _SignUpPageState extends State<SignUpPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      bool data = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const UserContrat()));
+                                      userContract = data;
+                                    },
                                     child: Row(
                                       children: const [
                                         Text(
@@ -516,12 +530,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       activeColor: Colors.pink,
                                       fillColor: MaterialStateProperty.all(
                                           Colors.white),
-                                      value: isChecked2,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          isChecked2 = value!;
-                                        });
-                                      },
+                                      value: userContract,
+                                      onChanged: (bool? value) {},
                                     ),
                                   ),
                                 ),
@@ -535,9 +545,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          !_isLoading
-                              ? Container()
-                              : const CircularProgressIndicator(),
                           const SizedBox(width: 50),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(

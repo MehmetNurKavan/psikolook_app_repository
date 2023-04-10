@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/topluluk/chat_page.dart';
+import 'package:psikolook_anasayfa/view/home/topluluk/add_new_group.dart';
+import 'package:psikolook_anasayfa/widget/group_card.dart';
 
 class ToplulukPage extends StatefulWidget {
   const ToplulukPage({Key? key}) : super(key: key);
@@ -9,52 +11,52 @@ class ToplulukPage extends StatefulWidget {
 }
 
 class _ToplulukPageState extends State<ToplulukPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            snap: false,
-            floating: true,
-            expandedHeight: MediaQuery.of(context).size.height * 0.2,
-            backgroundColor: Colors.black, 
-            iconTheme: const IconThemeData(color: Colors.white70),
-            flexibleSpace: const FlexibleSpaceBar(
-              title: Text('Topluluk', style: TextStyle(color: Colors.white70)),
-              centerTitle: true,
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.search),
-                tooltip: 'Ara',
-                onPressed: () {},
-              ),
-            ],
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Topluluk Ekle',
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AddNewGroup()));
+            },
           ),
-          //const SliverToBoxAdapter(),//hemen oraya bisey ekleyebilrisin Text fala nolur boxdecorationla
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  //color: index.isOdd ? Colors.pink[300] : Colors.pink[100],
-                  height: MediaQuery.of(context).size.height * 0.153,
-                  child: ListTile(
-                    title: const Text('Psikolook'),
-                    textColor: Colors.black87,
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ChatPage()));
-                    },
-                  ),
-                );
-              },
-              childCount: 7,
-            ),
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: 'Ara',
+            onPressed: () {},
           ),
         ],
+        backgroundColor: Colors.black,
+        title: const Text('Topluluk', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+        toolbarHeight: 100,
+      ),
+      body: SizedBox(
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Topluluk').snapshots(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: (snapshot.data! as dynamic).docs.length,
+              itemBuilder: (context, index) {
+                return GroupCard(
+                  snap: snapshot.data!.docs[index].data(),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

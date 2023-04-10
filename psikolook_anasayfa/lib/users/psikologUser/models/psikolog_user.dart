@@ -14,41 +14,45 @@ class PsikologUser {
   final String degree;
   final String schoolName;
   final String institutionName;
+  final bool kvkk;
+  final bool userContract;
 
-  const PsikologUser({
-    required this.username,
-    required this.uid,
-    required this.photoUrl,
-    required this.email,
-    required this.bio,
-    required this.interestField,
-    required this.followers,
-    required this.number,
-    required this.age,
-    required this.gender,
-    required this.degree,
-    required this.schoolName,
-    required this.institutionName,
-  });
+  const PsikologUser(
+      {required this.username,
+      required this.uid,
+      required this.photoUrl,
+      required this.email,
+      required this.bio,
+      required this.interestField,
+      required this.followers,
+      required this.number,
+      required this.age,
+      required this.gender,
+      required this.degree,
+      required this.schoolName,
+      required this.institutionName,
+      required this.kvkk,
+      required this.userContract});
 
   static PsikologUser fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return PsikologUser(
-      username: snapshot["username"] ?? '',
-      uid: snapshot["uid"] ?? '',
-      email: snapshot["email"] ?? '',
-      photoUrl: snapshot["photoUrl"] ?? '',
-      bio: snapshot["bio"] ?? '',
-      interestField: snapshot["interestField"]??'',
-      followers: snapshot["followers"] ?? '',
-      number: snapshot["number"] ?? '',
-      age: snapshot["age"] ?? '',
-      gender: snapshot["gender"] ?? '',
-      schoolName: snapshot["schoolName"] ?? '',
-      institutionName: snapshot["institutionName"] ?? '',
-      degree: snapshot["degree"] ?? '',
-    );
+        username: snapshot["username"] ?? '',
+        uid: snapshot["uid"] ?? '',
+        email: snapshot["email"] ?? '',
+        photoUrl: snapshot["photoUrl"] ?? '',
+        bio: snapshot["bio"] ?? '',
+        interestField: snapshot["interestField"] ?? '',
+        followers: snapshot["followers"] ?? '',
+        number: snapshot["number"] ?? '',
+        age: snapshot["age"] ?? '',
+        gender: snapshot["gender"] ?? '',
+        schoolName: snapshot["schoolName"] ?? '',
+        institutionName: snapshot["institutionName"] ?? '',
+        degree: snapshot["degree"] ?? '',
+        kvkk: snapshot["kvkk"] ?? '',
+        userContract: snapshot["userContract"] ?? '');
   }
 
   Map<String, dynamic> toJson() => {
@@ -64,5 +68,7 @@ class PsikologUser {
         'schoolName': schoolName,
         'institutionName': institutionName,
         'degree': degree,
+        'kvkk': kvkk,
+        'userContract': userContract
       };
 }

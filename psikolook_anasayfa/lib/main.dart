@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/users/otherUser/providers/other_user_provider.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
-import 'package:psikolook_anasayfa/responsive/mobile_screen_layout.dart';
-import 'package:psikolook_anasayfa/responsive/responsive_layout.dart';
-import 'package:psikolook_anasayfa/responsive/web_screen_layout.dart';
+import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/firstPage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'firebase_options.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:psikolook_anasayfa/responsive/diferent_user_platform.dart';
 
 //Psikolook
 void main() async {
@@ -36,30 +37,28 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Psikolook',
         debugShowCheckedModeBanner: false,
+        locale: const Locale('tr', 'TR'),
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: const [Locale('en'), Locale('tr', 'TR')],
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
-              // Checking if the snapshot has any data or not
               if (snapshot.hasData) {
-                // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-                return const ResponsiveLayout(
-                  mobileScreenLayout: MobileScreenLayout(),
-                  webScreenLayout: WebScreenLayout(),
+                return const DiferentPlatformLayout(
+                  psikologUserScreen: psikolog_page(),
+                  otherUserScreen: HomePage(),
                 );
-                /*  const psikolog_page(); */
-                //!Dikkat burda normal giriş ve psikollog kısmını ayırt ettiremmeiz gerekcektir!
               } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('${snapshot.error}'),
+                return Scaffold(
+                  body: Center(
+                    child: Text('Birşeyler ters gitti :/ ${snapshot.error}'),
+                  ),
                 );
               }
             }
-            // means connection to future hasnt been made yet
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const sayfa();
             }
             return const sayfa();
           },

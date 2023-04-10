@@ -5,7 +5,7 @@ import 'package:psikolook_anasayfa/constant/constants.dart';
 import 'dart:math' as math show Random;
 
 class MessageBubble extends StatefulWidget {
-  MessageBubble({
+  const MessageBubble({
     Key? key,
     this.text,
     this.sender,
@@ -23,44 +23,60 @@ class MessageBubble extends StatefulWidget {
 }
 
 class _MessageBubbleState extends State<MessageBubble> {
-  List colors = [Color(0xFFA2CED9), Color(0xFFEED0DD), Color(0xFFD5CDED)];
+  List colors = [const Color(0xFFA2CED9), Color(0xFFEED0DD), Color(0xFFD5CDED)];
 
   @override
   Widget build(BuildContext context) {
-    int index = 0;
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.only(bottom: 30.0),
       child: Column(
         crossAxisAlignment:
             widget.isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 14, right: 14),
-            child: Text(widget.sender!, style: Constants.stamps),
-          ),
           Material(
-            elevation: 5,
+            elevation: 10,
             shadowColor: Colors.white24,
             borderRadius: widget.isMe!
                 ? Constants.myChatBubbleRadius
                 : Constants.otherChatBubbleRadius,
             color: widget.isMe!
-                ? Color.fromARGB(254, 251, 245, 236)
+                ? const Color.fromARGB(254, 251, 245, 236)
                 : colors[math.Random().nextInt(colors.length)],
             child: Padding(
               padding: Constants.bubblePadding,
               child: Text(
                 widget.text!,
                 style: TextStyle(
-                  fontSize: 15,
-                  color: widget.isMe! ? Colors.black87 : Colors.black87,
+                  fontSize: 14,
+                  color: widget.isMe! ? Colors.black54 : Colors.black54,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
           ),
-          Text(DateFormat('dd MMM kk:mm').format(widget.timestamp!.toDate()),
-              style: Constants.stamps),
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+            child: Row(
+              mainAxisAlignment: widget.isMe!
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [
+                Text(widget.sender!,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black87,
+                    )),
+                const SizedBox(width: 11),
+                Text(
+                    DateFormat('dd.MM / kk:mm')
+                        .format(widget.timestamp!.toDate()),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black45,
+                    )),
+              ],
+            ),
+          ),
         ],
       ),
     );

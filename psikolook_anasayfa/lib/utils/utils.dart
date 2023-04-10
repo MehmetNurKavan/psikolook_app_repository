@@ -16,12 +16,13 @@ pickImage(ImageSource source) async {
 showSnackBar(BuildContext context, String text) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      duration: const Duration(seconds: 10),
       content: Text(text),
     ),
   );
 }
-Future<dynamic> showErorDialog(BuildContext context,
-    String title) {
+
+Future<dynamic> showErorDialog(BuildContext context, String title) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -101,24 +102,25 @@ Future<dynamic> fireShowDialog(BuildContext context,
     ),
   );
 }
+
 showLoaderDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children:const[
-          CircularProgressIndicator(),
-          Text("Yükleniyor..."),
-        ],
-      ),
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  AlertDialog alert = AlertDialog(
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: const [
+        CircularProgressIndicator(),
+        Text("Yükleniyor..."),
+      ],
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 /* Future<List<dynamic>> open({ List<String> ?types, bool multiple = false}) async {
 

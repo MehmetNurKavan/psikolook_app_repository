@@ -33,6 +33,8 @@ class OtherAuthMethods {
     required String complaint,
     required String schoolClass,
     required String schoolJob,
+    required bool kvkk,
+      required bool userContract
   }) async {
     String res = "Some error Occurred";
     try {
@@ -52,7 +54,8 @@ class OtherAuthMethods {
           email: email,
           password: password,
         );
-
+        //e-posta adresinde herhangi bir hata yoksa kimlik doğrulaması için e-posta gönderir.
+        cred.user!.sendEmailVerification();
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
 
@@ -69,6 +72,8 @@ class OtherAuthMethods {
           complaint: complaint,
           schoolClass: schoolClass,
           schoolJob: schoolJob,
+          kvkk: kvkk,
+          userContract: userContract
         );
         // adding user in our database
         await _firestore
@@ -76,7 +81,7 @@ class OtherAuthMethods {
             .doc(cred.user!.uid)
             .set(_user.toJson());
 
-        res = "Kayıt Başarılı";
+        res = "Kayıt Başarılı, E-posta adresinize aktivasyon maili gönderildi. Lütfen aktivasyon işlemini tamamlayıp giriş yapınız.";
       } else {
         res = "Lütfen tüm değerleri giriniz!";
       }

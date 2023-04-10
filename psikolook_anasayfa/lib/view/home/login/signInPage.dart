@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/responsive/diferent_user_platform.dart';
 import 'package:psikolook_anasayfa/users/otherUser/service/other_auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
 import 'package:psikolook_anasayfa/view/home/login/ForgetPasswordPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/signInWithPhonePage.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'package:psikolook_anasayfa/widget/text_field_input.dart';
 
 class SignInPage extends StatefulWidget {
@@ -19,7 +21,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _obscureText = true;
- 
+
   @override
   void dispose() {
     super.dispose();
@@ -36,7 +38,11 @@ class _SignInPageState extends State<SignInPage> {
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(
+              builder: (context) => const DiferentPlatformLayout(
+                    psikologUserScreen: psikolog_page(),
+                    otherUserScreen: HomePage(),
+                  )),
           (route) => false);
 
       setState(() {
@@ -87,7 +93,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const[
+                      children: const [
                         SizedBox(
                           width: 10.0,
                         ),
@@ -125,7 +131,7 @@ class _SignInPageState extends State<SignInPage> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const[
+                      children: const [
                         SizedBox(
                           width: 10.0,
                         ),
@@ -140,26 +146,29 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         Center(
                           child: TextField(
-                          controller: _passwordController,
-                          obscureText: _obscureText,
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                  color: Colors.black,
-                                  icon:
-                                      Icon(_obscureText ? Icons.visibility : Icons.visibility_off)),
-                              border: const OutlineInputBorder(
-                                  borderSide: BorderSide(width: 0, style: BorderStyle.none),
-                                  borderRadius: BorderRadius.all(Radius.circular(20))),
-                              hintText: "Şifrenizi Giriniz",
-                              filled: true,
-                              fillColor: Colors.white),
-                        ),
+                            controller: _passwordController,
+                            obscureText: _obscureText,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                    color: Colors.black,
+                                    icon: Icon(_obscureText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off)),
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 0, style: BorderStyle.none),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                hintText: "Şifrenizi Giriniz",
+                                filled: true,
+                                fillColor: Colors.white),
+                          ),
                         ),
                       ],
                     ),

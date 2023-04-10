@@ -8,7 +8,8 @@ import 'package:psikolook_anasayfa/users/services/auth_user.dart';
 import 'package:psikolook_anasayfa/users/services/firebase_service.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  final snap;
+  const ChatPage({Key? key, required this.snap}) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -46,6 +47,26 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 80,
+        title: Text(widget.snap['toplulukTitle'],
+            style: const TextStyle(color: Colors.black45, fontSize: 16)),
+        backgroundColor: backGroundColor[0],
+        actions: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Topluluk',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
+          const SizedBox(width: 20),
+        ],
+        iconTheme: const IconThemeData(color: Colors.black45),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -56,9 +77,6 @@ class _ChatPageState extends State<ChatPage> {
         ),
         child: Column(
           children: [
-            const Center(
-                child: Text('Topluluk',
-                    style: TextStyle(color: Colors.black, fontSize: 35))),
             StreamBuilder<QuerySnapshot>(
               builder: ((context, snapshot) {
                 if (snapshot.hasData) {
@@ -92,42 +110,62 @@ class _ChatPageState extends State<ChatPage> {
                   );
                 }
               }),
-              stream: _auth.snapshots(),
+              stream: snapshotsS(),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: Constants.typeMessage,
-                      contentPadding: Constants.buttonPadding,
+            Container(
+              height: 50,
+              color: backGroundColor[1],
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _textController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: Constants.typeMessage,
+                        contentPadding: Constants.buttonPadding,
+                      ),
                     ),
                   ),
-                ),
-                Hero(
-                  tag: 'login',
-                  child: IconButton(
-                    icon: const Icon(Icons.send, color: Colors.white),
-                    padding: Constants.buttonPadding,
-                    onPressed: () async {
-                      if (_textController.text.isNotEmpty) {
-                        _auth.add({
-                          'text': _textController.text,
-                          'sender': loggedInUser!.userEmail,
-                          'timestamp': FieldValue.serverTimestamp(),
-                        });
-                        _textController.clear();
-                      }
-                    },
-                  ),
-                )
-              ],
+                  Hero(
+                    tag: 'login',
+                    child: IconButton(
+                      icon: const Icon(Icons.send, color: Colors.black45),
+                      padding: Constants.buttonPadding,
+                      onPressed: () async {
+                        if (_textController.text.isNotEmpty) {
+                          addMessage({
+                            'text': _textController.text,
+                            'sender': loggedInUser!.userEmail,
+                            'timestamp': FieldValue.serverTimestamp(),
+                          });
+                          _textController.clear();
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<DocumentReference<Map<String, dynamic>>> addMessage(
+      Map<String, dynamic> data) async {
+    return FirebaseFirestore.instance
+        .collection(widget.snap['toplulukTitle'].toString())
+        .add(data);
+  }
+
+  @override
+  Stream<QuerySnapshot<Object?>> snapshotsS(
+      {bool includeMetadataChanges = false}) {
+    return FirebaseFirestore.instance
+        .collection(widget.snap['toplulukTitle'].toString())
+        .orderBy('timestamp')
+        .snapshots();
   }
 }

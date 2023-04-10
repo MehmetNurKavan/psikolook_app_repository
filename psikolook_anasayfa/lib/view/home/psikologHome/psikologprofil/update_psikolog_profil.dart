@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/auth_methods.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
-import 'package:psikolook_anasayfa/widget/date_time_card.dart';
+import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
+import 'package:psikolook_anasayfa/widget/date_time_card2.dart';
 
 class UpdatePsikologProfil extends StatefulWidget {
   final String uid;
@@ -18,20 +20,12 @@ class UpdatePsikologProfil extends StatefulWidget {
 }
 
 class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
-  bool isChecked = false;
-  bool isChecked0 = false;
-  bool isChecked1 = false;
-  bool isChecked2 = false;
-  bool isChecked3 = false;
-  int i = 0;
-
+  String dateDay0 = '';
   TextEditingController dateController = TextEditingController();
 
   TextEditingController bioController = TextEditingController();
   TextEditingController interestFieldController = TextEditingController();
-
   var userData = {};
-  var timeData = {};
   int blogLen = 0;
   int postLen = 0;
   int followers = 0;
@@ -74,7 +68,6 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
       isFollowing = userSnap
           .data()!['followers']
           .contains(FirebaseAuth.instance.currentUser!.uid);
-      timeData = userSnap.data()!['addDate'];
       setState(() {});
     } catch (e) {
       showSnackBar(
@@ -87,8 +80,31 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     });
   }
 
-  void addToDateAveliable(
-      String uid, String username, String dateDay, List<void> addDate) async {
+  void updateBioandInterestet(bio, interestField) async {
+    // set loading to true
+    setState(() {
+      isLoading = true;
+    });
+
+    // signup user using our authmethodds
+    String res = await AuthMethods()
+        .updatePsikologBioandInterestet(bio: bio, interestField: interestField);
+    // if string returned is sucess, user has been created
+    if (res == "Kayıt Başarılı") {
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      // show the error
+      showSnackBar(context, res);
+    }
+  }
+
+  void addToDateAvailable(
+      String uid, String username, String dateDay, String addDate) async {
     setState(() {
       isLoading = true;
     });
@@ -98,7 +114,6 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
       if (res == "success") {
         setState(() {
           isLoading = false;
-          Navigator.pop(context);
         });
         showSnackBar(
           context,
@@ -118,6 +133,22 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     }
   }
 
+  _bioField() {
+    if (userData['bio'].toString() != '' && userData['bio'].toString() != 'null') {
+      return userData['bio'];
+    } else {
+      return 'Buraya biyografini yaz';
+    }
+  }
+
+  _interestField() {
+    if (userData['interestField'].toString() != '' && userData['interestField'].toString() != 'null') {
+      return userData['interestField'];
+    } else {
+      return 'Buraya ilgilendiğin konuları yaz';
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -126,10 +157,63 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     dateController.dispose();
   }
 
+  _onPressed() {
+    String _bio = userData['bio'];
+    String _interestField = userData['interestField'];
+    if (bioController.text != _bio ||
+        interestFieldController.text == _interestField) {
+      updateBioandInterestet(bioController.text.trim(), _interestField);
+    } else if (bioController.text == _bio ||
+        interestFieldController.text != _interestField) {
+      updateBioandInterestet(_bio, interestFieldController.text.trim());
+    } else {
+      updateBioandInterestet(
+          bioController.text.trim(), interestFieldController.text.trim());
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                PsikologProfil(uid: FirebaseAuth.instance.currentUser!.uid)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final PsikologUserProvider userProvider =
         Provider.of<PsikologUserProvider>(context);
+
+    // Select for Time
+    Future<TimeOfDay> _selectTime(BuildContext context) async {
+      final selected = await showTimePicker(
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Colors.black,
+                onPrimary: Colors.white,
+                onSurface: Colors.black,
+              ),
+            ),
+            child: child!,
+          );
+        },
+        context: context,
+        initialTime: selectedTime,
+      );
+      if (selected != null && selected != selectedTime) {
+        setState(() {
+          selectedTime = selected;
+        });
+        addToDateAvailable(
+          userProvider.getUser.uid,
+          userProvider.getUser.username,
+          dateDay0,
+          getTime(selectedTime).toString(),
+        );
+      }
+      return selectedTime;
+    }
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -257,23 +341,44 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          TextField(
-                            keyboardType: TextInputType.name,
-                            textInputAction: TextInputAction.none,
-                            minLines: 5,
-                            maxLines: null,
-                            controller: bioController,
-                            cursorColor: Colors.black,
-                            decoration: const InputDecoration(
-                              hintText: 'Buraya biyografini yaz',
-                              hintStyle: TextStyle(color: Colors.black45),
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12),
-                                ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.95,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(22.0)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  const Text('BİYOGRAFİNİZ:',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: bioController,
+                                    keyboardType: TextInputType.name,
+                                    textInputAction: TextInputAction.none,
+                                    minLines: 3,
+                                    maxLines: null,
+                                    style:
+                                        const TextStyle(color: Colors.black45),
+                                    cursorColor: Colors.black,
+                                    decoration: InputDecoration(
+                                      hintText: _bioField().toString(),
+                                      hintStyle: const TextStyle(
+                                          color: Colors.black45),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      border: const OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -298,16 +403,16 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                                     textInputAction: TextInputAction.none,
                                     minLines: 3,
                                     maxLines: null,
-                                    style: const TextStyle(color: Colors.white),
+                                    style:
+                                        const TextStyle(color: Colors.black45),
                                     cursorColor: Colors.black,
-                                    decoration: const InputDecoration(
-                                      hintText:
-                                          'Buraya ilgilendiğin konuları yaz',
-                                      hintStyle:
-                                          TextStyle(color: Colors.black45),
+                                    decoration: InputDecoration(
+                                      hintText: _interestField().toString(),
+                                      hintStyle: const TextStyle(
+                                          color: Colors.black45),
                                       filled: true,
                                       fillColor: Colors.white,
-                                      border: OutlineInputBorder(
+                                      border: const OutlineInputBorder(
                                         borderSide: BorderSide.none,
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
@@ -319,17 +424,15 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                               ),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                right: 15.0, bottom: 10.0, top: 10.0),
-                            child: Text(
-                              'TAKVİM',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                          const SizedBox(height: 30),
+                          const Text(
+                            'Seanslarınızı Belirleyiniz',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
                           ),
+                          const SizedBox(height: 10),
                           TextField(
                             controller: dateController,
                             readOnly: true,
@@ -345,129 +448,119 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                                   ),
                                 ),
                                 hintText: 'Tarihi giriniz',
+                                hintStyle: TextStyle(fontSize: 30,color: Colors.black87),
                                 prefixIcon: Icon(
-                                  Icons.calendar_today_rounded,
-                                  color: Colors.black,
+                                  Icons.calendar_month,
+                                  color: Colors.black87,
                                 )),
                             style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 40,
+                                color: Colors.black87,
+                                fontSize: 30,
                                 fontWeight: FontWeight.bold),
                             onTap: () async {
                               DateTime? pickedDate = await _selectDate(context);
                               if (pickedDate != null) {
                                 String formattedDate =
                                     DateFormat("dd.MM.yyyy").format(pickedDate);
-                                
+
                                 setState(() {
                                   dateController.text =
                                       formattedDate.toString();
+                                  dateDay0 = formattedDate.toString();
                                 });
                               } else {
                                 print("Henüz tarih seçmediniz!");
                               }
                             },
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                            child: Text(
-                              'Takvimden seçtiğin tarihteki uygun olan saatleri belirle',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(22.0)),
-                                backgroundColor: Colors.white,
-                                side: const BorderSide(
-                                    width: 1.5,
-                                    color: Color.fromARGB(255, 201, 201, 201))),
-                            onPressed: () {
-                              /* _selectTime(context); */
-                              _selectTime(context);
-                              showTime = true;
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Ekle',
-                                style: TextStyle(color: Colors.black),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Text(
+                                'Takvimden seçtiğin tarihteki\nuygun olan saatleri belirleyiniz',
+                                style: TextStyle(fontSize: 12),
                               ),
-                            ),
-                          ),
-                          /* Card(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      showTime
-                                          ? Center(
-                                              child: buildCheckedBox1(
-                                                  getTime(selectedTime)))
-                                          : const SizedBox(),
-                                    ],
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(22.0)),
+                                    backgroundColor: Colors.white,
+                                    side: const BorderSide(
+                                        width: 1.5,
+                                        color: Color.fromARGB(255, 201, 201, 201))),
+                                onPressed: () {
+                                  /* _selectTime(context); */
+                                  _selectTime(context);
+                                  showTime = true;
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '🕘  Seans Ekle',
+                                    style: TextStyle(color: Colors.black),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ), */
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            child: ListView(
-                              children: [
-                                FutureBuilder(
-                                  future: FirebaseFirestore.instance
-                                      .collection('dateAvaliable')
-                                      .where('uid', isEqualTo: widget.uid)
-                                      .get(),
-                                  builder: (context, AsyncSnapshot snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(
-                                          color: Colors.black,
-                                          backgroundColor: Colors.white,
-                                        ),
-                                      );
-                                    }
-                                    return Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: GridView.builder(
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(22.0)),
+                            child: FutureBuilder(
+                              future: FirebaseFirestore.instance
+                                  .collection('dateAvailable')
+                                  .where('uid', isEqualTo: widget.uid)
+                                  .where('dateDay',
+                                      isEqualTo: dateController.text)
+                                  .get(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  );
+                                } else if (snapshot.hasData != null) {
+                                  if (snapshot.data!.docs.length > 0) {
+                                    return SizedBox(
+                                      height: snapshot.data!.docs.length == 1
+                                          ? 150
+                                          : MediaQuery.of(context).size.height *
+                                              0.4,
+                                      child: ListView.builder(
                                         primary: false,
-                                        shrinkWrap: true,
-                                        itemCount: (snapshot.data! as dynamic)
-                                            .docs
-                                            .length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 1,
-                                          crossAxisSpacing: 5,
-                                          mainAxisSpacing: 1.5,
-                                          childAspectRatio: 1,
+                                        itemCount: snapshot.data!.docs.length,
+                                        itemBuilder: (ctx, index) =>
+                                            DateTimeCard2(
+                                          snap:
+                                              snapshot.data!.docs[index].data(),
                                         ),
-                                        itemBuilder: (context, index) {
-                                          return DateTimeCard(
-                                              snap: snapshot.data!.docs[index]
-                                                  .data());
-                                        },
                                       ),
                                     );
-                                  },
-                                ),
-                              ],
+                                  } else {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 15.0,
+                                          right: 15.0,
+                                          bottom: 20,
+                                          top: 20),
+                                      child: Text(
+                                          'Henüz bir seans belirlemediniz.'),
+                                    );
+                                  }
+                                } else {
+                                  return Container();
+                                }
+                              },
                             ),
                           ),
-                          Text(timeData.toString()),
                           const Padding(
                             padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                             child: Text(
@@ -493,14 +586,7 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                                   ),
                                 ),
                               ),
-                              onPressed: () {
-                                addToDateAveliable(
-                                  userProvider.getUser.uid,
-                                  userProvider.getUser.username,
-                                  dateController.toString(),
-                                  [selectedTime],
-                                );
-                              },
+                              onPressed: _onPressed,
                               child: const Padding(
                                 padding: EdgeInsets.only(
                                     left: 70.0,
@@ -524,38 +610,12 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     );
   }
 
-/*   Future<DateTime?> buildDateTimeCalendar(BuildContext context) {
-    return showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
-      lastDate: DateTime(2024),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.black, // <-- SEE HERE
-              onPrimary: Colors.white, // <-- SEE HERE
-              onSurface: Colors.black, // <-- SEE HERE
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Colors.black, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-  } */
-
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime dateTime = DateTime.now();
   bool showDate = false;
   bool showTime = false;
-  bool showDateTime = false;
+  /* bool showDateTime = false; */
 
   // Select for Date
   Future<DateTime> _selectDate(BuildContext context) async {
@@ -568,14 +628,9 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Colors.black, // <-- SEE HERE
-              onPrimary: Colors.white, // <-- SEE HERE
-              onSurface: Colors.black, // <-- SEE HERE
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Colors.black, // button text color
-              ),
+              primary: Colors.black,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
             ),
           ),
           child: child!,
@@ -590,66 +645,6 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     return selectedDate;
   }
 
-// Select for Time
-  Future<TimeOfDay> _selectTime(BuildContext context) async {
-    final selected = await showTimePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.black, // <-- SEE HERE
-              onPrimary: Colors.white, // <-- SEE HERE
-              onSurface: Colors.black, // <-- SEE HERE
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Colors.black, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (selected != null && selected != selectedTime) {
-      setState(() {
-        selectedTime = selected;
-      });
-    }
-    return selectedTime;
-  }
-
-  /* // select date time picker
-
-  Future _selectDateTime(BuildContext context) async {
-    final date = await _selectDate(context);
-    if (date == null) return;
-
-    final time = await _selectTime(context);
-
-    if (time == null) return;
-    setState(() {
-      dateTime = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-    });
-  } */
-
-  /* String getDate() {
-    // ignore: unnecessary_null_comparison
-    if (selectedDate == null) {
-      return 'Günü seçiniz';
-    } else {
-      return DateFormat('MMM d, yyyy').format(selectedDate);
-    }
-  } */
-
   String getDateTime() {
     // ignore: unnecessary_null_comparison
     if (dateTime == null) {
@@ -663,7 +658,7 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     final now = DateTime.now();
 
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.jm();
+    final format = DateFormat.Hm();
     return format.format(dt);
   }
 }
