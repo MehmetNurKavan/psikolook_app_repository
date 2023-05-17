@@ -13,66 +13,58 @@ class FifthPage extends StatefulWidget {
 class _FifthPageState extends State<FifthPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: NextButton(function: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const SixthPage()));
-        }),
-        body:
-            Center(
-          child: Container(
-            width: double.infinity,
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/LoginTheme.png"),
+                fit: BoxFit.fill),
+          ),
+          child: SizedBox(
             height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/LoginTheme.png"),
-                  fit: BoxFit.fill),
-            ),
-            child: SizedBox(
-              height: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.175,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Aynı zamanda Psikologların",
-                        style: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(fontSize: 20)),
-                      ),
-                      Text(
-                        "blog yazılarını okuyabilir,",
-                        style: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "paylaşımlarını ",
-                            style: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                          ),
-                          Text(
-                            "takip edebilirsin",
-                            style: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(fontSize: 20)),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Image.asset("assets/images/Image4.png"),
-                  Image.asset("assets/images/logo_kucuk.png"),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.175,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "Aynı zamanda Psikologların",
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(fontSize: 20)),
+                    ),
+                    Text(
+                      "blog yazılarını okuyabilir,",
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "paylaşımlarını ",
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ),
+                        Text(
+                          "takip edebilirsin",
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(fontSize: 20)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Image.asset("assets/images/Image4.png"),
+                Image.asset("assets/images/logo_kucuk.png"),
+              ],
             ),
           ),
         ),

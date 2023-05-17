@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:psikolook_anasayfa/users/otherUser/providers/other_user_provider.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
+import 'package:psikolook_anasayfa/view/home/login/IntroducingPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/firstPage.dart';
 import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'firebase_options.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const sayfa();
             }
-            return const sayfa();
+            return IntroducingPage();
           },
         ),
       ),

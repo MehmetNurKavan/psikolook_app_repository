@@ -14,42 +14,35 @@ class fourthPage extends StatefulWidget {
 class _fourthPageState extends State<fourthPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: NextButton(function: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const FifthPage()));
-        }),
-        body: Center(
-          child: Container(
-              width: double.infinity,
+    return Scaffold(
+      body: Center(
+        child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/LoginTheme.png"),
+                  fit: BoxFit.fill),
+            ),
+            child: SizedBox(
               height: double.infinity,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/LoginTheme.png"),
-                    fit: BoxFit.fill),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.175,
+                  ),
+                  Text(
+                    "STK'lar tarafından verilenreferans\nkodunla Psikolook'tan ücretsiz\ndestek de alabilirsin",
+                    style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(fontSize: 20)),
+                    textAlign: TextAlign.center,
+                  ),
+                  Image.asset("assets/images/image3.png"),
+                  Image.asset("assets/images/logo_kucuk.png"),
+                ],
               ),
-              child: SizedBox(
-                height: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.175,
-                    ),
-                    Text(
-                      "STK'lar tarafından verilenreferans\nkodunla Psikolook'tan ücretsiz\ndestek de alabilirsin",
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 20)),
-                      textAlign: TextAlign.center,
-                    ),
-                    Image.asset("assets/images/image3.png"),
-                    Image.asset("assets/images/logo_kucuk.png"),
-                  ],
-                ),
-              )),
-        ),
+            )),
       ),
     );
   }

@@ -14,83 +14,84 @@ class _TwelfthPageState extends State<TwelfthPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: NextButton(function: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const LoginHomePage()));
-        }),
-        body: Stack(children: [
-          SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Image.asset(
-              "assets/images/loginPageBackground.png",
-              fit: BoxFit.cover,
+    return Scaffold(
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              "assets/images/LoginTheme2.png",
             ),
+            fit: BoxFit.fill,
           ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(
-                vertical: size.width * 0.03, horizontal: size.width * 0.03),
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Image.asset("assets/images/logo_kucuk.png"),
-              ],
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.15,
             ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(
-                vertical: size.height * 0.13, horizontal: size.width * 0.06),
-            //color: Colors.amber,
-            child: Center(
-              child: Image.asset(
-                "assets/images/Page12.png",
-              ),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(
-                vertical: size.height * 0.10, horizontal: size.width * 0.03),
-            child: Padding(
-              padding: const EdgeInsets.only(left:2.0,right: 2.0),
-              child: SizedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      "Anketler",
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 17)),
+            Center(
+              child: Expanded(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  width: MediaQuery.of(context).size.width * 0.80,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/Page12.png",
+                      ),
+                      fit: BoxFit.fill,
                     ),
-                    Text(
-                      "Menü",
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 17)),
-                    ),
-                    Text(
-                      "Topluluk",
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 17)),
-                    ),
-                    Text(
-                      "Mesajlar",
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 17)),
-                    ),
-                  ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Anketler",
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(fontSize: 16)),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Menü",
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(fontSize: 16)),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Topluluk",
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(fontSize: 16)),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Mesajlar",
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(fontSize: 16)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ]),
+            Expanded(
+                flex: 20, child: Image.asset("assets/images/logo_kucuk.png")),
+          ],
+        ),
       ),
     );
   }
