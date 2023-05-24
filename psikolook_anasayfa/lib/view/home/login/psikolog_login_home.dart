@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/login/PsikologsingInPage.dart';
 import 'package:psikolook_anasayfa/view/home/login/psikolog_sing_up.dart';
 
 class PsikologLoginHome extends StatefulWidget {
@@ -34,12 +33,10 @@ class _PsikologLoginHomeState extends State<PsikologLoginHome> {
                     Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                            ),
                             const Text(
-                              "Ruh sağlığı çalışanı girişi      ",
+                              "Ruh sağlığı çalışanı      ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
@@ -65,44 +62,6 @@ class _PsikologLoginHomeState extends State<PsikologLoginHome> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              gradient: const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color.fromARGB(255, 201, 139, 163),
-                                    Color.fromARGB(255, 202, 141, 164),
-                                    Color.fromARGB(255, 248, 234, 241),
-                                  ])),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shadowColor: Colors.transparent,
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              textStyle: const TextStyle(fontSize: 24),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PsikologSignInPage()));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 30, right: 30, top: 13, bottom: 13),
-                              child: Text(
-                                "Giriş Yap",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
                         Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),

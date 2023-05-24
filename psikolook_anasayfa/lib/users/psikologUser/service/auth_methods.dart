@@ -30,23 +30,25 @@ class AuthMethods {
       required String interestField,
       required Uint8List file,
       required String number,
-      required String age,
+      required int age,
       required String gender,
       required String schoolName,
       required String degree,
       required String institutionName,
       required bool kvkk,
-      required bool userContract}) async {
+      required bool userContract,
+      required Uint8List pdfFile}) async {
     String res = "Some error Occurred";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           username.isNotEmpty ||
           number.isNotEmpty ||
-          age.isEmpty ||
+          age.toString().isEmpty ||
           degree.isNotEmpty ||
           gender.isNotEmpty ||
           schoolName.isNotEmpty ||
+          pdfFile != null ||
           file != null) {
         // registering user in auth with email and password
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
@@ -57,8 +59,8 @@ class AuthMethods {
         cred.user!.sendEmailVerification();
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
-
-        model.PsikologUser _user = model.PsikologUser(
+        String pdfUrl = await StorageMethods().upLoadPdftoStorage(pdfFile);
+        model.PsikologUser user = model.PsikologUser(
             username: username,
             uid: cred.user!.uid,
             photoUrl: photoUrl,
@@ -73,14 +75,15 @@ class AuthMethods {
             degree: degree,
             institutionName: institutionName,
             kvkk: kvkk,
-            userContract: userContract);
+            userContract: userContract,
+            confirmation: false,
+            pdfUrl: pdfUrl);
         // adding user in our database
         await _firestore
             .collection("PsikologUsers")
             .doc(cred.user!.uid)
-            .set(_user.toJson());
-        res =
-            "Kayıt Başarılı, E-posta adresinize aktivasyon maili gönderildi. Lütfen aktivasyon işlemini tamamlayıp giriş yapınız.";
+            .set(user.toJson());
+        res = "Kayıt Başarılı, E-posta adresinize aktivasyon maili gönderildi. Lütfen aktivasyon işlemini tamamlayıp giriş yapınız.";
       } else {
         res = "Lütfen tüm değerleri giriniz!";
       }
@@ -149,24 +152,268 @@ class AuthMethods {
     return res;
   }
 
-  Future<String> updatePsikologBioandInterestet({
-    required final String bio,
-    required final String interestField,
+  Future<String> updatePsikologUser({
+    required String interestField,
+    required String bio,
+    required Uint8List? file,
   }) async {
     String res = "Some error Occurred";
     try {
-      if (bio.isNotEmpty || interestField.isNotEmpty) {
+      if (interestField.isNotEmpty && bio.isNotEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+
         // adding user in our database
         await _firestore
             .collection("PsikologUsers")
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({'bio': bio, 'interestField': interestField});
+            .update({
+          'interestField': interestField,
+          'bio': bio,
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        res = "Kayıt Başarılı";
+      } else if (interestField.isNotEmpty && bio.isNotEmpty && file == null) {
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'interestField': interestField,
+          'bio': bio,
+        });
+        res = "Kayıt Başarılı";
+      } else if (interestField.isEmpty && bio.isEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        //post için profil url ve isim değisimi
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        await _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'profImage': photoUrl,
+        });
+        res = "Kayıt Başarılı";
+      } else if (interestField.isNotEmpty && bio.isEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'interestField': interestField,
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        res = "Kayıt Başarılı";
+      } else if (interestField.isEmpty && bio.isNotEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'bio': bio,
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
         res = "Kayıt Başarılı";
       } else {
-        res = "Lütfen tüm değerleri giriniz!";
+        res = 'Lütfen tüm değerler girinz!';
       }
     } on FirebaseAuthException catch (e) {
       print('HATA!');
+      if (e.code == 'weak-password') {
+        res = 'zayıf şifre';
+      } else if (e.code == 'email-already-in-use') {
+        res = 'zaten kullanımda olan e-posta';
+      } else if (e.code == 'user-not-found') {
+        res = 'kullanıcı bulunamadı';
+      } else if (e.code == 'wrong-password') {
+        res = 'yanlış şifre';
+      }
+      print(e.code);
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
+
+  Future<String> updateAdminUser({
+    required String username,
+    required String bio,
+    required Uint8List? file,
+  }) async {
+    String res = "Some error Occurred";
+    try {
+      if (username.isNotEmpty && bio.isNotEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+
+        // adding user in our database
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'username': username,
+          'bio': bio,
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        if (_firestore
+                .collection('posts')
+                .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                .get() !=
+            null) {}
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        res = "Kayıt Başarılı";
+      } else if (username.isNotEmpty && bio.isNotEmpty && file == null) {
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'username': username,
+          'bio': bio,
+        });
+        res = "Kayıt Başarılı";
+      } else if (username.isEmpty && bio.isEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        _firestore.collection('posts').doc().update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        res = "Kayıt Başarılı";
+      } else if (username.isNotEmpty && bio.isEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'username': username,
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        res = "Kayıt Başarılı";
+      } else if (username.isEmpty && bio.isNotEmpty && file != null) {
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        await _firestore
+            .collection("PsikologUsers")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'bio': bio,
+          'photoUrl': photoUrl,
+        });
+        //post için profil url ve isim değisimi
+        _firestore
+            .collection('posts')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update(
+          {
+            'profImage': photoUrl,
+          },
+        );
+        res = "Kayıt Başarılı";
+      } else {
+        res = 'Lütfen tüm değerler girinz!';
+      }
+    } on FirebaseAuthException catch (e) {
+      print('HATA!');
+      if (e.code == 'weak-password') {
+        res = 'zayıf şifre';
+      } else if (e.code == 'email-already-in-use') {
+        res = 'zaten kullanımda olan e-posta';
+      } else if (e.code == 'user-not-found') {
+        res = 'kullanıcı bulunamadı';
+      } else if (e.code == 'wrong-password') {
+        res = 'yanlış şifre';
+      }
+      print(e.code);
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
+
+  Future<String> updatePsikologUserConfirm({
+    required String uid,
+    required bool confirmation,
+  }) async {
+    String res = "Some error Occurred";
+    try {
+      await _firestore
+          .collection("PsikologUsers")
+          .doc(uid)
+          .update({'confirmation': confirmation});
+      res = "Kayıt Başarılı";
+    } on FirebaseAuthException catch (e) {
+      print('HATA!');
+      if (e.code == 'weak-password') {
+        res = 'zayıf şifre';
+      } else if (e.code == 'email-already-in-use') {
+        res = 'zaten kullanımda olan e-posta';
+      } else if (e.code == 'user-not-found') {
+        res = 'kullanıcı bulunamadı';
+      } else if (e.code == 'wrong-password') {
+        res = 'yanlış şifre';
+      }
       print(e.code);
     } catch (err) {
       return err.toString();

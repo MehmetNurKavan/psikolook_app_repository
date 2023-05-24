@@ -83,10 +83,12 @@ class _CikisYapPageState extends State<CikisYapPage> {
                       try {
                         await _auth.signOut();
                         /* Navigator.of(context).pop(); */
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginHomePage()));
+                              builder: (context) => const LoginHomePage(),
+                            ),
+                            (route) => false);
                       } on Exception catch (e) {
                         log(e.toString());
                         showDialog(

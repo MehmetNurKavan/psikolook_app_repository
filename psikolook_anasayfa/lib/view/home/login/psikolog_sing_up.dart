@@ -1,15 +1,17 @@
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/kvkk_page.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/user_contrant.dart';
-import 'package:psikolook_anasayfa/view/home/login/PsikologsingInPage.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
+import 'package:psikolook_anasayfa/view/home/login/signInPage.dart';
 import 'package:psikolook_anasayfa/widget/text_field_input.dart';
+import 'package:image_picker/image_picker.dart';
 
 class psikologSignUpPage extends StatefulWidget {
   const psikologSignUpPage({Key? key}) : super(key: key);
@@ -21,9 +23,7 @@ class psikologSignUpPage extends StatefulWidget {
 class _psikologSignUpPageState extends State<psikologSignUpPage> {
   bool _isLoading = false;
   bool _obscureText = true;
-/*   UploadTask? task;
-  File? file;
- */
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -37,6 +37,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
   bool kvkk = false;
   bool userContract = false;
   Uint8List? _image;
+  Uint8List? _pdfFile;
 
   @override
   void dispose() {
@@ -66,13 +67,14 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
           interestField: '',
           file: _image!,
           number: '90'.toString() + _numberController.text,
-          age: _ageController.text,
+          age: _ageController.hashCode,
           gender: _genderController.text,
           schoolName: _schoolNameController.text,
           degree: _degreeController.text,
           institutionName: _institutionNameController.text,
           kvkk: kvkk,
-          userContract: userContract);
+          userContract: userContract,
+          pdfFile: _pdfFile!);
       // if string returned is sucess, user has been created
       if (res ==
           "Kayıt Başarılı, E-posta adresinize aktivasyon maili gönderildi. Lütfen aktivasyon işlemini tamamlayıp giriş yapınız.") {
@@ -80,22 +82,23 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
           _isLoading = false;
           showSnackBar(context, res);
           // navigate to the home screen
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const PsikologSignInPage(),
-          ));
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const SignInPage()),
+              (route) => false);
           //kayıt oldugunda otomatik giirş yapmasın diye çıkış da yapiyoruz
           FirebaseAuth.instance.signOut();
         });
       } else {
         setState(() {
           _isLoading = false;
-          // show the error
           showSnackBar(context, res);
         });
       }
     } else {
-      showSnackBar(context,
-          'Lütfen Kvkk veya Kullanıcı Sözleşmelerini okuyup onayladıktan sonra kayıt yapınız');
+      setState(() {
+          _isLoading = false;
+          showSnackBar(context,'Kvkk veya Kullanıcı Sözleşmelerini okuyup onayladıktan sonra kayıt yapınız');
+        });
     }
   }
 
@@ -109,8 +112,6 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-/*     final fileName =
-        file != null ? p.basename(file!.path) : 'Henüz dosya seçilemedi'; */
     return Scaffold(
       body: Container(
           decoration: BoxDecoration(
@@ -401,7 +402,8 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: const [
                           SizedBox(width: 10.0),
-                          Text('Diplomanız ya da Öğrenci Belgeniz',
+                          Text(
+                              'Diplomanız ya da Öğrenci Belgeniz\n(PDF formatında istenilmektedir)',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               )),
@@ -409,52 +411,28 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
-                      /* Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                    elevation: MaterialStateProperty.all(1),
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.white),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ))),
-                                onPressed: selectedFile,
-                                child: const Padding(
-                                  padding: EdgeInsets.only(top: 5.0, bottom: 5),
-                                  child: Text(
-                                    "Belgenizi Seçiniz",
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black54),
-                                  ),
-                                ),
+                      Card(
+                        child: TextButton(
+                          onPressed: selectedFile,
+                          style: ButtonStyle(
+                            side: MaterialStateProperty.all<BorderSide>(
+                              const BorderSide(
+                                width: 1,
+                                color: Colors.black,
                               ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                    elevation: MaterialStateProperty.all(1),
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.white),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ))),
-                                onPressed: upLoadFile,
-                                child: const Padding(
-                                  padding: EdgeInsets.only(top: 5.0, bottom: 5),
-                                  child: Text(
-                                    "Belgeyi Onayla",
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black54),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          task != null ? buildUploadStatus(task!) : Container(), */
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                                left: 50.0,
+                                right: 50.0,
+                                bottom: 10.0,
+                                top: 10.0),
+                            child: Text('BELGENİZİ SEÇİNİZ',
+                                style: TextStyle(color: Colors.black)),
+                          ),
+                        ),
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(left: 10.0),
                       ),
@@ -600,28 +578,18 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
     );
   }
 
-/*   Future selectedFile() async {
+  Future selectedFile() async {
     final result = await FilePicker.platform.pickFiles(
-        allowMultiple: false,
-        type: FileType.custom,
-        allowedExtensions: ['pdf']);
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(() => file = File(path));
-  }
-
-  Future upLoadFile() async {
-    if (file == null) return;
-    final fileName = p.basename(file!.path);
-    final destination = 'pdf/$fileName';
-    task = StorageMethods.uploadFile(destination, file!);
-    setState(() {});
-    if (task == null) return;
-    final snapshot = await task!.whenComplete(
-      () {},
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
     );
-    final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download-link: $urlDownload');
+    if (result != null) {
+      File pick = File(result.files.single.path.toString());
+      _pdfFile = pick.readAsBytesSync();
+      return _pdfFile;
+    }
+    if (result == null) return;
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
@@ -639,7 +607,7 @@ class _psikologSignUpPageState extends State<psikologSignUpPage> {
             return Container();
           }
         },
-      ); */
+      );
 
   /*  gender(selectedGender) {
     return Row(

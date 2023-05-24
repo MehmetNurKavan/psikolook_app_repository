@@ -2,33 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:psikolook_anasayfa/adminpanel/admin_panel.dart';
+import 'package:psikolook_anasayfa/adminpanel/admin_profil.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/home/drawer/drawer_widget.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/cok_yakinda_page.dart';
 import 'package:psikolook_anasayfa/view/home/message/message_page.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/palnlanPage.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/psikolog_profil.dart';
 import 'package:psikolook_anasayfa/view/home/topluluk/toplulukPage.dart';
 import 'package:psikolook_anasayfa/widget/blog_card.dart';
 import 'package:psikolook_anasayfa/widget/post_card.dart';
 
-class PsikologPsikolookIcon extends StatefulWidget {
+class AdminPsikolookIcon extends StatefulWidget {
   final String uid;
-  const PsikologPsikolookIcon({Key? key, required this.uid}) : super(key: key);
+  const AdminPsikolookIcon({Key? key, required this.uid}) : super(key: key);
 
   @override
-  State<PsikologPsikolookIcon> createState() => _PsikologPsikolookIconState();
+  State<AdminPsikolookIcon> createState() => _AdminPsikolookIconState();
 }
 
-class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
+class _AdminPsikolookIconState extends State<AdminPsikolookIcon> {
   bool isVisible = true;
   bool isNotVisible = false;
-  String psikologName = 'Uzman Klinik Psikolog Aslı Kaya';
-  String enyakinSeansTarih = '04.03.2023';
-  String enyakinSeansSaat = '11.00';
-  String psikologImage = 'assets/images/woman_picture.png';
-  String otherPsikologName = 'Psikolook';
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +47,7 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
             Visibility(
               visible: isVisible,
               child: Expanded(
-                flex: 5,
-                child: buildTopCardView(context, psikologName,
-                    enyakinSeansTarih, enyakinSeansSaat, psikologImage),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.02,
-            ),
-            Visibility(
-              visible: isVisible,
-              child: Expanded(
-                flex: 5,
+                flex: 4,
                 child: Container(
                   alignment: Alignment.topCenter,
                   child: SizedBox(
@@ -136,7 +119,7 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
             Visibility(
               visible: isVisible,
               child: Expanded(
-                flex: 4,
+                flex: 6,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: StreamBuilder(
@@ -159,7 +142,7 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
                         itemCount: (snapshot.data! as dynamic).docs.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
+                          crossAxisCount: 2,
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 1.5,
                           childAspectRatio: 1,
@@ -226,130 +209,6 @@ class _PsikologPsikolookIconState extends State<PsikologPsikolookIcon> {
       ),
     );
   }
-}
-
-Card buildTopCardView(
-    context, psikologName, enYakinSeansTarih, enYakinSeansSaat, psikologImage) {
-  return Card(
-    elevation: 0,
-    color: const Color.fromARGB(255, 251, 249, 249),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0),
-      side: const BorderSide(
-          width: 0.4, color: Color.fromARGB(255, 201, 201, 201)),
-    ),
-    margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-    child: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            'assets/images/infinity_half_big.png',
-          ),
-          fit: BoxFit.fitWidth,
-        ),
-      ),
-      child: Column(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.045,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      tileMode: TileMode.decal,
-                      colors: [
-                        Color.fromARGB(255, 248, 229, 228),
-                        Color.fromARGB(255, 252, 246, 238),
-                        Color.fromARGB(255, 252, 246, 238),
-                        Color.fromARGB(255, 252, 246, 238),
-                        Color.fromARGB(255, 248, 229, 228),
-                      ],
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      psikologName,
-                      style: const TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              SizedBox(width: MediaQuery.of(context).size.width * 0.08),
-              Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                  CircleAvatar(
-                    backgroundImage: AssetImage(psikologImage),
-                    radius: 35.0,
-                    backgroundColor: Colors.white,
-                  ),
-                ],
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.075),
-              Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PlanPage()));
-                            },
-                            child: const Text(
-                              'En Yakın Seans Tarihiniz:',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.pink,
-                              ),
-                            )),
-                        Text(
-                          'Tarih: $enYakinSeansTarih',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black45,
-                          ),
-                        ),
-                        Text(
-                          'Saat: $enYakinSeansSaat',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black45,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
 }
 
 Card buildBlogCardView(dkk, baslik, image) {
@@ -536,10 +395,8 @@ Container buildButtonNavigatorBar(BuildContext context) {
         children: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const psikolog_page()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AdminPanel()));
             },
             icon: Image.asset('assets/images/home_icon.png'),
             iconSize: 40,
@@ -575,7 +432,7 @@ Container buildButtonNavigatorBar(BuildContext context) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PsikologProfil(
+                      builder: (context) => AdminProfil(
                             uid: FirebaseAuth.instance.currentUser!.uid,
                           )));
             },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/login/secondPage.dart';
+import 'package:psikolook_anasayfa/view/home/login/IntroducingPage.dart';
 
 class sayfa extends StatefulWidget {
   const sayfa({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class _sayfaState extends State<sayfa> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const secondPage()));
+          context, MaterialPageRoute(builder: (context) => const IntroducingPage()));
     });
   }
 

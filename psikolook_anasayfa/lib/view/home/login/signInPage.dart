@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:psikolook_anasayfa/adminpanel/admin_panel.dart';
 import 'package:psikolook_anasayfa/responsive/diferent_user_platform.dart';
 import 'package:psikolook_anasayfa/users/otherUser/service/other_auth_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
@@ -34,25 +36,44 @@ class _SignInPageState extends State<SignInPage> {
     setState(() {
       _isLoading = true;
     });
-    String res = await OtherAuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
-    if (res == 'success') {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (context) => const DiferentPlatformLayout(
-                    psikologUserScreen: psikolog_page(),
-                    otherUserScreen: HomePage(),
-                  )),
-          (route) => false);
-
-      setState(() {
-        _isLoading = false;
-      });
+    if (_emailController.text == 'psikolookdevelopment@gmail.com') {
+      String res = await OtherAuthMethods().loginUser(
+          email: _emailController.text, password: _passwordController.text);
+      if (res == 'success') {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const AdminPanel()),
+            (route) => false);
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(context, res);
+      }
     } else {
-      setState(() {
-        _isLoading = false;
-      });
-      showSnackBar(context, res);
+      String res = await OtherAuthMethods().loginUser(
+          email: _emailController.text, password: _passwordController.text);
+      if (res == 'success') {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => const DiferentPlatformLayout(
+                      psikologUserScreen: psikolog_page(),
+                      otherUserScreen: HomePage(),
+                      adminUserScreen: AdminPanel(),
+                    )),
+            (route) => false);
+
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(context, res);
+      }
     }
   }
 
@@ -107,19 +128,7 @@ class _SignInPageState extends State<SignInPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Center(
-                          child: /* TextField(
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 0, style: BorderStyle.none),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              hintText: "E-Mail Adresiniz",
-                              filled: true,
-                              fillColor: Colors.white),
-                        ), */
+                          child:
                               TextFieldInput(
                             hintText: 'E-Mail Adresiniz',
                             textInputType: TextInputType.emailAddress,
@@ -195,34 +204,9 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        /* !_isLoading
-                            ? Container()
-                            : const CircularProgressIndicator(), */
                         const SizedBox(width: 50),
                         Column(
                           children: [
-                            /* InkWell(
-                            child: Container(
-                              child: !_isLoading
-                                  ? const Text(
-                                      'Giriş Yap',
-                                    )
-                                  : const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: const ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                color: Colors.black,
-                              ),
-                            ),
-                            onTap: loginUser,
-                          ), */
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.black,
@@ -254,7 +238,6 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ],
                     ),
-                    //SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                     Image.asset("assets/images/logo_kucuk.png"),
                   ],
                 ),

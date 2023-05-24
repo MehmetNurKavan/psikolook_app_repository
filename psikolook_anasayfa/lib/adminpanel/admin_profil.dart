@@ -1,26 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:psikolook_anasayfa/adminpanel/update_admin_profil.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/home/blog/my_posts_page.dart';
 import 'package:psikolook_anasayfa/view/home/blog/utils/customColors.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologprofil/update_psikolog_profil.dart';
-import 'package:psikolook_anasayfa/widget/date_time_card.dart';
 import 'package:psikolook_anasayfa/widget/my_post_card.dart';
 
-class PsikologProfil extends StatefulWidget {
+class AdminProfil extends StatefulWidget {
   final String uid;
-  const PsikologProfil({Key? key, required this.uid}) : super(key: key);
+  const AdminProfil({Key? key, required this.uid}) : super(key: key);
 
   @override
-  State<PsikologProfil> createState() => _PsikologProfilState();
+  State<AdminProfil> createState() => _AdminProfilState();
 }
 
-class _PsikologProfilState extends State<PsikologProfil> {
-  TextEditingController dateController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
+class _AdminProfilState extends State<AdminProfil> {
 
   var userData = {};
   int blogLen = 0;
@@ -33,7 +29,6 @@ class _PsikologProfilState extends State<PsikologProfil> {
   void initState() {
     super.initState();
     getData();
-    dateController.text = "";
   }
 
   getData() async {
@@ -76,15 +71,6 @@ class _PsikologProfilState extends State<PsikologProfil> {
     });
   }
 
-  _interestField() {
-    if (userData['interestField'].toString() != '' &&
-        userData['interestField'].toString() != 'null') {
-      return userData['interestField'];
-    } else {
-      return 'Lütfen düzenleye tıklayıp ilgilendiğiniz alanı yazınız!';
-    }
-  }
-
   _bioField() {
     if (userData['bio'].toString() != '' &&
         userData['bio'].toString() != 'null') {
@@ -98,6 +84,8 @@ class _PsikologProfilState extends State<PsikologProfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -131,7 +119,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                         color: Colors.white,
                                         size: 30)),
                                 CircleAvatar(
-                                  backgroundColor: Colors.grey,
+                                  backgroundColor: Colors.transparent,
                                   backgroundImage: NetworkImage(
                                     userData['photoUrl'],
                                   ),
@@ -146,7 +134,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                       width: MediaQuery.of(context).size.width *
                                           0.4,
                                       child: Text(
-                                        userData['username'],
+                                        userData['username'].toString(),
                                         style: const TextStyle(
                                             fontSize: 17,
                                             color: Colors.white,
@@ -173,7 +161,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    UpdatePsikologProfil(
+                                                    UpdateAdminProfil(
                                                         uid: FirebaseAuth
                                                             .instance
                                                             .currentUser!
@@ -265,10 +253,10 @@ class _PsikologProfilState extends State<PsikologProfil> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(22.0)),
                           child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.only(left:20.0,right: 20.0,bottom: 50.0,top: 20.0),
                             child: Column(
                               children: [
-                                const Text('BİYOGRAFİNİZ:',
+                                const Text('Biyografiniz:',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold)),
@@ -282,104 +270,7 @@ class _PsikologProfilState extends State<PsikologProfil> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 25),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(22.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                const Text('İLGİLENDİĞİ ALANLAR:',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 20),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(_interestField().toString(),
-                                      textAlign: TextAlign.start),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                         const SizedBox(height: 30),
-                        Row(
-                          children: const [
-                            SizedBox(
-                              width: 50,
-                            ),
-                            Text(
-                              'SEANSLAR:',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(22.0)),
-                          child: FutureBuilder(
-                            future: FirebaseFirestore.instance
-                                .collection('dateAvailable')
-                                .where('uid', isEqualTo: widget.uid)
-                                .get(),
-                            builder: (context, AsyncSnapshot snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.black,
-                                    backgroundColor: Colors.white,
-                                  ),
-                                );
-                              } else if (snapshot.hasData != null) {
-                                if (snapshot.data!.docs.length > 0) {
-                                  return SizedBox(
-                                    height: snapshot.data!.docs.length == 1
-                                        ? 150
-                                        : MediaQuery.of(context).size.height *
-                                            0.5,
-                                    child: ListView.builder(
-                                      primary: false,
-                                      itemCount: snapshot.data!.docs.length,
-                                      itemBuilder: (ctx, index) => DateTimeCard(
-                                        snap: snapshot.data!.docs[index].data(),
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(22.0)),
-                                    child: const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 15.0,
-                                          right: 15.0,
-                                          bottom: 30,
-                                          top: 30),
-                                      child: Text(
-                                          'Henüz bir seans belirlemediniz.\nSeans saatini düzenle kısmından ayarlayabilirsiniz.'),
-                                    ),
-                                  );
-                                }
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 20),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 275,

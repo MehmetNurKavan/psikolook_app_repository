@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/view/home/topluluk/add_new_group.dart';
+import 'package:psikolook_anasayfa/adminpanel/add_new_group.dart';
 import 'package:psikolook_anasayfa/widget/group_card.dart';
 
 class ToplulukPage extends StatefulWidget {
@@ -16,14 +16,6 @@ class _ToplulukPageState extends State<ToplulukPage> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Topluluk Ekle',
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AddNewGroup()));
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'Ara',

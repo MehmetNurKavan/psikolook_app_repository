@@ -4,9 +4,9 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
-  firebase_core
   flutter_localization
   smart_auth
+  syncfusion_pdfviewer_windows
   url_launcher_windows
 )
 

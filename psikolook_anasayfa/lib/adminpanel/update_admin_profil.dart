@@ -1,52 +1,42 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
+import 'package:psikolook_anasayfa/adminpanel/admin_panel.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/auth_methods.dart';
-import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
-import 'package:psikolook_anasayfa/widget/date_time_card2.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UpdatePsikologProfil extends StatefulWidget {
+class UpdateAdminProfil extends StatefulWidget {
   final String uid;
-  const UpdatePsikologProfil({Key? key, required this.uid}) : super(key: key);
+  const UpdateAdminProfil({Key? key, required this.uid}) : super(key: key);
 
   @override
-  State<UpdatePsikologProfil> createState() => _UpdatePsikologProfilState();
+  State<UpdateAdminProfil> createState() => _UpdateAdminProfilState();
 }
 
-class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
+class _UpdateAdminProfilState extends State<UpdateAdminProfil> {
   String dateDay0 = '';
-  TextEditingController dateController = TextEditingController();
-
-  TextEditingController bioController = TextEditingController();
-  TextEditingController interestFieldController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _bioController = TextEditingController();
   var userData = {};
-  bool _isLoading = false;
   int blogLen = 0;
   int postLen = 0;
   int followers = 0;
   bool isFollowing = false;
-  bool isLoading = false;
+  bool _isLoading = false;
   Uint8List? _image;
 
   @override
   void initState() {
     super.initState();
     getData();
-    dateController.text = "";
   }
 
   getData() async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     try {
       var userSnap = await FirebaseFirestore.instance
@@ -81,38 +71,15 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
       );
     }
     setState(() {
-      isLoading = false;
+      _isLoading = false;
     });
   }
 
-  void addToDateAvailable(
-      String uid, String username, String dateDay, String addDate) async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      String res = await FireStoreMethods()
-          .uploadDateAvailable(uid, username, dateDay, addDate);
-      if (res == "success") {
-        setState(() {
-          isLoading = false;
-        });
-        showSnackBar(
-          context,
-          'Eklenildi!',
-        );
-      } else {
-        showSnackBar(context, res);
-      }
-    } catch (err) {
-      setState(() {
-        isLoading = false;
-      });
-      showSnackBar(
-        context,
-        err.toString(),
-      );
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    _bioController.dispose();
+    _nameController.dispose();
   }
 
   _bioField() {
@@ -124,48 +91,39 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
     }
   }
 
-  _interestField() {
-    if (userData['interestField'].toString() == '' ||
-        userData['interestField'].toString() == 'null') {
-      return 'Buraya İlgilendiğiniz Alanları Yazınız';
+  _nameField() {
+    if (userData['username'].toString() == '' ||
+        userData['username'].toString() == 'null') {
+      return 'Buraya Admin Adınızı Yazınız';
     } else {
-      return userData['interestField'];
+      return userData['username'];
+      ;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    bioController.dispose();
-    interestFieldController.dispose();
-    dateController.dispose();
   }
 
   _onPressed() {
     String _bio = userData['bio'];
-    String _interestField = userData['interestField'];
-    if (bioController.text != _bio && interestFieldController.text == '') {
-      updateUser(bioController.text.trim(), _interestField);
-    } else if (interestFieldController.text != _interestField &&
-        bioController.text == '') {
-      updateUser(_bio, interestFieldController.text.trim());
+    String _name = userData['username'];
+    if (_bioController.text != _bio && _nameController.text == '') {
+      updateUser(_bioController.text.trim(), _name);
+    } else if (_nameController.text != _name && _bioController.text == '') {
+      updateUser(_bio, _nameController.text.trim());
     } else {
-      updateUser(
-          bioController.text.trim(), interestFieldController.text.trim());
+      updateUser(_bioController.text.trim(), _nameController.text.trim());
     }
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const psikolog_page()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const AdminPanel()));
   }
 
-  void updateUser(String bio, String interestField) async {
+  void updateUser(String bio, String name) async {
     // set loading to true
     setState(() {
       _isLoading = true;
     });
 
     // signup user using our authmethodds
-    String res = await AuthMethods().updatePsikologUser(
-      interestField: interestField,
+    String res = await AuthMethods().updateAdminUser(
+      username: name,
       bio: bio,
       file: _image,
     );
@@ -192,41 +150,6 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
 
   @override
   Widget build(BuildContext context) {
-    final PsikologUserProvider userProvider =
-        Provider.of<PsikologUserProvider>(context);
-
-    // Select for Time
-    Future<TimeOfDay> _selectTime(BuildContext context) async {
-      final selected = await showTimePicker(
-        builder: (context, child) {
-          return Theme(
-            data: Theme.of(context).copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Colors.black,
-                onPrimary: Colors.white,
-                onSurface: Colors.black,
-              ),
-            ),
-            child: child!,
-          );
-        },
-        context: context,
-        initialTime: selectedTime,
-      );
-      if (selected != null && selected != selectedTime) {
-        setState(() {
-          selectedTime = selected;
-        });
-        addToDateAvailable(
-          userProvider.getUser.uid,
-          userProvider.getUser.username,
-          dateDay0,
-          getTime(selectedTime).toString(),
-        );
-      }
-      return selectedTime;
-    }
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -236,7 +159,7 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
               tileMode: TileMode.decal,
               colors: backGroundColor),
         ),
-        child: isLoading
+        child: _isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -383,13 +306,13 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                               padding: const EdgeInsets.all(20.0),
                               child: Column(
                                 children: [
-                                  const Text('BİYOGRAFİNİZ:',
+                                  const Text('Admin Adını Düzenleyiniz:',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold)),
                                   const SizedBox(height: 20),
                                   TextField(
-                                    controller: bioController,
+                                    controller: _nameController,
                                     keyboardType: TextInputType.name,
                                     textInputAction: TextInputAction.none,
                                     minLines: 3,
@@ -398,7 +321,7 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                                         const TextStyle(color: Colors.black45),
                                     cursorColor: Colors.black,
                                     decoration: InputDecoration(
-                                      hintText: _bioField().toString(),
+                                      hintText: _nameField().toString(),
                                       hintStyle: const TextStyle(
                                           color: Colors.black45),
                                       filled: true,
@@ -425,13 +348,13 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                               padding: const EdgeInsets.all(20.0),
                               child: Column(
                                 children: [
-                                  const Text('İLGİLENDİĞİ ALANLAR:',
+                                  const Text('Biyografinizi Düzenleyiniz:',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold)),
                                   const SizedBox(height: 20),
                                   TextField(
-                                    controller: interestFieldController,
+                                    controller: _bioController,
                                     keyboardType: TextInputType.name,
                                     textInputAction: TextInputAction.none,
                                     minLines: 3,
@@ -440,7 +363,7 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                                         const TextStyle(color: Colors.black45),
                                     cursorColor: Colors.black,
                                     decoration: InputDecoration(
-                                      hintText: _interestField().toString(),
+                                      hintText: _bioField().toString(),
                                       hintStyle: const TextStyle(
                                           color: Colors.black45),
                                       filled: true,
@@ -457,156 +380,7 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 30),
-                          const Text(
-                            'Seanslarınızı Belirleyiniz',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 10),
-                          TextField(
-                            controller: dateController,
-                            readOnly: true,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                hintText: 'Tarihi giriniz',
-                                hintStyle: TextStyle(
-                                    fontSize: 30, color: Colors.black87),
-                                prefixIcon: Icon(
-                                  Icons.calendar_month,
-                                  color: Colors.black87,
-                                )),
-                            style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold),
-                            onTap: () async {
-                              DateTime? pickedDate = await _selectDate(context);
-                              if (pickedDate != null) {
-                                String formattedDate =
-                                    DateFormat("dd.MM.yyyy").format(pickedDate);
-
-                                setState(() {
-                                  dateController.text =
-                                      formattedDate.toString();
-                                  dateDay0 = formattedDate.toString();
-                                });
-                              } else {
-                                print("Henüz tarih seçmediniz!");
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Text(
-                                'Takvimden seçtiğin tarihteki\nuygun olan saatleri belirleyiniz',
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(22.0)),
-                                    backgroundColor: Colors.white,
-                                    side: const BorderSide(
-                                        width: 1.5,
-                                        color: Color.fromARGB(
-                                            255, 201, 201, 201))),
-                                onPressed: () {
-                                  /* _selectTime(context); */
-                                  _selectTime(context);
-                                  showTime = true;
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '🕘  Seans Ekle',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 30),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(22.0)),
-                            child: FutureBuilder(
-                              future: FirebaseFirestore.instance
-                                  .collection('dateAvailable')
-                                  .where('uid', isEqualTo: widget.uid)
-                                  .where('dateDay',
-                                      isEqualTo: dateController.text)
-                                  .get(),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.black,
-                                      backgroundColor: Colors.white,
-                                    ),
-                                  );
-                                } else if (snapshot.hasData != null) {
-                                  if (snapshot.data!.docs.length > 0) {
-                                    return SizedBox(
-                                      height: snapshot.data!.docs.length == 1
-                                          ? 150
-                                          : MediaQuery.of(context).size.height *
-                                              0.4,
-                                      child: ListView.builder(
-                                        primary: false,
-                                        itemCount: snapshot.data!.docs.length,
-                                        itemBuilder: (ctx, index) =>
-                                            DateTimeCard2(
-                                          snap:
-                                              snapshot.data!.docs[index].data(),
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 15.0,
-                                          right: 15.0,
-                                          bottom: 20,
-                                          top: 20),
-                                      child: Text(
-                                          'Henüz bir seans belirlemediniz.'),
-                                    );
-                                  }
-                                } else {
-                                  return Container();
-                                }
-                              },
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                            child: Text(
-                              'Sadece seçtiğin saatlerde danışan göreceksin.',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                          const SizedBox(height: 40),
                           Padding(
                             padding:
                                 const EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -644,57 +418,5 @@ class _UpdatePsikologProfilState extends State<UpdatePsikologProfil> {
               ),
       ),
     );
-  }
-
-  DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now();
-  DateTime dateTime = DateTime.now();
-  bool showDate = false;
-  bool showTime = false;
-  /* bool showDateTime = false; */
-
-  // Select for Date
-  Future<DateTime> _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2023),
-      lastDate: DateTime(2024),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.black,
-              onPrimary: Colors.white,
-              onSurface: Colors.black,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (selected != null && selected != selectedDate) {
-      setState(() {
-        selectedDate = selected;
-      });
-    }
-    return selectedDate;
-  }
-
-  String getDateTime() {
-    // ignore: unnecessary_null_comparison
-    if (dateTime == null) {
-      return 'select date timer';
-    } else {
-      return DateFormat('yyyy-MM-dd HH: ss a').format(dateTime);
-    }
-  }
-
-  String getTime(TimeOfDay tod) {
-    final now = DateTime.now();
-
-    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.Hm();
-    return format.format(dt);
   }
 }

@@ -29,6 +29,24 @@ class StorageMethods {
     return downloadUrl;
   }
 
+  Future<String> upLoadPdftoStorage(Uint8List _pdfFile) async {
+    if (_pdfFile != null) {
+      UploadTask? task = StorageMethods.uploadBytesforPdf(_pdfFile);
+      if (task != null) {
+        TaskSnapshot snapshot = await task.whenComplete(
+          () {},
+        );
+        String pdfUrl = await snapshot.ref.getDownloadURL();
+        print('Download-link: $pdfUrl');
+        return pdfUrl;
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
+  }
+
 /*   // adding pdf to firebase storage
   Future<String?> uploadPdfToStorage(
       String childName, File pdfFile, bool isPost) async {
@@ -57,18 +75,24 @@ class StorageMethods {
   //  adding pdf to firebase storage
   static UploadTask? uploadFile(String destination, File file) {
     try {
-      final ref = FirebaseStorage.instance.ref().child(FirebaseAuth.instance.currentUser!.uid).child(destination);
-        return ref.putFile(file);
-    }on FirebaseException catch (e) {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child(FirebaseAuth.instance.currentUser!.uid)
+          .child(destination);
+      return ref.putFile(file);
+    } on FirebaseException catch (e) {
       return null;
-    } 
+    }
   }
-  static UploadTask? uploadBytes(String destination, Uint8List data) {
+
+  static UploadTask? uploadBytesforPdf(Uint8List data) {
     try {
-      final ref = FirebaseStorage.instance.ref(destination);
-        return ref.putData(data);
-    }on FirebaseException catch (e) {
+      String name = DateTime.now().millisecondsSinceEpoch.toString();
+      var pdfFile =
+          FirebaseStorage.instance.ref().child('pdf').child("$name/.pdf");
+      return pdfFile.putData(data);
+    } on FirebaseException catch (e) {
       return null;
-    } 
+    }
   }
 }

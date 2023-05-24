@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psikolook_anasayfa/adminpanel/admin_panel.dart';
 import 'package:psikolook_anasayfa/users/otherUser/providers/other_user_provider.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
 import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
                 return const DiferentPlatformLayout(
                   psikologUserScreen: psikolog_page(),
                   otherUserScreen: HomePage(),
+                  adminUserScreen: AdminPanel(),
                 );
               } else if (snapshot.hasError) {
                 return Scaffold(
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const sayfa();
             }
-            return IntroducingPage();
+            return const IntroducingPage();
           },
         ),
       ),
