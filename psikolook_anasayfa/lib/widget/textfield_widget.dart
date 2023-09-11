@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
-  final Function(String)? onChanged;
   final TextEditingController controller;
   const TextFieldWidget({
     Key? key,
     required this.hintText,
     required this.controller,
-    this.onChanged,
-    required this.keyboardType,
+    this.keyboardType=TextInputType.text,
   }) : super(key: key);
 
   @override
@@ -19,13 +17,11 @@ class TextFieldWidget extends StatelessWidget {
       controller: controller ,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-          border: OutlineInputBorder(
-              borderSide: BorderSide(width: 0, style: BorderStyle.none),
+          border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           hintText: hintText,
           filled: true,
           fillColor: Colors.white),
-      onChanged: onChanged,
     );
   }
 }

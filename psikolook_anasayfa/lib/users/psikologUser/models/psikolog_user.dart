@@ -6,7 +6,7 @@ class PsikologUser {
   final String photoUrl;
   final String username;
   final String bio;
-  final String interestField;
+  final List interestField;
   final List followers;
   final String number;
   final int age;
@@ -18,6 +18,10 @@ class PsikologUser {
   final bool userContract;
   final bool confirmation;
   final String pdfUrl;
+  final String nickname;
+  final String moneyValue;
+  final String ibanValue;
+  final String seansDkkValue;
 
   const PsikologUser({
     required this.username,
@@ -37,6 +41,10 @@ class PsikologUser {
     required this.userContract,
     required this.confirmation,
     required this.pdfUrl,
+    required this.nickname,
+    required this.ibanValue,
+    required this.moneyValue,
+    required this.seansDkkValue,
   });
 
   static PsikologUser fromSnap(DocumentSnapshot snap) {
@@ -60,6 +68,10 @@ class PsikologUser {
       userContract: snapshot["userContract"] ?? '',
       confirmation: snapshot['confirmation'] ?? '',
       pdfUrl: snapshot['pdfUrl'] ?? '',
+      nickname: snapshot['nickname'] ?? '',
+      moneyValue: snapshot['moneyValue'] ?? '',
+      ibanValue: snapshot['ibanValue'] ?? '',
+      seansDkkValue:snapshot['seansDkkValue'] ?? '',
     );
   }
 
@@ -73,12 +85,17 @@ class PsikologUser {
         'number': number,
         'age': age,
         'gender': gender,
+        'interestField': interestField,
         'schoolName': schoolName,
         'institutionName': institutionName,
         'degree': degree,
         'kvkk': kvkk,
         'userContract': userContract,
         'confirmation': confirmation,
-        'pdfUrl': pdfUrl
+        'pdfUrl': pdfUrl,
+        'nickname': nickname,
+        'moneyValue': moneyValue,
+        'ibanValue': ibanValue,
+        'seansDkkValue': seansDkkValue,
       };
 }

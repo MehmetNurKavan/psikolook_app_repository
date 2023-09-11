@@ -19,7 +19,7 @@ class TextFieldInput extends StatelessWidget {
     return TextField(
       controller: textEditingController,
       decoration: InputDecoration(
-      border: OutlineInputBorder(
+      border: const OutlineInputBorder(
           borderSide: BorderSide(
               width: 0, style: BorderStyle.none),
           borderRadius:

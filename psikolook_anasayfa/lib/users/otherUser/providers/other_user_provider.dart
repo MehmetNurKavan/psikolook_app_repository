@@ -1,3 +1,5 @@
+/* 
+//! null chach operator null value yuzunden kaldırdık
 import 'package:flutter/widgets.dart';
 import 'package:psikolook_anasayfa/users/otherUser/models/other_user.dart';
 import 'package:psikolook_anasayfa/users/otherUser/service/other_auth_methods.dart';
@@ -14,3 +16,4 @@ class OtherUserProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+ */

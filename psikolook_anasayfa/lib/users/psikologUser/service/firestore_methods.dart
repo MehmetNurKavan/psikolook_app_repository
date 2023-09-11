@@ -1,33 +1,40 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/blog.dart';
-import 'package:psikolook_anasayfa/users/psikologUser/models/date_Available.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/date_available.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/group.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/post.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/survay.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadBlog(String description, Uint8List file, String uid,
-      String username, String blogText, String blogTime) async {
+  Future<String> uploadBlog(
+      String description,
+      Uint8List file,
+      String uid,
+      String username,
+      String blogText,
+      String blogTime,
+      String photoUrl) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
-      String photoUrl =
+      String blogUrl =
           await StorageMethods().uploadImageToStorage('blogs', file, true);
       String blogId = const Uuid().v1(); // creates unique id based on time
       Blog blog = Blog(
-        description: description,
-        uid: uid,
-        username: username,
-        blogId: blogId,
-        datePublished: DateTime.now(),
-        blogUrl: photoUrl,
-        blogText: blogText,
-        blogTime: blogTime,
-      );
+          description: description,
+          uid: uid,
+          username: username,
+          blogId: blogId,
+          datePublished: DateTime.now(),
+          blogUrl: blogUrl,
+          blogText: blogText,
+          blogTime: blogTime,
+          photoUrl: photoUrl);
       _firestore.collection('blogs').doc(blogId).set(blog.toJson());
       res = "success";
     } catch (err) {
@@ -49,7 +56,7 @@ class FireStoreMethods {
   }
 
   Future<String> uploadPost(
-      String uid, String username, String profImage, String postText) async {
+      String uid, String username, String photoUrl, String postText) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -60,7 +67,7 @@ class FireStoreMethods {
         likes: [],
         postId: postId,
         datePublished: DateTime.now(),
-        profImage: profImage,
+        photoUrl: photoUrl,
         postText: postText,
       );
       _firestore.collection('posts').doc(postId).set(post.toJson());
@@ -73,7 +80,7 @@ class FireStoreMethods {
 
   // Post comment
   Future<String> postComment(String postId, String text, String uid,
-      String name, String profilePic) async {
+      String username, String photoUrl) async {
     String res = "Some error occurred";
     try {
       if (text.isNotEmpty) {
@@ -85,8 +92,8 @@ class FireStoreMethods {
             .collection('comments')
             .doc(commentId)
             .set({
-          'profilePic': profilePic,
-          'name': name,
+          'photoUrl': photoUrl,
+          'username': username,
           'uid': uid,
           'text': text,
           'commentId': commentId,
@@ -102,12 +109,125 @@ class FireStoreMethods {
     return res;
   }
 
+  Future<String> deletepostComment(String postId, String commentId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore
+          .collection('posts')
+          .doc(postId)
+          .collection('comments')
+          .doc(commentId)
+          .delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
   // Delete Post
   Future<String> deletePost(String postId) async {
     String res = "Some error occurred";
     try {
       await _firestore.collection('posts').doc(postId).delete();
       res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  // Delete Date
+  Future<String> deleteDate(String dateId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('dateAvailable').doc(dateId).delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  // update Date 'add to other uid,name'
+  Future<String> updateDate(String dateId, String otherName, String otherUid,
+      String otherPhotoUrlUrl) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('dateAvailable').doc(dateId).update({
+        'otherUid': otherUid,
+        'isVisible': false,
+        'otherName': otherName,
+        'otherPhotoUrl': otherPhotoUrlUrl
+      });
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  // update Date 'remove to other uid,name'
+  Future<String> updateDate2(String dateId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('dateAvailable').doc(dateId).update({
+        'otherUid': '',
+        'isVisible': true,
+        'otherName': '',
+        'otherPHotoUrl': '',
+      });
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  // update Date 'meet link'
+  Future<String> updateDate3(String dateId, String meetLink) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore
+          .collection('dateAvailable')
+          .doc(dateId)
+          .update({'meetLink': meetLink});
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  // update Date 'money , seans dkk'
+  Future<String> updateDate4(
+      String uid, String moneyValue, String seansDkkValue) async {
+    String res = "Some error occurred";
+    try {
+      if ((moneyValue == null || moneyValue == '') &&
+          (seansDkkValue == null || seansDkkValue == '')) {
+        res = 'not change';
+      } else if ((moneyValue == null || moneyValue == '') &&
+          (seansDkkValue != null || seansDkkValue != '')) {
+        await _firestore
+            .collection('PsikologUsers')
+            .doc(uid)
+            .update({'seansDkkValue': seansDkkValue});
+        res = 'success';
+      } else if ((moneyValue != null || moneyValue != '') &&
+          (seansDkkValue == null || seansDkkValue == '')) {
+        await _firestore
+            .collection('PsikologUsers')
+            .doc(uid)
+            .update({'moneyValue': moneyValue});
+        res = 'success';
+      } else {
+        await _firestore
+            .collection('PsikologUsers')
+            .doc(uid)
+            .update({'moneyValue': moneyValue, 'seansDkkValue': seansDkkValue});
+        res = 'success';
+      }
     } catch (err) {
       res = err.toString();
     }
@@ -138,23 +258,23 @@ class FireStoreMethods {
   Future<void> followUser(String uid, String followId) async {
     try {
       DocumentSnapshot snap =
-          await _firestore.collection('Psikolog Users').doc(uid).get();
+          await _firestore.collection('OtherUsers').doc(uid).get();
       List following = (snap.data()! as dynamic)['following'];
 
       if (following.contains(followId)) {
-        await _firestore.collection('Psikolog Users').doc(followId).update({
+        await _firestore.collection('PsikologUsers').doc(followId).update({
           'followers': FieldValue.arrayRemove([uid])
         });
 
-        await _firestore.collection('Psikolog Users').doc(uid).update({
+        await _firestore.collection('OtherUsers').doc(uid).update({
           'following': FieldValue.arrayRemove([followId])
         });
       } else {
-        await _firestore.collection('Psikolog Users').doc(followId).update({
+        await _firestore.collection('PsikologUsers').doc(followId).update({
           'followers': FieldValue.arrayUnion([uid])
         });
 
-        await _firestore.collection('Psikolog Users').doc(uid).update({
+        await _firestore.collection('OtherUsers').doc(uid).update({
           'following': FieldValue.arrayUnion([followId])
         });
       }
@@ -164,23 +284,80 @@ class FireStoreMethods {
   }
 
   Future<String> uploadDateAvailable(
-      String uid, String username, String dateDay, addDate) async {
+      String uid,
+      String username,
+      String dateDay,
+      addDate,
+      DateTime datePublished,
+      String photoUrl,
+      List interestField,
+      String degree,
+      String moneyValue,
+      String ibanValue,
+      String seansDkkValue) async {
     String res = "Some error occurred";
     try {
       String dateId = const Uuid().v1();
       DateAvailable dateAveliable = DateAvailable(
-          uid: uid,
-          username: username,
-          dateId: dateId,
-          addDate: addDate,
-          dateDay: dateDay);
+        uid: uid,
+        username: username,
+        dateId: dateId,
+        addDate: addDate,
+        dateDay: dateDay,
+        datePublished: datePublished,
+        isVisible: true,
+        photoUrl: photoUrl,
+        interestField: interestField,
+        degree: degree,
+        ibanValue: ibanValue,
+        moneyValue: moneyValue,
+        seansDkkValue: seansDkkValue,
+        isVolunteer: false,
+      );
       _firestore
           .collection('dateAvailable')
           .doc(dateId)
           .set(dateAveliable.toJson());
-      /* _firestore.collection('dateAveliable').doc(dateId).update({
-          'addDate': FieldValue.arrayUnion([uid])
-        }); */
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> uploadDateAvailableVolunteer(
+      String uid,
+      String username,
+      String dateDay,
+      addDate,
+      DateTime datePublished,
+      String photoUrl,
+      List interestField,
+      String degree,
+      String seansDkkValue) async {
+    String res = "Some error occurred";
+    try {
+      String dateId = const Uuid().v1();
+      DateAvailable dateAveliable = DateAvailable(
+        uid: uid,
+        username: username,
+        dateId: dateId,
+        addDate: addDate,
+        dateDay: dateDay,
+        datePublished: datePublished,
+        isVisible: true,
+        photoUrl: photoUrl,
+        interestField: interestField,
+        degree: degree,
+        seansDkkValue: seansDkkValue,
+        ibanValue: '',
+        moneyValue: '',
+        isVolunteer: true,
+      );
+      _firestore
+          .collection('dateAvailable')
+          .doc(dateId)
+          .set(dateAveliable.toJson());
       res = "success";
     } catch (err) {
       res = err.toString();
@@ -208,6 +385,27 @@ class FireStoreMethods {
     }
     return res;
   } */
+  Future<String> uploadNewSurvey(String uid, String surveyTitle,
+      String surveyName, String surveyLink) async {
+    // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
+    String res = "Some error occurred";
+    try {
+      String surveyId = const Uuid().v1(); // creates unique id based on time
+      Survey survey = Survey(
+        uid: uid,
+        surrveyTitle: surveyTitle,
+        surveyId: surveyId,
+        surveyLink: surveyLink,
+        surveyName: surveyName,
+      );
+      _firestore.collection('Survey').doc(surveyId).set(survey.toMap());
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
   Future<String> uploadNewTopluluk(String uid, String toplulukTitle) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
@@ -224,11 +422,21 @@ class FireStoreMethods {
     }
     return res;
   }
-   // Delete Post
-  Future<String> deleteToplulukGroup(String groupId) async {
+
+  // Delete Post
+  Future<String> deleteToplulukGroup(
+      String groupId, String toplulukTitle) async {
     String res = "Some error occurred";
     try {
       await _firestore.collection('Topluluk').doc(groupId).delete();
+      await _firestore
+          .collection(toplulukTitle.toString())
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          doc.reference.delete();
+        });
+      });
       res = 'success';
     } catch (err) {
       res = err.toString();

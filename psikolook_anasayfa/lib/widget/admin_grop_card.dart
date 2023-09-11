@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/utils/utils.dart';
 
 class AdminGroupCard extends StatefulWidget {
@@ -19,9 +20,9 @@ class _AdminGroupCardState extends State<AdminGroupCard> {
     super.initState();
   }
 
-  deleteGroup(String groupId) async {
+  deleteGroup(String groupId,String toplulukTitle) async {
     try {
-      String res = await FireStoreMethods().deleteToplulukGroup(groupId);
+      String res = await FireStoreMethods().deleteToplulukGroup(groupId, toplulukTitle);
       if (res == "success") {
         showSnackBar(
           context,
@@ -37,6 +38,7 @@ class _AdminGroupCardState extends State<AdminGroupCard> {
       );
     }
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class _AdminGroupCardState extends State<AdminGroupCard> {
           left: 30.0, right: 30.0, top: 10.0, bottom: 10.0),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: cardBackgroundColor,
             border: Border.all(color: Colors.grey),
             borderRadius: const BorderRadius.all(Radius.circular(22.0))),
         child: Padding(
@@ -81,6 +83,7 @@ class _AdminGroupCardState extends State<AdminGroupCard> {
                                       onTap: () {
                                         deleteGroup(
                                           widget.snap['groupId'].toString(),
+                                          widget.snap['toplulukTitle'].toString(),
                                         );
                                         // remove the dialog box
                                         Navigator.of(context).pop();

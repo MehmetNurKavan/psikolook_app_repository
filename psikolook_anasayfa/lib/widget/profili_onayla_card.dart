@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/adminpanel/confirm_page.dart';
+import 'package:psikolook_anasayfa/utils/colors.dart';
+import 'package:psikolook_anasayfa/view/adminHome/confirm_page.dart';
 
 class ConfirmationCard extends StatefulWidget {
   final snap;
@@ -32,7 +33,7 @@ class _ConfirmationCardState extends State<ConfirmationCard> {
         widget.snap['confirmation'].toString() == 'true') {
       return Colors.black;
     } else {
-      return Colors.pink;
+      return pinkColor;
     }
   }
 
@@ -43,7 +44,7 @@ class _ConfirmationCardState extends State<ConfirmationCard> {
           left: 30.0, right: 30.0, top: 10.0, bottom: 10.0),
       child: Container(
         decoration: const BoxDecoration(
-            color: Colors.white,
+            color: cardBackgroundColor,
             borderRadius: BorderRadius.all(Radius.circular(22.0))),
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),

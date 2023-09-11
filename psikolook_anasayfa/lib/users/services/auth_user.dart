@@ -13,5 +13,6 @@ class AuthUser {
 
   factory AuthUser.fromFirebase(User user) => AuthUser(
         userEmail: user.email ?? '',
+        
       );
 }

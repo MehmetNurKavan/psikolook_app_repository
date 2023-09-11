@@ -6,7 +6,7 @@ class Post {
   final likes;
   final String postId;
   final DateTime datePublished;
-  final String profImage;
+  final String photoUrl;
   final String postText;
 
   const Post(
@@ -16,7 +16,7 @@ class Post {
       required this.likes,
       required this.postId,
       required this.datePublished,
-      required this.profImage,
+      required this.photoUrl,
       required this.postText});
 
   static Post fromSnap(DocumentSnapshot snap) {
@@ -28,7 +28,7 @@ class Post {
       postId: snapshot["postId"]?? '',
       datePublished: snapshot["datePublished"]?? '',
       username: snapshot["username"]?? '',
-      profImage: snapshot['profImage']?? '',
+      photoUrl: snapshot['photoUrl']?? '',
       postText: snapshot['postText']?? '',
     );
   }
@@ -39,7 +39,7 @@ class Post {
         "username": username,
         "postId": postId,
         "datePublished": datePublished,
-        'profImage': profImage,
+        'photoUrl': photoUrl,
         'postText': postText,
       };
 }

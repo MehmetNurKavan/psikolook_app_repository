@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/widget/blog_page.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/service/firestore_methods.dart';
+import 'package:psikolook_anasayfa/view/psikologHome/blog/blog_page.dart';
+import '../utils/utils.dart';
 
 class BlogCard extends StatefulWidget {
   final snap;
@@ -13,6 +16,22 @@ class BlogCard extends StatefulWidget {
 }
 
 class _BlogCardState extends State<BlogCard> {
+
+    deleteBlogs(String blogId) async {
+    try {
+      await FireStoreMethods().deleteBlog(blogId);
+      showSnackBar(
+        context,
+        'Blog Kaldırıldı!',
+      );
+    } catch (err) {
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -42,27 +61,76 @@ class _BlogCardState extends State<BlogCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: 50,
-                  child: SingleChildScrollView(
-                    child: Text(
-                      widget.snap['description'],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 10.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
+                widget.snap['uid'].toString() == FirebaseAuth.instance.currentUser!.uid
+                        ?  Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                            onPressed: () {
+                              showDialog(
+                                useRootNavigator: false,
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: ListView(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16),
+                                        shrinkWrap: true,
+                                        children: ['Blogu Sil !']
+                                            .map(
+                                              (e) => InkWell(
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 12,
+                                                        horizontal: 16),
+                                                    child: Text(e),
+                                                  ),
+                                                  onTap: () {
+                                                    deleteBlogs(
+                                                      widget.snap['blogId']
+                                                          .toString(),
+                                                    );
+                                                    // remove the dialog box
+                                                    Navigator.of(context).pop();
+                                                  }),
+                                            )
+                                            .toList()),
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.more_vert,
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                  offset: Offset(1.0, 1.0),
+                                  blurRadius: 10.0,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
+                  ],
+                ): Container(),
+                Text(
+                  widget.snap['description'],
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0,
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(1.0, 1.0),
+                        blurRadius: 10.0,
+                        color: Color.fromARGB(255, 0, 0, 0),
                       ),
-                      //maxLines: 3,
-                    ),
+                    ],
                   ),
+                  maxLines: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

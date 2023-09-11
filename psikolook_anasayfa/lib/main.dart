@@ -1,21 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:psikolook_anasayfa/adminpanel/admin_panel.dart';
-import 'package:psikolook_anasayfa/users/otherUser/providers/other_user_provider.dart';
-import 'package:psikolook_anasayfa/users/psikologUser/providers/user_provider.dart';
-import 'package:psikolook_anasayfa/view/home/home_page/my_home_page.dart';
-import 'package:psikolook_anasayfa/view/home/login/IntroducingPage.dart';
-import 'package:psikolook_anasayfa/view/home/login/firstPage.dart';
-import 'package:psikolook_anasayfa/view/home/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
+import 'package:flutterfire_ui/i10n.dart';
+import 'package:psikolook_anasayfa/view/adminHome/admin_panel.dart';
+import 'package:psikolook_anasayfa/utils/psikolook_loading.dart';
+import 'package:psikolook_anasayfa/view/otherHome/home_page/my_home_page.dart';
+import 'package:psikolook_anasayfa/view/partner/login/firstPage.dart';
+import 'package:psikolook_anasayfa/view/psikologHome/psikologHomePageNesxts/psikolog_home.dart';
 import 'firebase_options.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:psikolook_anasayfa/responsive/diferent_user_platform.dart';
+import 'package:psikolook_anasayfa/users/diferent_user_platform.dart';
+import 'package:flutter/services.dart';
 
 //Psikolook
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -27,45 +27,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => OtherUserProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => PsikologUserProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Psikolook',
-        debugShowCheckedModeBanner: false,
-        locale: const Locale('tr', 'TR'),
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        supportedLocales: const [Locale('en'), Locale('tr', 'TR')],
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                return const DiferentPlatformLayout(
-                  psikologUserScreen: psikolog_page(),
-                  otherUserScreen: HomePage(),
-                  adminUserScreen: AdminPanel(),
-                );
-              } else if (snapshot.hasError) {
-                return Scaffold(
-                  body: Center(
-                    child: Text('Birşeyler ters gitti :/ ${snapshot.error}'),
-                  ),
-                );
-              }
+    return MaterialApp(
+      title: 'Psikolook',
+      debugShowCheckedModeBanner: false,
+      locale: const Locale('tr', 'TR'),
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [Locale('tr', 'TR')],
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return const DiferentPlatformLayout(
+                psikologUserScreen: PsikologHome(),
+                otherUserScreen: HomePage(),
+                adminUserScreen: AdminPanel(),
+              );
+            } else {
+              return const FirstPage();
             }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const sayfa();
-            }
-            return const IntroducingPage();
-          },
-        ),
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const PsikolookLoading();
+          } else {
+            return const FirstPage();
+          }
+        },
       ),
     );
   }

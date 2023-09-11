@@ -9,6 +9,7 @@ class Blog {
   final String blogUrl;
   final String blogText;
   final String blogTime;
+  final String photoUrl;
 
   const Blog(
       {required this.description,
@@ -18,7 +19,9 @@ class Blog {
       required this.datePublished,
       required this.blogUrl,
       required this.blogText,
-      required this.blogTime});
+      required this.blogTime,
+      required this.photoUrl,
+      });
 
   static Blog fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -32,6 +35,7 @@ class Blog {
       blogUrl: snapshot['blogUrl'] ?? '',
       blogText: snapshot['blogText'] ?? '',
       blogTime: snapshot['blogTime'] ?? '',
+      photoUrl: snapshot['photoUrl'] ?? '',
     );
   }
 
@@ -44,5 +48,6 @@ class Blog {
         'blogUrl': blogUrl,
         'blogText': blogText,
         'blogTime': blogTime,
+        'photoUrl':photoUrl,
       };
 }

@@ -16,10 +16,17 @@ pickImage(ImageSource source) async {
 showSnackBar(BuildContext context, String text) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      duration: const Duration(seconds: 10),
+      behavior: SnackBarBehavior.floating,
+      showCloseIcon: true,
+      duration: const Duration(seconds: 7),
       content: Text(text),
     ),
   );
+}
+
+circleLoading() {
+  return const CircularProgressIndicator(
+      backgroundColor: Colors.black, color: Colors.white);
 }
 
 Future<dynamic> showErorDialog(BuildContext context, String title) {
@@ -107,9 +114,9 @@ showLoaderDialog(BuildContext context) {
   AlertDialog alert = AlertDialog(
     content: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
-        CircularProgressIndicator(),
-        Text("Yükleniyor..."),
+      children: [
+        circleLoading(),
+        const Text("Yükleniyor..."),
       ],
     ),
   );
@@ -121,6 +128,36 @@ showLoaderDialog(BuildContext context) {
     },
   );
 }
+
+List<String> unvan = const [
+  'Psikolog',
+  'Psikiyatrist',
+  'Klinik Psikolog',
+  'Psikolojik Danışman',
+  'Evlilik Terapisti',
+  'Aile Terapisti',
+  'Cinsel Terapist',
+  'Spor Psikologu',
+  'Eğitim Psikologu',
+  'Diğer'
+];
+List<String> ilgiAlani = const [
+  'Anksiyete bozukluğu',
+  'Stresyönetimi',
+  'Aile içi lişkiler',
+  'Okb',
+  'Dehb',
+  'Depresyon',
+  'Yeme bozuklukları',
+  'Kronik hastalıklar',
+  'Bağımlılıklar\n(madde ve davranışsal)',
+  'Öfke problemleri',
+  'Çocuk ergen görüşmeleri',
+  'Sınav kaygısı',
+  'Sağlık kaygısı',
+  'Sosyal kaygı',
+  'Diğer',
+];
 
 /* Future<List<dynamic>> open({ List<String> ?types, bool multiple = false}) async {
 

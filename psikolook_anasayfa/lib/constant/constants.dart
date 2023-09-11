@@ -8,7 +8,7 @@ class Constants {
   // static const String registerMessage = 'One step away from ';
   // static const String enterPassword = 'Şifrenizi Giriniz';
   //static const String forgotPassword = 'Şifrenizi mi unuttunuz ?';
-  static const String typeMessage = 'Birşeyler yazınız...';
+  static const String typeMessage = 'Mesaj';
 
   // ---------------RADIUS&PADDING----------------
 
