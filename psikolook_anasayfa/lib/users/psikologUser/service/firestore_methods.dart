@@ -1,10 +1,14 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/blog.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/captions.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/comment.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/date_available.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/group.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/post.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/question.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/models/survay.dart';
+import 'package:psikolook_anasayfa/users/psikologUser/models/topic.dart';
 import 'package:psikolook_anasayfa/users/psikologUser/service/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
@@ -406,11 +410,11 @@ class FireStoreMethods {
     return res;
   }
 
+  // Topluluk **** <--------> ****
   Future<String> uploadNewTopluluk(String uid, String toplulukTitle) async {
-    // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
-      String groupId = const Uuid().v1(); // creates unique id based on time
+      String groupId = const Uuid().v1();
       Topluluk group = Topluluk(
         groupId: groupId,
         toplulukTitle: toplulukTitle,
@@ -423,7 +427,6 @@ class FireStoreMethods {
     return res;
   }
 
-  // Delete Post
   Future<String> deleteToplulukGroup(
       String groupId, String toplulukTitle) async {
     String res = "Some error occurred";
@@ -437,6 +440,201 @@ class FireStoreMethods {
           doc.reference.delete();
         });
       });
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+//Form **** <--------> ****
+  Future<String> uploadTopic(
+      String uid, String username, String photoUrl, String topicText) async {
+    String res = "Some error occurred";
+    try {
+      String topicId = const Uuid().v1();
+      Topic topic = Topic(
+        uid: uid,
+        username: username,
+        topicId: topicId,
+        datePublished: DateTime.now(),
+        photoUrl: photoUrl,
+        topicText: topicText,
+      );
+      _firestore.collection('topics').doc(topicId).set(topic.toJson());
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteTopic(String topicId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('topics').doc(topicId).delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> uploadCaption(String uid, String username, String photoUrl,
+      String captionText, String topicText) async {
+    String res = "Some error occurred";
+    try {
+      String captionId = const Uuid().v1();
+      Caption caption = Caption(
+        uid: uid,
+        username: username,
+        captionId: captionId,
+        datePublished: DateTime.now(),
+        photoUrl: photoUrl,
+        topicText: topicText,
+        captionText: captionText,
+      );
+      _firestore.collection('captions').doc(captionId).set(caption.toJson());
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteCaption(String captionId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('captions').doc(captionId).delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> uploadQuestion(String uid, String username, String photoUrl,
+      String questionText, String topicText) async {
+    String res = "Some error occurred";
+    try {
+      String questionId = const Uuid().v1();
+      Question question = Question(
+        uid: uid,
+        username: username,
+        questionId: questionId,
+        datePublished: DateTime.now(),
+        photoUrl: photoUrl,
+        topicText: topicText,
+        questionText: questionText,
+      );
+      _firestore.collection('questions').doc(questionId).set(question.toJson());
+      res = "success";
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteQuestion(String questionId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore.collection('questions').doc(questionId).delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> questionComment(String questionId, String text, String uid,
+      String username, String photoUrl) async {
+    String res = "Some error occurred";
+    try {
+      if (text.isNotEmpty) {
+        // if the likes list contains the user uid, we need to remove it
+        String commentId = const Uuid().v1();
+        Comment comment = Comment(
+          uid: uid,
+          username: username,
+          commentId: commentId,
+          datePublished: DateTime.now(),
+          photoUrl: photoUrl,
+          text: text,
+        );
+        _firestore
+            .collection('questions')
+            .doc(questionId)
+            .collection('comments')
+            .doc(commentId)
+            .set(comment.toJson());
+        res = 'success';
+      } else {
+        res = "Please enter text";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteQuestionComment(
+      String questionId, String commentId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore
+          .collection('questions')
+          .doc(questionId)
+          .collection('comments')
+          .doc(commentId)
+          .delete();
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> captionComment(String captionId, String text, String uid,
+      String username, String photoUrl) async {
+    String res = "Some error occurred";
+    try {
+      if (text.isNotEmpty) {
+        // if the likes list contains the user uid, we need to remove it
+        String commentId = const Uuid().v1();
+        Comment comment = Comment(
+          uid: uid,
+          username: username,
+          commentId: commentId,
+          datePublished: DateTime.now(),
+          photoUrl: photoUrl,
+          text: text,
+        );
+        _firestore
+            .collection('captions')
+            .doc(captionId)
+            .collection('comments')
+            .doc(commentId)
+            .set(comment.toJson());
+        res = 'success';
+      } else {
+        res = "Please enter text";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> deleteCaptionComment(
+      String captionId, String commentId) async {
+    String res = "Some error occurred";
+    try {
+      await _firestore
+          .collection('Captions')
+          .doc(captionId)
+          .collection('comments')
+          .doc(commentId)
+          .delete();
       res = 'success';
     } catch (err) {
       res = err.toString();

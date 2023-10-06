@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "psikolook_anasayfa",
+            "cwd": "psikolook_anasayfa",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "psikolook_anasayfa (profile mode)",
+            "cwd": "psikolook_anasayfa",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "psikolook_anasayfa (release mode)",
+            "cwd": "psikolook_anasayfa",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

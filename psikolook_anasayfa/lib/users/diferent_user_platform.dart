@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/partner/login/firstPage.dart';
 import 'package:psikolook_anasayfa/view/partner/login/onay_bekleme_ekran%C4%B1.dart';
 import 'package:psikolook_anasayfa/widget/tryagain.dart';
@@ -60,11 +59,11 @@ class _DiferentPlatformLayoutState extends State<DiferentPlatformLayout> {
   }
 
   selectedUserPlatform() {
-    if (isOther = true) {
+    if (isOther == true) {
       if (otherUserData['userContract'] == true) {
-        return widget.psikologUserScreen;
+        return widget.otherUserScreen;
       } else {
-        return widget.psikologUserScreen;
+        return const FirstPage();
       }
     } else if (isPsikolog == true) {
       if (psikologUserData['email'] == 'psikolookdevelopment@gmail.com') {

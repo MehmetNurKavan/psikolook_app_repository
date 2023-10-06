@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:psikolook_anasayfa/utils/utils.dart';
 import 'package:psikolook_anasayfa/view/psikologHome/forum/newCaption.dart';
 import 'package:psikolook_anasayfa/view/psikologHome/forum/newQuestionPage.dart';
 import 'package:psikolook_anasayfa/view/psikologHome/forum/questionsPage.dart';
@@ -65,7 +67,7 @@ class PsikolookformPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NewQuestionPage(),
+                              builder: (context) => const NewQuestionPage(),
                             ),
                           );
                         },
@@ -80,7 +82,7 @@ class PsikolookformPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => newTopicPage(),
+                              builder: (context) => const NewTopicPage(),
                             ),
                           );
                         },
@@ -95,7 +97,7 @@ class PsikolookformPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const newCaptionPage()));
+                                      const NewCaptionPage()));
                         },
                         icon: const Icon(
                           Icons.question_answer,
@@ -105,6 +107,7 @@ class PsikolookformPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: height * 0.02),
                 Row(
                   children: [
                     TextButton(
@@ -126,21 +129,39 @@ class PsikolookformPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                buildPsikolookFormSection(height, width),
                 SizedBox(
-                  height: height * 0.02,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('captions')
+                        .orderBy('datePublished', descending: true)
+                        .limit(3)
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: circleLoading(),
+                        );
+                      }
+                      return ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          return CaptionCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-                buildPsikolookFormSection(height, width),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                buildPsikolookFormSection(height, width),
+                SizedBox(height: height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: width * 0.01,
-                    ),
+                    SizedBox(width: width * 0.01),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -160,21 +181,39 @@ class PsikolookformPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                buildPsikolookFormQuestionSection(height, width),
                 SizedBox(
-                  height: height * 0.05,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('questions')
+                        .orderBy('datePublished', descending: true)
+                        .limit(3)
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: circleLoading(),
+                        );
+                      }
+                      return ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          return QuestionCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-                buildPsikolookFormQuestionSection(height, width),
-                SizedBox(
-                  height: height * 0.05,
-                ),
-                buildPsikolookFormQuestionSection(height, width),
+                SizedBox(height: height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: width * 0.01,
-                    ),
+                    SizedBox(width: width * 0.01),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -194,162 +233,38 @@ class PsikolookformPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                buildTopics(width, height),
                 SizedBox(
-                  height: height * 0.05,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('topics')
+                        .orderBy('datePublished', descending: true)
+                        .limit(3)
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: circleLoading(),
+                        );
+                      }
+                      return ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          return TopicCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-                buildTopics(width, height),
-                SizedBox(
-                  height: height * 0.05,
-                ),
-                buildTopics(width, height),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  buildTopics(var width, var height) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Card(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(60),
-                topRight: Radius.circular(60),
-              ),
-            ),
-            child: Container(
-              height: height * 0.10,
-              width: width * 1,
-              child: const Center(
-                child: Text(
-                  "KONU BAŞLIĞI",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  buildPsikolookFormSection(var height, var width) {
-    return Stack(
-      alignment: Alignment.topRight,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 24.0),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                      width: width * 0.5,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Ünvan İsim Soyisim",
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                          Divider(thickness: 0.7, color: Colors.black),
-                        ],
-                      )),
-                  const Text("Lorem Ipsum",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(color: Colors.black, fontSize: 16)),
-                  const Divider(thickness: 0.7, color: Colors.black),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 36,
-            child: CircleAvatar(
-              radius: 32,
-              foregroundImage: AssetImage(
-                "assets/images/woman_blog.png",
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  buildPsikolookFormQuestionSection(var height, var width) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 24.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0)),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: ListTile(
-                  textColor: Colors.red,
-                  title: Text(
-                    "\nÜnvan İsim Soyisim\n \nLisans Bilgisi",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        decoration: TextDecoration.underline),
-                  ),
-                  subtitle: Text(
-                    "\nKonu",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        decoration: TextDecoration.underline),
-                  ),
-                  tileColor: Colors.white,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 36,
-              child: CircleAvatar(
-                radius: 32,
-                foregroundImage: AssetImage(
-                  "assets/images/woman_blog.png",
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

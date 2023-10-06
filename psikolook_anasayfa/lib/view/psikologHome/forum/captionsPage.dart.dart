@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:psikolook_anasayfa/utils/utils.dart';
+import 'package:psikolook_anasayfa/view/psikologHome/forum/customs/forumcustoms.dart';
 import '../../../widget/bac_icon_button.dart';
-import 'captions-AnswerPage.dart.dart';
 
 class CaptionsPage extends StatefulWidget {
   const CaptionsPage({Key? key}) : super(key: key);
@@ -15,11 +17,10 @@ class _CaptionsPageState extends State<CaptionsPage> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        height: height * 1,
-        width: width * 1,
+        height: double.infinity,
+        width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
@@ -27,62 +28,61 @@ class _CaptionsPageState extends State<CaptionsPage> {
           ),
         ),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 90, right: 24, left: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const BackIconButton2(),
-                        SizedBox(
-                          width: width * 0.6,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20.0, bottom: 30),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    /* const SearchBar(); */
-                                  });
-                                },
-                                child: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      CupertinoIcons.search_circle_fill,
-                                      size: 50,
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50.0),
-                child: Text(
-                  "BAŞLIKLAR",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 27,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
+          child: PaddingCustom(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const BackIconButton2(),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          CupertinoIcons.search_circle_fill,
+                          size: 50,
+                        )),
+                  ],
                 ),
-              ),
-              buildPsikolookFormQuestionSection(height, width, context),
-              buildPsikolookFormQuestionSection(height, width, context),
-              buildPsikolookFormQuestionSection(height, width, context),
-            ],
+                SizedBox(height: height * 0.01),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: Text(
+                    "BAŞLIKLAR",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('captions')
+                        .orderBy('datePublished', descending: true)
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: circleLoading(),
+                        );
+                      }
+                      return ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          return CaptionCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -110,64 +110,6 @@ class _CaptionsPageState extends State<CaptionsPage> {
           ),
         ),
       ],
-    );
-  }
-
-  buildPsikolookFormQuestionSection(
-    var height,
-    var width,
-    context,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          Container(
-            height: height * 0.15,
-            child: Card(
-              child: ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                textColor: Colors.red,
-                title: const Text(
-                  "Ünvan İsim Soyisim",
-                  style: TextStyle(
-                      fontSize: 18, decoration: TextDecoration.underline),
-                ),
-                enabled: false,
-                subtitle: InkWell(
-                  onTap: () {
-                    //Buraya Konunun adresi gelecek
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CaptionAnswerPage(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "\n\Başlık konuları Buraya gelecek",
-                    style: TextStyle(
-                        fontSize: 18, decoration: TextDecoration.underline),
-                  ),
-                ),
-                tileColor: Colors.white,
-                trailing: Container(
-                  width: width * 0.4,
-                  alignment: const Alignment(1, -5),
-                  child: const SizedBox(
-                    child: CircleAvatar(
-                      foregroundImage: AssetImage(
-                        "assets/images/woman_blog.png",
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:psikolook_anasayfa/utils/colors.dart';
 import 'package:psikolook_anasayfa/view/partner/bilimekatki/bilime_katki_page.dart';
 import 'package:psikolook_anasayfa/view/partner/bilimekatki/bilime_katki_share.dart';
+import 'package:psikolook_anasayfa/view/psikologHome/forum/psikolook_forum.dart';
 import 'package:psikolook_anasayfa/view/psikologhome/blog/choose_screen_page.dart';
 import 'package:psikolook_anasayfa/view/partner/drawer/destekAl_page.dart';
 import 'package:psikolook_anasayfa/view/partner/drawer/drawer_widget.dart';
@@ -80,7 +81,7 @@ class _PsikologHomeState extends State<PsikologHome> {
               buildRow(
                 Image.asset('assets/images/forum_icon.png'),
                 'Psikolog\nFormu',
-                const BilimeKatkiPage(),
+                const PsikolookformPage(),
                 Image.asset('assets/images/hand2_icon.png'),
                 'Seans\nGeçmişiniz',
                 const SeansGecmisiPAge(),

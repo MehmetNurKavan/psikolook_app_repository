@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:psikolook_anasayfa/utils/utils.dart';
+import 'package:psikolook_anasayfa/view/psikologHome/forum/customs/forumcustoms.dart';
 import '../../../widget/bac_icon_button.dart';
 
 class TopicsPage extends StatelessWidget {
@@ -22,53 +24,63 @@ class TopicsPage extends StatelessWidget {
           ),
         ),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 90, right: 24, left: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const BackIconButton2(),
-                        SizedBox(
-                          width: width * 0.6,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20.0, bottom: 30),
-                          child: Column(
-                            children: [
-                              Icon(
-                                CupertinoIcons.search_circle_fill,
-                                size: 50,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50.0),
-                child: Text(
-                  "KONULAR",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 27,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
+          child: PaddingCustom(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const BackIconButton2(),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          CupertinoIcons.search_circle_fill,
+                          size: 50,
+                        )),
+                  ],
                 ),
-              ),
-              buildPsikolookFormQuestionSection(height, width, context),
-              buildPsikolookFormQuestionSection(height, width, context),
-              buildPsikolookFormQuestionSection(height, width, context),
-            ],
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: Text(
+                    "KONULAR",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('topics')
+                        .orderBy('datePublished', descending: true)
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: circleLoading(),
+                        );
+                      }
+                      return ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          return TopicCard(
+                            snap: snapshot.data!.docs[index].data(),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -97,36 +109,5 @@ class TopicsPage extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  buildPsikolookFormQuestionSection(
-    var height,
-    var width,
-    context,
-  ) {
-    return const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Card(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-          ),
-          child: Padding(
-            padding:
-                EdgeInsets.only(top: 15.0, bottom: 15.0, left: 15, right: 15),
-            child: Center(
-              child: Expanded(
-                child: Text(
-                  "Konu Başlığı",
-                  style: TextStyle(
-                      fontSize: 18, decoration: TextDecoration.underline),
-                ),
-              ),
-            ),
-          ),
-        ));
   }
 }
